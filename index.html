@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Azaz Shaikh — Full-Stack Engineer &amp; Business Automation Specialist</title>
-<meta name="description" content="Portfolio of Azaz Shaikh. Full-stack software engineer specialising in scalable web systems, business automation workflows, logistics algorithms, and data-driven platforms.">
+<title>Azaz Shaikh — Full-Stack Engineer</title>
+<meta name="description" content="Portfolio of Azaz Shaikh, full-stack engineer. Web systems, business automation and optimization engines — including a live cutting-stock demo.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
 <style>
-/* ---------- tokens: blueprint SaaS house style (white background, Material family, engineering drawing touches) ---------- */
+/* ---------- tokens: blueprint SaaS house style ---------- */
 :root {
   --bg: #FFFFFF;
   --surface: #FFFFFF;
@@ -72,9 +72,21 @@ mark.good, mark.bad {
 mark.good { background: var(--accent-tint); color: var(--accent-ink); }
 mark.bad { background: var(--bad-tint); color: #B4472B; }
 
-/* ---------- layout & sections ---------- */
+/* ---------- layout ---------- */
 section { padding-block: clamp(64px, 10vw, 128px); }
 main > section + section, .hero-bg + section { border-top: 1px solid var(--rule); }
+
+/* sheet-frame kicker (hero) + numbered section labels */
+.kicker {
+  display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  font-size: .875rem; font-weight: 600; color: var(--ink-soft);
+  padding-bottom: 14px; border-bottom: 1px solid var(--rule);
+  margin-bottom: clamp(24px, 4vw, 44px);
+}
+.kicker .k2 { color: var(--steel); font-weight: 500; }
+.sec { font-weight: 700; font-size: .9375rem; margin-bottom: 14px; }
+.sec strong { color: var(--accent); font-variant-numeric: tabular-nums; }
+.sec span { color: var(--ink-soft); font-weight: 600; }
 
 /* ---------- nav ---------- */
 .nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 20px; }
@@ -84,6 +96,8 @@ main > section + section, .hero-bg + section { border-top: 1px solid var(--rule)
 .nav ul a { color: var(--ink-soft); font-weight: 500; transition: color .15s; }
 .nav ul a:hover { color: var(--ink); }
 .nav-cta { display: flex; gap: 10px; align-items: center; }
+.status { display: inline-flex; align-items: center; gap: 8px; font-size: .8125rem; font-weight: 600; color: var(--ink-soft); padding-right: 6px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-tint); flex: none; }
 
 /* ---------- buttons: lift + ring on hover, ripple on click ---------- */
 .btn {
@@ -104,6 +118,7 @@ main > section + section, .hero-bg + section { border-top: 1px solid var(--rule)
 .btn-solid:hover { filter: brightness(1.08); }
 .btn-link { border: 0; background: transparent; box-shadow: none; padding: 0 10px; color: var(--ink-soft); }
 .btn-link:hover { color: var(--ink); transform: none; box-shadow: none; }
+.btn.mini { min-height: 34px; padding: 0 12px; font-size: .875rem; border-radius: 6px; box-shadow: none; }
 .ripple {
   position: absolute; border-radius: 50%; pointer-events: none; z-index: -1;
   background: currentColor; opacity: .28; transform: scale(0);
@@ -112,9 +127,9 @@ main > section + section, .hero-bg + section { border-top: 1px solid var(--rule)
 @keyframes ripple { to { transform: scale(1); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .btn:hover { transform: none; } .ripple { display: none; } }
 
-/* ---------- hero with faint blueprint backdrop ---------- */
+/* ---------- hero with beam-elevation blueprint backdrop ---------- */
 .hero-bg { position: relative; overflow: hidden; }
-.hero { position: relative; padding-top: clamp(40px, 8vw, 96px); padding-bottom: clamp(56px, 8vw, 104px); }
+.hero { position: relative; padding-top: clamp(36px, 6vw, 72px); padding-bottom: clamp(56px, 8vw, 104px); }
 .hero-foot { display: grid; grid-template-columns: minmax(0, 36rem) auto; justify-content: space-between; align-items: end; gap: 32px; margin-top: clamp(28px, 4vw, 48px); }
 .hero-foot p { font-size: 1.1875rem; color: var(--ink-soft); line-height: 1.6; }
 .actions { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -135,102 +150,52 @@ main > section + section, .hero-bg + section { border-top: 1px solid var(--rule)
   background: var(--surface); border: 1px solid var(--rule); font-size: .875rem; font-weight: 500;
   box-shadow: 0 1px 3px rgba(42,53,71,.05);
 }
-.pill strong { color: var(--accent); font-weight: 700; }
+.pill strong { color: var(--accent); font-weight: 700; white-space: nowrap; }
 .ti { width: 18px; height: 18px; flex: none; stroke-width: 1.8; vertical-align: middle; }
 .pill .ti { color: var(--accent); }
 
-/* ---------- cards & grid ---------- */
-.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: clamp(36px, 5vw, 56px); }
-.card {
-  background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 22px;
-  box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px;
-  transition: transform .2s, border-color .2s, box-shadow .2s;
+/* ---------- work: an index, not a card grid ---------- */
+.work-grid { display: grid; grid-template-columns: minmax(0, 1fr) clamp(280px, 26vw, 360px); gap: clamp(24px, 4vw, 48px); align-items: start; }
+.work-list { border-top: 1px solid var(--rule); margin-top: clamp(28px, 4vw, 44px); }
+.work-row {
+  display: grid; grid-template-columns: 3rem minmax(0, 1fr) auto auto;
+  gap: 4px clamp(14px, 2.5vw, 28px); align-items: center;
+  padding: 22px 8px; border-bottom: 1px solid var(--rule);
+  transition: background .15s, border-color .15s;
 }
-a.card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 0 0 3px var(--accent-tint), var(--shadow); }
-.card p { font-size: .9375rem; color: var(--ink-soft); flex-grow: 1; line-height: 1.55; }
-.tile {
-  width: 52px; height: 52px; border-radius: 12px; background: var(--accent-tint); color: var(--accent);
-  display: grid; place-items: center; margin-bottom: 4px;
+.work-row:hover, .work-row:focus-visible { background: var(--fill); }
+.wi { font-weight: 700; color: var(--steel); font-variant-numeric: tabular-nums; transition: color .15s; }
+.work-row:hover .wi, .work-row:focus-visible .wi { color: var(--accent); }
+.wt h3 { display: inline; font-size: 1.0625rem; }
+.wt { min-width: 0; }
+.wd { color: var(--ink-soft); font-size: .9375rem; margin-top: 5px; max-width: 54ch; line-height: 1.55; }
+.wtags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.wtags span { font-size: .8125rem; font-weight: 600; color: var(--ink-soft); background: var(--fill); border-radius: 6px; padding: 3px 8px; }
+.work-row:hover .wtags span { background: var(--surface); }
+.wo { display: inline-flex; align-items: center; gap: 6px; color: var(--steel); font-size: .875rem; transition: color .15s; }
+.work-row:hover .wo { color: var(--accent); }
+.wo .ti { transition: transform .2s; }
+.work-row:hover .wo .ti { transform: translate(2px, -2px); }
+
+/* hover vignette panel: one sticky drawing sheet */
+.vig {
+  position: sticky; top: 24px; min-height: clamp(300px, 24vw, 348px);
+  border: 1px solid var(--rule); border-radius: 12px; box-shadow: var(--shadow);
+  background:
+    linear-gradient(var(--rule) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(90deg, var(--rule) 1px, transparent 1px) 0 0 / 28px 28px,
+    var(--surface);
+  overflow: hidden; display: flex; flex-direction: column; padding-top: 18px;
 }
-.tile .ti { width: 31px; height: 31px; }
-.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-.tags span { font-size: .8125rem; font-weight: 600; color: var(--ink-soft); background: var(--fill); border-radius: 6px; padding: 3px 8px; }
-.card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-.card-ext { color: var(--steel); font-size: .875rem; display: inline-flex; align-items: center; gap: 2px; }
-a.card:hover .card-ext { color: var(--accent); }
+.vig .vizfx { position: relative; margin: 0 18px; width: calc(100% - 36px); aspect-ratio: 340 / 300; }
+.vig .viz { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity .25s; color: var(--steel); }
+.vig .viz.on { opacity: 1; color: var(--accent); }
+.vig-cap { margin-top: auto; display: flex; justify-content: space-between; gap: 12px; font-size: .8125rem; color: var(--ink-soft); border-top: 1px solid var(--rule); padding: 10px 18px 12px; }
+.vig-cap strong { color: var(--ink); font-weight: 700; }
 
-/* ---------- experience strip ---------- */
-.exp-list { display: flex; flex-direction: column; gap: 18px; margin-top: clamp(36px, 5vw, 56px); }
-.exp-card {
-  background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 22px;
-  box-shadow: var(--shadow); display: grid; grid-template-columns: 14rem minmax(0, 1fr); gap: 24px;
-}
-.exp-meta h3 { font-size: 1.15rem; color: var(--ink); }
-.exp-company { display: block; font-weight: 700; color: var(--accent); font-size: .9375rem; margin-top: 4px; }
-.exp-period { display: block; font-size: .8125rem; color: var(--ink-soft); margin-top: 4px; }
-.exp-body p { font-size: .9375rem; color: var(--ink-soft); line-height: 1.6; }
-.exp-body ul { margin-top: 10px; padding-left: 20px; font-size: .9375rem; color: var(--ink-soft); }
-.exp-body li { margin-bottom: 4px; }
-
-/* ---------- numbered steps (for sequences) ---------- */
-.steps { list-style: none; padding: 0; counter-reset: s; margin-top: clamp(32px, 5vw, 48px); max-width: 48rem; }
-.steps li { counter-increment: s; display: grid; grid-template-columns: 3rem minmax(0, 1fr); padding-block: 20px; border-top: 1px solid var(--rule); }
-.steps li:last-child { border-bottom: 1px solid var(--rule); }
-.steps li::before { content: counter(s); font-weight: 700; font-size: 1.5rem; line-height: 1.1; color: var(--accent); }
-.steps h3 { margin-bottom: 6px; }
-.steps p { color: var(--ink-soft); font-size: .9375rem; }
-
-/* ---------- comparison table (before / after) ---------- */
-.vs { margin-top: clamp(36px, 5vw, 56px); border-top: 1px solid var(--rule); }
-.vs-row { display: grid; grid-template-columns: 11rem minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 3.5vw, 48px); padding-block: 18px; border-bottom: 1px solid var(--rule); }
-.vs-head { font-weight: 700; font-size: clamp(1.15rem, 1.8vw, 1.35rem); }
-.vs-head > div:nth-child(2) { color: var(--ink-soft); padding-left: 30px; }
-.vs-head > div:nth-child(3) { color: var(--accent); padding-left: 30px; }
-.vs-topic { font-weight: 700; font-size: .9375rem; color: var(--ink); }
-.vs-row > [data-side] { position: relative; padding-left: 30px; font-size: .9375rem; }
-.vs-row > [data-side="before"] { color: var(--ink-soft); }
-.vs-row > [data-side]::before { content: ""; position: absolute; left: 0; top: 2px; width: 20px; height: 20px; border-radius: 50%; }
-.vs-row > [data-side]::after { content: ""; position: absolute; left: 4px; top: 6px; width: 12px; height: 12px; -webkit-mask: var(--ic) center / contain no-repeat; mask: var(--ic) center / contain no-repeat; }
-.vs-row > [data-side="before"]::before { background: var(--bad-tint); }
-.vs-row > [data-side="after"]::before { background: var(--accent-tint); }
-.vs-row > [data-side="before"]::after { background: var(--bad); --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M18 6L6 18M6 6l12 12'/%3E%3C/svg%3E"); }
-.vs-row > [data-side="after"]::after { background: var(--accent); --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); }
-
-/* ---------- tabs: sideways scroll, no scrollbar, no vertical overflow ---------- */
-.tabs {
-  display: flex; gap: 4px; margin-top: clamp(32px, 5vw, 48px);
-  overflow-x: auto; overflow-y: hidden; scrollbar-width: none; overscroll-behavior-x: contain;
-  box-shadow: inset 0 -1px 0 var(--rule);
-}
-.tabs::-webkit-scrollbar { display: none; }
-.tabs button {
-  font: inherit; font-weight: 600; padding: 12px 18px; border: 0; background: none;
-  color: var(--ink-soft); border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap;
-}
-.tabs button:hover { color: var(--ink); }
-.tabs button[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
-.tabs button:focus-visible { outline-offset: -3px; }
-.panel { margin-top: 24px; }
-
-/* ---------- interactive case study layout ---------- */
-.bb { display: grid; grid-template-columns: minmax(0, 22rem) minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); align-items: start; }
-.bb > * { min-width: 0; }
-.field-group { border: 1px solid var(--rule); border-radius: 12px; padding: 18px; background: var(--surface); box-shadow: var(--shadow); margin-bottom: 16px; }
-.field-group h4 { font-size: .875rem; font-weight: 700; color: var(--ink-soft); margin-bottom: 12px; }
-.field { display: grid; grid-template-columns: minmax(0, 1fr) 8rem; align-items: center; gap: 10px; padding: 6px 0; font-size: .875rem; }
-.field label { color: var(--ink); font-weight: 500; }
-.field .in { display: flex; align-items: center; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); transition: border-color .15s, box-shadow .15s; }
-.field .in:focus-within, .field .in.typing { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-tint); }
-.field input { width: 100%; border: 0; background: none; font: inherit; font-weight: 600; text-align: right; padding: 7px 8px; color: var(--ink); }
-.field input:focus { outline: none; }
-.field .unit { padding-right: 8px; font-size: .8125rem; color: var(--ink-soft); font-weight: 500; user-select: none; }
-.field-msg { font-size: .8125rem; color: var(--bad); margin-top: 8px; min-height: 1.2em; }
-
-.bb-right { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
-
-/* ---------- drawing card & SVG classes (drawing-kit) ---------- */
+/* ---------- figs & drawing SVG classes (drawing-kit) ---------- */
 .fig { border: 1px solid var(--rule); border-radius: 12px; padding: 18px; background: var(--surface); box-shadow: var(--shadow); }
-.fig figcaption { font-size: .8125rem; color: var(--ink-soft); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+.fig figcaption { font-size: .8125rem; color: var(--ink-soft); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .fig figcaption strong { color: var(--accent); font-weight: 600; }
 .fig svg { width: 100%; height: auto; display: block; overflow: visible; }
 
@@ -243,6 +208,7 @@ a.card:hover .card-ext { color: var(--accent); }
 .sv-dl { stroke: var(--dim); stroke-width: 1.6; }
 .sv-dh { fill: var(--dim); }
 .sv-dt { fill: var(--dim); font: 700 13px "Plus Jakarta Sans", system-ui, sans-serif; }
+.sv-dt.bad { fill: var(--bad); }
 .sv-dv { fill: var(--ink); font: 600 12px "Plus Jakarta Sans", system-ui, sans-serif; }
 .sv-t { fill: var(--ink-soft); font: 500 12px "Plus Jakarta Sans", system-ui, sans-serif; paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
 .sv-t.k { fill: var(--ink); font-weight: 700; }
@@ -257,6 +223,45 @@ a.card:hover .card-ext { color: var(--accent); }
 .linked tr.hl td { background: var(--accent-tint); color: var(--accent-ink); font-weight: 600; }
 .sv-hit { fill: none; stroke: transparent; stroke-width: 14px; pointer-events: stroke; }
 
+/* ---------- case study layout ---------- */
+.case-grid { display: flex; flex-direction: column; gap: clamp(20px, 3vw, 30px); margin-top: clamp(32px, 5vw, 48px); }
+.bb { display: grid; grid-template-columns: minmax(0, 22rem) minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); align-items: start; }
+.bb > * { min-width: 0; }
+.bb-right { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.field-group { border: 1px solid var(--rule); border-radius: 12px; padding: 18px; background: var(--surface); box-shadow: var(--shadow); margin-bottom: 16px; }
+.field-group h4 { font-size: .875rem; font-weight: 700; color: var(--ink-soft); margin-bottom: 12px; }
+.field { display: grid; grid-template-columns: minmax(0, 1fr) 8rem; align-items: center; gap: 10px; padding: 6px 0; font-size: .875rem; }
+.field label { color: var(--ink); font-weight: 500; }
+.field .in { display: flex; align-items: center; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); transition: border-color .15s, box-shadow .15s; }
+.field .in:focus-within, .field .in.typing { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-tint); }
+.field input { width: 100%; border: 0; background: none; font: inherit; font-weight: 600; text-align: right; padding: 7px 8px; color: var(--ink); }
+.field input:focus { outline: none; }
+.field .unit { padding-right: 8px; font-size: .8125rem; color: var(--ink-soft); font-weight: 500; user-select: none; }
+.field-msg { font-size: .8125rem; color: var(--bad); margin-top: 8px; min-height: 1.2em; }
+.cutsys { display: flex; gap: 8px; justify-content: flex-start; margin-top: 10px; }
+
+/* pattern sheet rows */
+.pats { margin-top: 6px; border-bottom: 1px solid var(--rule); }
+.pat { display: grid; grid-template-columns: 11rem minmax(0, 1fr) auto; gap: clamp(12px, 2.5vw, 24px); align-items: center; padding: 14px 0; border-top: 1px solid var(--rule); }
+.pat .pf { font-size: .9375rem; color: var(--ink); }
+.pat-bar { display: flex; height: 30px; border-radius: 6px; overflow: hidden; border: 1px solid var(--rule); background: var(--surface); min-width: 0; }
+.pat-bar .seg { background: var(--fill); border-left: 1px solid var(--rule); }
+.pat-bar .seg:first-child { border-left: 0; }
+.pat-bar .kseg { background: color-mix(in srgb, var(--dim) 26%, #fff); border-left: 1px solid var(--rule); }
+.pat-bar .tseg { background: repeating-linear-gradient(45deg, var(--bad-tint) 0 6px, #F8E3D8 6px 12px); border-left: 1px solid var(--rule); }
+.pat.best .seg { background: color-mix(in srgb, var(--accent) 14%, #fff); border-left-color: color-mix(in srgb, var(--accent) 28%, transparent); }
+.pat.best .seg:first-child { border-left: 0; }
+.patscr { font-size: .8125rem; color: var(--ink-soft); white-space: nowrap; }
+.patscr b { color: var(--ink); font-weight: 700; }
+.pat-note { margin-top: 10px; font-size: .8125rem; color: var(--ink-soft); }
+
+/* case metrics cards */
+.case-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
+.case-metrics .card { padding: 16px; gap: 4px; }
+.case-metrics .metric-val { display: block; font-size: 1.3rem; font-weight: 700; color: var(--ink); }
+.case-metrics .metric-lbl { display: block; margin-top: 5px; font-size: .8125rem; color: var(--ink-soft); font-weight: 500; }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 22px; box-shadow: var(--shadow); }
+
 /* ---------- wide tables with scroll, fade & glide ---------- */
 .table-box { border: 1px solid var(--rule); border-radius: 12px; padding: 6px 14px; background: var(--surface); box-shadow: var(--shadow); }
 .table-scroll { position: relative; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--rule) transparent; padding-bottom: 6px; }
@@ -268,6 +273,11 @@ a.card:hover .card-ext { color: var(--accent); }
 .table-scroll.fade-l { -webkit-mask-image: linear-gradient(to right, transparent, #000 32px); mask-image: linear-gradient(to right, transparent, #000 32px); }
 .table-scroll.fade-l.fade-r { -webkit-mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent); }
 
+/* wide drawing: same scroll affordance on small screens */
+.draw-scroll { position: relative; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--rule) transparent; padding-bottom: 6px; }
+.draw-scroll.dragging { cursor: grabbing; user-select: none; }
+.draw-scroll svg { display: block; width: 100%; min-width: 680px; height: auto; }
+
 table { border-collapse: collapse; width: 100%; min-width: 600px; font-size: .9375rem; }
 th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
 th { font-weight: 600; color: var(--ink-soft); font-size: .8125rem; }
@@ -278,32 +288,79 @@ tbody tr:last-child td { border-bottom: 0; }
 .badge.dim { background: #E8EFFF; color: var(--dim); }
 .badge.bad { background: var(--bad-tint); color: var(--bad); }
 
-/* ---------- case metrics cards ---------- */
-.case-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
-.case-metrics .card { padding: 16px; gap: 4px; }
-.case-metrics .metric-val { font-size: 1.4rem; font-weight: 700; color: var(--ink); }
-.case-metrics .metric-lbl { font-size: .8125rem; color: var(--ink-soft); font-weight: 500; }
+/* ---------- numbered steps ---------- */
+.steps { list-style: none; padding: 0; counter-reset: s; margin-top: 0; max-width: 48rem; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 3rem minmax(0, 1fr); padding-block: 20px; border-top: 1px solid var(--rule); }
+.steps li:last-child { border-bottom: 1px solid var(--rule); }
+.steps li::before { content: counter(s); font-weight: 700; font-size: 1.5rem; line-height: 1.1; color: var(--accent); }
+.steps h3 { margin-bottom: 6px; }
+.steps p { color: var(--ink-soft); font-size: .9375rem; }
+.steps-c { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px 72px; align-items: center; margin-top: clamp(32px, 5vw, 48px); }
+.legend { display: grid; gap: 12px; border-top: 1px solid var(--rule); padding-top: 14px; font-size: .8125rem; color: var(--ink-soft); line-height: 1.45; }
+.legend .lt { font-size: .75rem; font-weight: 700; color: var(--ink); }
+.legend .li-row { display: grid; grid-template-columns: 40px minmax(0, 1fr); align-items: center; gap: 12px; }
+.legend .sw { height: 13px; border-radius: 3px; }
+.legend .sw.piece { background: color-mix(in srgb, var(--accent) 14%, #fff); border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent); }
+.legend .sw.kerf { background: var(--dim); width: 10px; justify-self: start; }
+.legend .sw.tail { background: repeating-linear-gradient(45deg, var(--bad-tint) 0 5px, #F8E3D8 5px 10px); border: 1px solid var(--rule); }
+.legend b { color: var(--ink); font-weight: 600; }
+@media (max-width: 960px) { .steps-c { grid-template-columns: 1fr; } }
 
-/* ---------- closing + footer ---------- */
+/* ---------- comparison table (before / after) ---------- */
+.vs { margin-top: clamp(36px, 5vw, 56px); border-top: 1px solid var(--rule); }
+.vs-row { display: grid; grid-template-columns: 11rem minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 3.5vw, 48px); padding-block: 18px; border-bottom: 1px solid var(--rule); }
+.vs-head { font-weight: 700; font-size: clamp(1.05rem, 1.8vw, 1.25rem); }
+.vs-head > div:nth-child(2) { color: var(--ink-soft); padding-left: 30px; }
+.vs-head > div:nth-child(3) { color: var(--accent); padding-left: 30px; }
+.vs-topic { font-weight: 700; font-size: .9375rem; color: var(--ink); }
+.vs-row > [data-side] { position: relative; padding-left: 30px; font-size: .9375rem; }
+.vs-row > [data-side="before"] { color: var(--ink-soft); }
+.vs-row > [data-side]::before { content: ""; position: absolute; left: 0; top: 2px; width: 20px; height: 20px; border-radius: 50%; }
+.vs-row > [data-side]::after { content: ""; position: absolute; left: 4px; top: 6px; width: 12px; height: 12px; -webkit-mask: var(--ic) center / contain no-repeat; mask: var(--ic) center / contain no-repeat; }
+.vs-row > [data-side="before"]::before { background: var(--bad-tint); }
+.vs-row > [data-side="after"]::before { background: var(--accent-tint); }
+.vs-row > [data-side="before"]::after { background: var(--bad); --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M18 6L6 18M6 6l12 12'/%3E%3C/svg%3E"); }
+.vs-row > [data-side="after"]::after { background: var(--accent); --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); }
+
+/* ---------- closing + footer title block ---------- */
 .closing h2 { max-width: 22ch; font-size: clamp(2.2rem, 5vw, 4rem); }
 .closing p { margin-top: 20px; max-width: 38rem; font-size: 1.125rem; color: var(--ink-soft); }
 .closing .actions { margin-top: 32px; }
-footer { padding-block: 28px; font-size: .875rem; color: var(--ink-soft); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--rule); }
+footer { padding-bottom: 40px; }
+.tblock {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr);
+  border: 1px solid var(--rule); border-radius: 12px; overflow: hidden;
+  box-shadow: var(--shadow); background: var(--surface); margin-bottom: 22px;
+}
+.tblock > div { padding: 16px 20px; border-left: 1px solid var(--rule); }
+.tblock > div:first-child { border-left: 0; }
+.tl { display: block; font-size: .8125rem; color: var(--ink-soft); font-weight: 500; margin-bottom: 6px; }
+.tv { font-weight: 600; color: var(--ink); font-size: .9375rem; line-height: 1.55; }
+.tv a { display: inline-block; }
+.tv a:hover { color: var(--accent); text-decoration: underline; }
+.foot-line { font-size: .8125rem; color: var(--steel); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 960px) {
   .nav ul { display: none; }
   .bb { grid-template-columns: minmax(0, 1fr); }
-  .exp-card { grid-template-columns: 1fr; gap: 12px; }
+  .work-grid { grid-template-columns: minmax(0, 1fr); }
+  .vig { display: none; }
 }
 @media (max-width: 640px) {
   .hero-foot { grid-template-columns: 1fr; }
-  .fig figcaption { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .fig figcaption { flex-direction: column; align-items: flex-start; }
   .vs-row { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   .vs-head { display: none; }
   .vs-topic { font-size: .8125rem; color: var(--accent); }
-  .nav-cta .btn-link { display: none; }
+  .nav-cta .btn-link, .status { display: none; }
   .blueprint { opacity: .18; }
+  .work-row { grid-template-columns: 2.2rem minmax(0, 1fr); }
+  .wo { grid-column: 2; justify-self: start; }
+  .tblock { grid-template-columns: minmax(0, 1fr); }
+  .tblock > div { border-left: 0; border-top: 1px solid var(--rule); }
+  .tblock > div:first-child { border-top: 0; }
+  .pat { grid-template-columns: minmax(0, 1fr); gap: 10px; }
 }
 </style>
 </head>
@@ -320,28 +377,32 @@ footer { padding-block: 28px; font-size: .875rem; color: var(--ink-soft); displa
     <ul>
       <li><a href="#work">Work</a></li>
       <li><a href="#case">Case study</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#how">How I work</a></li>
-      <li><a href="#services">Services</a></li>
+      <li><a href="#how">Approach</a></li>
+      <li><a href="#stack">Stack</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
   <div class="nav-cta">
+    <span class="status"><span class="dot" aria-hidden="true"></span>open to full-stack roles</span>
     <a class="btn btn-link" href="https://github.com/SHAIKH-AZAZ" target="_blank" rel="noopener">GitHub</a>
-    <a class="btn btn-solid" href="#contact">Get in touch</a>
+    <a class="btn btn-solid" href="#contact">Start a project</a>
   </div>
 </header>
 
 <main id="main">
-  <!-- ---------- hero with blueprint backdrop ---------- -->
+  <!-- ---------- hero: beam-elevation blueprint ---------- -->
   <div class="hero-bg" id="heroBg">
     <section class="wrap hero" id="top">
-      <h1>Full-stack engineer.<span class="l2">Business automation specialist.</span></h1>
+      <div class="kicker">
+        <span>Azaz Shaikh &mdash; portfolio</span>
+        <span class="k2">rev 2026-11 &middot; scale 1:1 &middot; drawn by hand</span>
+      </div>
+      <h1>Software that turns drawings<span class="l2">into cutting plans.</span></h1>
       <div class="hero-foot">
-        <p>I engineer <mark class="good">scalable web systems</mark>, <mark class="good">business automation workflows</mark>, and custom <mark class="good">optimization algorithms</mark> that eliminate friction, cut waste, and drive business growth.</p>
+        <p>Full-stack engineer. I build the whole pipeline &mdash; <mark class="good">read the drawing</mark>, compute every bar, and <mark class="good">pack 12&nbsp;m stock with the least scrap</mark> &mdash; plus the accounting, exports and dashboards around it.</p>
         <div class="actions">
-          <a class="btn btn-solid" href="#work">Explore deployed systems</a>
-          <a class="btn" href="#contact">Start a project</a>
+          <a class="btn btn-solid" href="#work">See deployed systems</a>
+          <a class="btn" href="#case">Run the live engine</a>
         </div>
       </div>
       <div class="pills">
@@ -349,197 +410,167 @@ footer { padding-block: 28px; font-size: .875rem; color: var(--ink-soft); displa
           <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M7 8l-4 4l4 4"/><path d="M17 8l4 4l-4 4"/><path d="M14 4l-4 16"/>
           </svg>
-          <strong>Full-stack</strong> Next.js, React, Node.js, Python
+          <strong>Full-stack</strong> TypeScript, React, Next.js, Node.js
         </span>
         <span class="pill">
           <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M6 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M6 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M8.6 8.6l10.4 10.4"/><path d="M8.6 15.4l3.4 -3.4m2 -2l5 -5"/>
           </svg>
-          <strong>Optimization</strong> 1D cutting-stock algorithms &amp; waste minimisation
+          <strong>Optimization</strong> 1D cutting-stock, dynamic programming
         </span>
         <span class="pill">
           <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/><path d="M9 12l2 2l4 -4"/>
           </svg>
-          <strong>AI &amp; Data</strong> LangChain, LangGraph multi-step agents, ETL pipelines
+          <strong>AI &amp; data</strong> LangGraph agents, drawing-vision pipelines
         </span>
       </div>
     </section>
   </div>
 
-  <!-- ---------- selected work cards (deployed systems from azazshaikh.info) ---------- -->
+  <!-- ---------- work: index rows + sticky drawing sheet ---------- -->
   <section id="work">
     <div class="wrap">
-      <h2>Deployed systems &amp; products</h2>
-      <p class="lede">Production applications engineered to solve real operational bottlenecks permanently.</p>
-      <div class="cards">
-        <a class="card" href="https://poc-waste-proper.vercel.app/" target="_blank" rel="noopener">
-          <div class="card-head">
-            <span class="tile" aria-hidden="true">
-              <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M6 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M8.6 8.6l10.4 10.4"/><path d="M8.6 15.4l3.4 -3.4m2 -2l5 -5"/>
-              </svg>
-            </span>
-            <span class="card-ext">Live demo &nearr;</span>
-          </div>
-          <h3>POC Waste Optimizer</h3>
-          <p>Industrial optimization platform built on custom cutting-stock algorithms to minimize raw material waste from 12% to under 2.5% and streamline schedule takeoff.</p>
-          <div class="tags"><span>Next.js</span><span>Algorithms</span><span>PostgreSQL</span><span>Dynamic Programming</span></div>
-        </a>
+      <p class="sec"><strong>01</strong> <span>&middot; selected work</span></p>
+      <h2>Six builds, four of them live.</h2>
+      <p class="lede">Real products in front of real users. The first one is the flagship &mdash; it gets a whole case study below.</p>
 
-        <a class="card" href="https://excel-cleaner-one.vercel.app/" target="_blank" rel="noopener">
-          <div class="card-head">
-            <span class="tile" aria-hidden="true">
-              <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"/><path d="M8 11l4 4l4 -4"/><path d="M8 15l4 -4l4 4"/>
-              </svg>
+      <div class="work-grid">
+        <div class="work-list" id="workList">
+          <a class="work-row" href="https://poc-waste-proper.vercel.app/" target="_blank" rel="noopener" data-viz="v1">
+            <span class="wi">01</span>
+            <span class="wt">
+              <h3>POC Waste Optimizer</h3>
+              <p class="wd">Plans how to cut 12&nbsp;m steel bar for a whole rebar schedule so the off-cut pile stays small &mdash; parsing, optimization and Excel export in one flow. The engine behind the case study below.</p>
+              <span class="wtags"><span>Next.js</span><span>cutting-stock</span><span>PostgreSQL</span></span>
             </span>
-            <span class="card-ext">Live demo &nearr;</span>
-          </div>
-          <h3>Excel Cleaner Tool</h3>
-          <p>High-throughput data sanitiser that strips corrupt macros, bloated objects, and chaotic styling from XLSX sheets to deliver structured, validated datasets.</p>
-          <div class="tags"><span>Next.js</span><span>Regex</span><span>Batch Processing</span><span>Data Sanitation</span></div>
-        </a>
+            <span class="badge ok">Live</span>
+            <span class="wo">visit <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></span>
+          </a>
 
-        <a class="card" href="https://shamgym.vercel.app/" target="_blank" rel="noopener">
-          <div class="card-head">
-            <span class="tile" aria-hidden="true">
-              <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 21h18"/><path d="M5 21v-14l8 -4v18"/><path d="M19 21v-10l-6 -4"/><path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/>
-              </svg>
+          <a class="work-row" href="https://excel-cleaner-one.vercel.app/" target="_blank" rel="noopener" data-viz="v2">
+            <span class="wi">02</span>
+            <span class="wt">
+              <h3>Excel cleaner</h3>
+              <p class="wd">Takes broken &ldquo;dirty&rdquo; XLSX files &mdash; macros, bloated styling, corrupt objects &mdash; and returns validated, readable data a pipeline can trust.</p>
+              <span class="wtags"><span>Next.js</span><span>streaming</span><span>validation</span></span>
             </span>
-            <span class="card-ext">Live demo &nearr;</span>
-          </div>
-          <h3>ShamGym platform</h3>
-          <p>Production strength &amp; conditioning platform featuring responsive class schedules, trainer rosters, dynamic membership plans, and automated trial booking.</p>
-          <div class="tags"><span>Next.js</span><span>Responsive UI</span><span>Fluid CSS</span><span>Booking Flow</span></div>
-        </a>
+            <span class="badge ok">Live</span>
+            <span class="wo">visit <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></span>
+          </a>
 
-        <a class="card" href="https://www.safeandsecuresecurityservice.com/" target="_blank" rel="noopener">
-          <div class="card-head">
-            <span class="tile" aria-hidden="true">
-              <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/><path d="M12 11m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12l0 2.5"/>
-              </svg>
+          <a class="work-row" href="https://shamgym.vercel.app/" target="_blank" rel="noopener" data-viz="v3">
+            <span class="wi">03</span>
+            <span class="wt">
+              <h3>ShamGym</h3>
+              <p class="wd">A single gym&rsquo;s whole web presence: class schedules, trainer rosters, membership plans, and a trial booking flow that works on the first visit.</p>
+              <span class="wtags"><span>Next.js</span><span>fluid CSS</span><span>booking</span></span>
             </span>
-            <span class="card-ext">Live demo &nearr;</span>
-          </div>
-          <h3>Safe &amp; Secure Security Service</h3>
-          <p>Commercial portal for a Gujarat security agency covering VIP protection and event security, with a multi-scenario request form that generates quotes in real time.</p>
-          <div class="tags"><span>Next.js</span><span>Quote Engine</span><span>Technical SEO</span></div>
-        </a>
+            <span class="badge ok">Live</span>
+            <span class="wo">visit <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></span>
+          </a>
 
-        <a class="card" href="#case">
-          <div class="card-head">
-            <span class="tile" aria-hidden="true">
-              <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M14 9h7"/><path d="M14 15h7"/><path d="M3 9h6"/><path d="M3 15h6"/>
-              </svg>
+          <a class="work-row" href="https://www.safeandsecuresecurityservice.com/" target="_blank" rel="noopener" data-viz="v4">
+            <span class="wi">04</span>
+            <span class="wt">
+              <h3>Safe &amp; Secure Security Service</h3>
+              <p class="wd">Site for a Gujarat security agency with a multi-scenario request form that prices a quote in real time instead of ending in &ldquo;contact us&rdquo;.</p>
+              <span class="wtags"><span>Next.js</span><span>quote engine</span><span>SEO</span></span>
             </span>
-            <span class="card-ext">Architecture</span>
-          </div>
-          <h3>FastShipment logistics engine</h3>
-          <p>End-to-end logistics platform with automated order management, secure checkout, real-time shipment tracking with dynamic updates, and carrier dispatch tools.</p>
-          <div class="tags"><span>Python</span><span>Checkout Engine</span><span>Shipment Tracking</span><span>Microservices</span></div>
-        </a>
+            <span class="badge ok">Live</span>
+            <span class="wo">visit <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></span>
+          </a>
 
-        <a class="card" href="#case">
-          <div class="card-head">
-            <span class="tile" aria-hidden="true">
-              <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h16v16h-16z"/><path d="M9 4v16"/><path d="M14 4v16"/><path d="M4 9h16"/><path d="M4 14h16"/>
-              </svg>
+          <div class="work-row" data-viz="v5">
+            <span class="wi">05</span>
+            <span class="wt">
+              <h3>FastShipment logistics engine</h3>
+              <p class="wd">Order-to-dispatch pipeline: secure checkout, live shipment status with dynamic updates, and the dispatch tools a carrier team actually needs.</p>
+              <span class="wtags"><span>Python</span><span>REST</span><span>tracking</span></span>
             </span>
-            <span class="card-ext">Architecture</span>
+            <span class="badge dim">Private build</span>
+            <span class="wo">under NDA</span>
           </div>
-          <h3>LangGraph multi-step AI agent</h3>
-          <p>Stateful orchestration agent capable of tool execution, conditional branching, persistent memory, and autonomous task completion for enterprise workflows.</p>
-          <div class="tags"><span>LangGraph</span><span>LangChain</span><span>Vector DB</span><span>AI Agents</span></div>
-        </a>
+
+          <div class="work-row" data-viz="v6">
+            <span class="wi">06</span>
+            <span class="wt">
+              <h3>LangGraph multi-step agent</h3>
+              <p class="wd">A stateful agent for ops work: tool calls, conditional branching, persistent memory &mdash; the difference between a chatbot that talks and one that finishes the task.</p>
+              <span class="wtags"><span>LangGraph</span><span>LangChain</span><span>vector store</span></span>
+            </span>
+            <span class="badge dim">Private build</span>
+            <span class="wo">under NDA</span>
+          </div>
+        </div>
+
+        <div class="vig" id="workViz" aria-hidden="true">
+          <div class="vig-cap"><span id="vigFig">fig 01</span><strong id="vigName">POC Waste Optimizer</strong></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ---------- one deep case study (layout geometry & web performance engine) ---------- -->
+  <!-- ---------- case study: live cutting-stock engine ---------- -->
   <section id="case">
     <div class="wrap">
-      <h2>Case study: responsive layout &amp; performance engine</h2>
-      <p class="lede">An interactive layout geometry and web performance budget engine. Demonstrating fluid CSS grid track math, active container spanning, and sub-100ms frame lifecycle execution. Formula renders live in KaTeX: $\text{Span Width} = \frac{W - 2M - (C-1)G}{C} \times S + (S-1)G$.</p>
+      <p class="sec"><strong>02</strong> <span>&middot; case study</span></p>
+      <h2>The cutting-stock engine, live.</h2>
+      <p class="lede">This is the exact formulation the optimizer runs, here in your browser. Type a demand list &mdash; it redraws the bar, recomputes every number and shows each one beside the formula that produced it.</p>
 
-      <div class="tabs" role="tablist" aria-label="Case study views">
-        <button type="button" role="tab" aria-selected="true" aria-controls="p-engine" id="t-engine" data-panel="p-engine">Live layout &amp; performance engine</button>
-        <button type="button" role="tab" aria-selected="false" aria-controls="p-arch" id="t-arch" data-panel="p-arch" tabindex="-1">System architecture</button>
-      </div>
+      <div class="case-grid linked">
+        <figure class="fig wide">
+          <figcaption>
+            <span>Live cut plan &mdash; one raw bar, drawn to scale. Blue slivers are the blade kerf, widened so they stay visible.</span>
+            <strong>hover / click a piece to link it</strong>
+          </figcaption>
+          <div class="draw-scroll"><svg id="drawSvg" viewBox="0 0 1080 240" role="img" aria-label="Live cutting-stock drawing"></svg></div>
+        </figure>
 
-      <!-- Tab 1: Live Layout & Performance Engine -->
-      <div class="panel linked" id="p-engine" role="tabpanel" aria-labelledby="t-engine">
         <div class="bb">
-          <!-- Form on the left -->
-          <form class="bb-form" id="stockForm" onsubmit="return false">
+          <!-- form -->
+          <form id="stockForm" onsubmit="return false">
             <div class="field-group">
-              <h4>Viewport &amp; grid geometry</h4>
+              <h4>Raw stock</h4>
               <div class="field">
-                <label for="inVpW">Viewport width ($W$)</label>
-                <div class="in"><input type="number" id="inVpW" value="1440" min="360" max="1920" step="10"><span class="unit">px</span></div>
+                <label for="inStockL">Standard bar length ($L$)</label>
+                <div class="in"><input type="number" id="inStockL" value="12000" min="6000" max="18000" step="500"><span class="unit">mm</span></div>
               </div>
               <div class="field">
-                <label for="inMargin">Safe page margin ($M$)</label>
-                <div class="in"><input type="number" id="inMargin" value="32" min="8" max="96" step="4"><span class="unit">px</span></div>
-              </div>
-              <div class="field">
-                <label for="inCols">Grid columns ($C$)</label>
-                <div class="in"><input type="number" id="inCols" value="12" min="4" max="16" step="1"><span class="unit">cols</span></div>
-              </div>
-              <div class="field">
-                <label for="inGutter">Column gutter ($G$)</label>
-                <div class="in"><input type="number" id="inGutter" value="24" min="4" max="48" step="2"><span class="unit">px</span></div>
+                <label for="inKerf">Blade kerf ($K$)</label>
+                <div class="in"><input type="number" id="inKerf" value="4" min="0" max="10" step="1"><span class="unit">mm</span></div>
               </div>
             </div>
 
             <div class="field-group">
-              <h4>Component &amp; performance budget</h4>
-              <div class="field">
-                <label for="inSpan">Component span ($S$)</label>
-                <div class="in"><input type="number" id="inSpan" value="8" min="1" max="12" step="1"><span class="unit">cols</span></div>
-              </div>
-              <div class="field">
-                <label for="inRtt">Network RTT ($T_{\text{rtt}}$)</label>
-                <div class="in"><input type="number" id="inRtt" value="32" min="5" max="250" step="1"><span class="unit">ms</span></div>
-              </div>
-              <div class="field">
-                <label for="inSsr">Server SSR compute ($T_{\text{ssr}}$)</label>
-                <div class="in"><input type="number" id="inSsr" value="14" min="2" max="100" step="1"><span class="unit">ms</span></div>
+              <h4>Demand cut list</h4>
+              <div id="cutRows"></div>
+              <div class="cutsys">
+                <button type="button" class="btn mini" id="addCut">+ add cut</button>
+                <button type="button" class="btn mini btn-link" id="removeCut">remove last</button>
               </div>
               <div class="field-msg" id="fieldMsg"></div>
             </div>
           </form>
 
-          <!-- Live drawing & result cards on the right -->
+          <!-- metrics + table -->
           <div class="bb-right">
-            <figure class="fig">
-              <figcaption>
-                <span>Live layout blueprint: fluid tracks, active container span &amp; frame budget</span>
-                <strong>Hover any mark to link</strong>
-              </figcaption>
-              <svg id="drawSvg" viewBox="0 0 800 295" role="img" aria-label="Responsive layout geometry and performance blueprint diagram"></svg>
-            </figure>
-
             <div class="case-metrics">
-              <div class="card" data-mark="span" tabindex="0">
-                <span class="metric-val" id="cardSpan">909 px</span>
-                <span class="metric-lbl">Active component span</span>
+              <div class="card" data-mark="util" tabindex="0">
+                <span class="metric-val" id="cardWaste">&mdash;</span>
+                <span class="metric-lbl">Scrap waste</span>
               </div>
-              <div class="card" data-mark="col" tabindex="0">
-                <span class="metric-val" id="cardCol">92.6 px</span>
-                <span class="metric-lbl">Single column track</span>
+              <div class="card" data-mark="used" tabindex="0">
+                <span class="metric-val" id="cardUsed">&mdash;</span>
+                <span class="metric-lbl">Finished length, mm</span>
               </div>
-              <div class="card" data-mark="lat" tabindex="0">
-                <span class="metric-val" id="cardLat">54 ms</span>
-                <span class="metric-lbl">Total P95 latency</span>
+              <div class="card" data-mark="scrap" tabindex="0">
+                <span class="metric-val" id="cardScrap">&mdash;</span>
+                <span class="metric-lbl">Off-cut tail, mm</span>
               </div>
-              <div class="card" data-mark="fps" tabindex="0">
-                <span class="metric-val" id="cardFps">16.6 ms</span>
-                <span class="metric-lbl">60 FPS paint budget</span>
+              <div class="card" data-mark="perf" tabindex="0">
+                <span class="metric-val" id="cardPerf">&mdash;</span>
+                <span class="metric-lbl">Compute + draw, ms</span>
               </div>
             </div>
 
@@ -548,150 +579,118 @@ footer { padding-block: 28px; font-size: .875rem; color: var(--ink-soft); displa
                 <table>
                   <thead>
                     <tr>
-                      <th>Mark</th>
-                      <th>Layout / budget metric</th>
-                      <th>Mathematical formula</th>
-                      <th class="num">Computed value</th>
-                      <th>Engineering status</th>
+                      <th>Piece</th>
+                      <th>What it is</th>
+                      <th>Formula</th>
+                      <th class="num">Length (mm)</th>
+                      <th>State</th>
                     </tr>
                   </thead>
-                  <tbody id="metricsTableBody">
-                    <!-- Populated dynamically with live formulas -->
-                  </tbody>
+                  <tbody id="metricsTableBody"></tbody>
                 </table>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- pattern sheet: same demand, different packings -->
+        <figure class="fig" id="patterns">
+          <figcaption>
+            <span>Pattern sheet &mdash; the same demand list, packed in every priority order. The tail is what the solver competes to shrink.</span>
+            <strong>computed live for your inputs</strong>
+          </figcaption>
+          <div class="pats" id="patList"></div>
+          <p class="pat-note" id="patNote"></p>
+        </figure>
       </div>
 
-      <!-- Tab 2: System Architecture -->
-      <div class="panel linked" id="p-arch" role="tabpanel" aria-labelledby="t-arch" hidden>
-        <figure class="fig">
-          <figcaption>
-            <span>POC Waste Optimizer architecture: Client &rarr; Ingestion Gateway &rarr; Cutting-Stock Engine &rarr; Database Cache</span>
-            <strong>Hover any subsystem</strong>
-          </figcaption>
-          <svg viewBox="0 0 960 425" role="img" aria-label="System architecture blueprint" id="archSvg"></svg>
-        </figure>
+      <div class="steps-c">
+        <ol class="steps">
+          <li>
+            <div>
+              <h3>Turn a schedule into demands</h3>
+              <p>Every row of a rebar schedule becomes a cut: a bar mark, a diameter, an exact length in millimetres. Nothing is eyeballed.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Generate packings that fit</h3>
+              <p>A pattern is only legal if every piece on the bar fits &mdash; lengths plus one kerf per cut. Illegal patterns never enter the search.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Pick the smallest tail</h3>
+              <p>Across all bars and patterns, choose the packing with the least off-cut &mdash; and among equal tails, fewer pieces, because every extra cut is one more chance to be off on site.</p>
+            </div>
+          </li>
+        </ol>
+        <aside class="legend" aria-label="Reading the drawings">
+          <span class="lt">Reading the drawings</span>
+          <span class="li-row"><span class="sw piece"></span><span><b>Cut piece</b> &mdash; one demanded length, drawn to scale</span></span>
+          <span class="li-row"><span class="sw kerf"></span><span><b>Blade kerf</b> &mdash; 4&nbsp;mm real, drawn wider to stay visible</span></span>
+          <span class="li-row"><span class="sw tail"></span><span><b>Off-cut tail</b> &mdash; what becomes scrap</span></span>
+        </aside>
+      </div>
+    </div>
+  </section>
 
-        <div class="table-box" style="margin-top:18px">
-          <div class="table-scroll">
-            <table>
-              <thead>
-                <tr>
-                  <th>Subsystem layer</th>
-                  <th>Core modules</th>
-                  <th>Data contract / protocol</th>
-                  <th class="num">P95 latency</th>
-                  <th>Reliability</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-mark="layer-ui" tabindex="0">
-                  <td><strong>01 &middot; Client runtime</strong></td>
-                  <td>Next.js 14 App Router, Virtualised Takeoff Table, Zod Parameter Guards</td>
-                  <td>HTTPS / WSS &middot; JSON Payload</td>
-                  <td class="num">&lt; 32 ms</td>
-                  <td><span class="badge ok">100% verified</span></td>
-                </tr>
-                <tr data-mark="layer-api" tabindex="0">
-                  <td><strong>02 &middot; Ingestion gateway</strong></td>
-                  <td>Express REST API, Lossless XLSX Sanitizer, Worker Pool Scheduler</td>
-                  <td>REST &middot; Multipart Stream</td>
-                  <td class="num">&lt; 58 ms</td>
-                  <td><span class="badge ok">Sub-100ms</span></td>
-                </tr>
-                <tr data-mark="layer-calc" tabindex="0">
-                  <td><strong>03 &middot; Optimizer engine</strong></td>
-                  <td>1D Cutting-Stock DP, Heuristic Pattern Pruner, 8-Thread Worker Pool</td>
-                  <td>IPC &middot; Zero-copy ArrayBuffer</td>
-                  <td class="num">&lt; 14 ms</td>
-                  <td><span class="badge ok">0.35% scrap parity</span></td>
-                </tr>
-                <tr data-mark="layer-db" tabindex="0">
-                  <td><strong>04 &middot; Persistence layer</strong></td>
-                  <td>PostgreSQL 16 (BOM Orders), MongoDB (Takeoff Trees), Redis Cache</td>
-                  <td>TCP &middot; Replicated ACID Pool</td>
-                  <td class="num">&lt; 9 ms</td>
-                  <td><span class="badge ok">ACID compliant</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+  <!-- ---------- experience: two ledger rows ---------- -->
+  <section id="experience">
+    <div class="wrap">
+      <p class="sec"><strong>03</strong> <span>&middot; track record</span></p>
+      <h2>Where this was learned.</h2>
+      <p class="lede">Two years of shipping real systems, one of breaking them carefully first.</p>
+
+      <div class="work-list" style="max-width:72rem">
+        <div class="work-row exp-row" style="grid-template-columns:9rem minmax(0,1fr) auto">
+          <span class="wi" style="color:var(--steel)" aria-hidden="true">2024&ndash;<br>present</span>
+          <span class="wt">
+            <h3>Full-stack IT engineer &middot; Buniyadbyte</h3>
+            <p class="wd">Shipped the <a href="https://poc-waste-proper.vercel.app/" target="_blank" rel="noopener" style="color:var(--accent-ink);text-decoration:underline;font-weight:600">POC Waste Optimizer</a> end to end: CAD-file ingestion, the 1D cutting-stock engine, project dashboards and XLSX reporting. FastShipment and the LangGraph agent are also mine.</p>
+          </span>
+          <span class="wo">Ahmedabad, IN</span>
+        </div>
+        <div class="work-row exp-row" style="grid-template-columns:9rem minmax(0,1fr) auto">
+          <span class="wi" style="color:var(--steel)" aria-hidden="true">2023&ndash;24</span>
+          <span class="wt">
+            <h3>QA intern, manual &amp; automation &middot; Maxgen Technologies</h3>
+            <p class="wd">Built manual test matrices and regression suites across viewports and browsers; caught data-processing edge cases before they reached production.</p>
+          </span>
+          <span class="wo">India</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ---------- experience section ---------- -->
-  <section id="experience">
-    <div class="wrap">
-      <h2>Professional experience</h2>
-      <p class="lede">Engineering journey and hands-on industry work delivering production software.</p>
-      <div class="exp-list">
-        <article class="exp-card">
-          <div class="exp-meta">
-            <h3>Full Stack IT Engineer</h3>
-            <span class="exp-company">Buniyadbyte</span>
-            <span class="exp-period">2024 &mdash; Present &middot; India</span>
-          </div>
-          <div class="exp-body">
-            <p>Developed and shipped <a href="https://poc-waste-proper.vercel.app/" target="_blank" rel="noopener" style="color:var(--accent-ink);text-decoration:underline;font-weight:700">POC Waste Optimizer &nearr;</a>, a high-performance Bar Cutting Optimization web application that eliminated manual takeoff errors and cut steel scrap from 12% to under 2.5%.</p>
-            <ul>
-              <li>Engineered custom 1D cutting-stock algorithms and dynamic programming heuristics for complex structural schedules.</li>
-              <li>Built full project management dashboards, DWG/DXF/PDF CAD takeoff data pipelines, and XLSX report generation engines.</li>
-              <li>Architected resilient REST microservices handling heavy concurrent calculations with sub-second response times.</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="exp-card">
-          <div class="exp-meta">
-            <h3>QA Manual &amp; Automation Intern</h3>
-            <span class="exp-company">Maxgen Web Technologies</span>
-            <span class="exp-period">2023 &mdash; 2024 &middot; India</span>
-          </div>
-          <div class="exp-body">
-            <p>Secured the quality and reliability of commercial web applications by designing rigorous manual test matrices and automated regression testing suites.</p>
-            <ul>
-              <li>Created end-to-end test scenarios across responsive screen viewports and browser environments.</li>
-              <li>Identified critical edge-case bugs in data processing workflows prior to production releases.</li>
-            </ul>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ---------- how I work (steps & before/after comparison) ---------- -->
+  <!-- ---------- approach: steps + before/after ---------- -->
   <section id="how">
     <div class="wrap">
-      <h2>How I work</h2>
-      <p class="lede">A disciplined pipeline from operational bottleneck to running production software.</p>
+      <p class="sec"><strong>04</strong> <span>&middot; how I work</span></p>
+      <h2>The boring part that makes the rest hold up.</h2>
       <ol class="steps">
         <li>
           <div>
-            <h3>Discovery &amp; constraint mapping</h3>
-            <p>Identify real-world operational friction, calculate mathematical constraints, and establish strict data contracts before touching code.</p>
+            <h3>Find the constraint before writing code</h3>
+            <p>Talk to whoever fights the problem daily. Write the hard limits down &mdash; 12&nbsp;m stock, 4&nbsp;mm kerf, a cover dimension &mdash; and treat them as law. Everything downstream obeys.</p>
           </div>
         </li>
         <li>
           <div>
-            <h3>Architect with typed domain engines</h3>
-            <p>Isolate pure business logic into verified algorithms. Design strongly-typed interfaces across client and server with zero framework lock-in.</p>
+            <h3>Formulate first, type second</h3>
+            <p>Cast the messy job as math: lengths, counts, laps, wastage. If the formula can&rsquo;t be checked by hand, it can&rsquo;t be trusted in code.</p>
           </div>
         </li>
         <li>
           <div>
-            <h3>Build accessible, zero-overflow UI</h3>
-            <p>Construct fluid layouts with clamp math, accessible keyboard navigation, and custom scroll containers that never trigger phantom scrollbars or phone zoom-outs.</p>
+            <h3>Ship the smallest real version</h3>
+            <p>One element type working end to end &mdash; parse, compute, export &mdash; beats half-finished everything. Then widen it.</p>
           </div>
         </li>
         <li>
           <div>
-            <h3>Verify at 1440px and 390px with real data</h3>
-            <p>Audit page widths with automated headless browser tests, confirm zero uncaught console errors, and verify exact arithmetic parity against source numbers.</p>
+            <h3>Verify like a site engineer will</h3>
+            <p>Numbers re-derived by hand, screens checked at 1440 and 390, no uncaught console errors. A schedule that&rsquo;s off by a metre is a bad day on site.</p>
           </div>
         </li>
       </ol>
@@ -699,124 +698,129 @@ footer { padding-block: 28px; font-size: .875rem; color: var(--ink-soft); displa
       <div class="vs">
         <div class="vs-row vs-head" aria-hidden="true">
           <div></div>
-          <div>Before / Manual workflow</div>
-          <div>After / My engineering standard</div>
+          <div>Before</div>
+          <div>After</div>
         </div>
 
         <div class="vs-row">
           <div class="vs-topic">Material takeoff</div>
-          <div data-side="before">Manual spreadsheet estimation with <mark class="bad">10% to 15% scrap waste</mark>.</div>
-          <div data-side="after">Algorithmic cutting-stock optimization with <mark class="good">scrap minimised below 2.5%</mark>.</div>
+          <div data-side="before">Manual spreadsheet estimation, and whatever falls off stays off: <mark class="bad">12% to 15% scrap</mark>.</div>
+          <div data-side="after">Cutting-stock plans computed per bar: <mark class="good">under 2.5% waste</mark> on customer schedules.</div>
         </div>
 
         <div class="vs-row">
-          <div class="vs-topic">Data ingestion</div>
-          <div data-side="before">Corrupted XLSX files with macros and <mark class="bad">broken cell formulas</mark>.</div>
-          <div data-side="after">Automated macro stripping and <mark class="good">clean structured data output</mark>.</div>
+          <div class="vs-topic">Excel ingestion</div>
+          <div data-side="before">Client files arrive with macros and <mark class="bad">corrupt styling objects</mark>.</div>
+          <div data-side="after">Stripped, validated and <mark class="good">schema-checked before a single row</mark> enters the pipeline.</div>
         </div>
 
         <div class="vs-row">
-          <div class="vs-topic">Architecture</div>
-          <div data-side="before">Monolithic components with <mark class="bad">mixed rendering and business logic</mark>.</div>
-          <div data-side="after">Clean state machines with <mark class="good">isolated domain engines</mark> and typed contracts.</div>
-        </div>
-
-        <div class="vs-row">
-          <div class="vs-topic">Responsive UI</div>
-          <div data-side="before">Fixed-pixel breakpoints causing <mark class="bad">horizontal page overflow</mark> on mobile.</div>
-          <div data-side="after">Fluid clamp layouts with <mark class="good">zero scroll jitter</mark> across 320px to 1800px.</div>
+          <div class="vs-topic">Interfaces</div>
+          <div data-side="before">Pinned pixel widths that <mark class="bad">overflow on phones</mark>.</div>
+          <div data-side="after">Fluid layouts from <mark class="good">320px to 1800px with zero horizontal scroll</mark>.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ---------- services / disciplines ---------- -->
-  <section id="services">
+  <!-- ---------- materials list: real skills ledger ---------- -->
+  <section id="stack">
     <div class="wrap">
-      <h2>Engineering services</h2>
-      <p class="lede">From core infrastructure to user-facing flows, I build technical solutions mapped directly to business growth.</p>
-      <div class="cards">
-        <div class="card">
-          <span class="tile" aria-hidden="true">
-            <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M14 9h7"/><path d="M14 15h7"/><path d="M3 9h6"/><path d="M3 15h6"/>
-            </svg>
-          </span>
-          <h3>Enterprise applications</h3>
-          <p>Internal tools, interactive dashboards, and operations management portals built to unify company workflows and eliminate manual spreadsheets.</p>
-          <div class="tags"><span>Next.js</span><span>PostgreSQL</span><span>Role-Based Auth</span><span>Dashboards</span></div>
-        </div>
+      <p class="sec"><strong>05</strong> <span>&middot; the stack</span></p>
+      <h2>Materials list.</h2>
+      <p class="lede">Not a badge wall &mdash; each line is something I ship with, and where it earned its keep.</p>
 
-        <div class="card">
-          <span class="tile" aria-hidden="true">
-            <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M6 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M8.6 8.6l10.4 10.4"/><path d="M8.6 15.4l3.4 -3.4m2 -2l5 -5"/>
-            </svg>
-          </span>
-          <h3>Algorithm development</h3>
-          <p>Custom logic engineering for complex mathematical challenges: 1D cutting stock, route scheduling, inventory optimization, and polygon geometry.</p>
-          <div class="tags"><span>Dynamic Programming</span><span>Heuristics</span><span>Geometry Math</span></div>
-        </div>
-
-        <div class="card">
-          <span class="tile" aria-hidden="true">
-            <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 21h18"/><path d="M5 21v-14l8 -4v18"/><path d="M19 21v-10l-6 -4"/><path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/>
-            </svg>
-          </span>
-          <h3>SaaS architectures</h3>
-          <p>Scalable web foundations with robust security, sub-100ms response times, and automated background jobs that scale effortlessly.</p>
-          <div class="tags"><span>Node.js</span><span>Express</span><span>REST APIs</span><span>Worker Pools</span></div>
-        </div>
-
-        <div class="card">
-          <span class="tile" aria-hidden="true">
-            <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/><path d="M9 12l2 2l4 -4"/>
-            </svg>
-          </span>
-          <h3>AI agents &amp; data pipelines</h3>
-          <p>Retrieval-Augmented Generation (RAG) and multi-step autonomous agents using LangChain and LangGraph wired directly into business databases.</p>
-          <div class="tags"><span>LangChain</span><span>LangGraph</span><span>ETL Pipelines</span><span>Vector DB</span></div>
+      <div class="table-box" style="margin-top:clamp(28px,4vw,44px)">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Tools I ship with</th>
+                <th>Where it&rsquo;s earned</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Language &amp; types</strong></td>
+                <td>TypeScript, Python, plain JavaScript</td>
+                <td>Every project above</td>
+              </tr>
+              <tr>
+                <td><strong>Interface</strong></td>
+                <td>React, Next.js, MUI, hand-rolled SVG and CSS</td>
+                <td>This page is drawn by hand, not from a template</td>
+              </tr>
+              <tr>
+                <td><strong>Server</strong></td>
+                <td>Node.js, Express, REST, queue workers</td>
+                <td>Import pipelines and report exports that run long</td>
+              </tr>
+              <tr>
+                <td><strong>Data</strong></td>
+                <td>MongoDB, PostgreSQL, Redis, XLSX/CSV pipelines</td>
+                <td>Schedules, orders, caches</td>
+              </tr>
+              <tr>
+                <td><strong>Modeling &amp; AI</strong></td>
+                <td>1D cutting-stock DP, LangGraph/LangChain agents, document-vision extraction</td>
+                <td>The optimizer, and reading drawings so nobody retypes them</td>
+              </tr>
+              <tr>
+                <td><strong>Ship it</strong></td>
+                <td>Docker, CI pipelines, PM2</td>
+                <td>Four products currently serving traffic</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ---------- closing CTA ---------- -->
+  <!-- ---------- closing ---------- -->
   <section class="closing" id="contact">
     <div class="wrap">
-      <h2>Let's build something durable.</h2>
-      <p>I partner with forward-thinking teams to engineer robust web platforms, automated workflows, and custom algorithms. Available for full-stack engineering and remote roles.</p>
+      <p class="sec"><strong>06</strong> <span>&middot; contact</span></p>
+      <h2>Send me a messy problem.</h2>
+      <p>A broken spreadsheet, an overdue drawing set, a bill that wastes steel &mdash; if it can be measured, we can build around it. Full-time or freelance, remote-friendly from India (UTC+5:30).</p>
       <div class="actions">
         <a class="btn btn-solid" href="mailto:azazshaikh2703@gmail.com">Email azazshaikh2703@gmail.com</a>
-        <a class="btn" href="https://www.linkedin.com/in/mohammadazaz-shaikh-421937322" target="_blank" rel="noopener">LinkedIn profile</a>
+        <a class="btn" href="https://www.linkedin.com/in/mohammadazaz-shaikh-421937322" target="_blank" rel="noopener">LinkedIn</a>
         <a class="btn" href="https://github.com/SHAIKH-AZAZ" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
   </section>
 </main>
 
+<!-- ---------- footer as a drawing title block ---------- -->
 <footer class="wrap">
-  <span>&copy; 2026 Azaz Shaikh &middot; Full-Stack Engineer</span>
-  <span>Built in the blueprint SaaS house style</span>
+  <div class="tblock">
+    <div>
+      <span class="tl">drawn by</span>
+      <span class="tv">Azaz Shaikh &middot; full-stack engineer<br>This page, tokens to SVGs: hand-built</span>
+    </div>
+    <div>
+      <span class="tl">reach</span>
+      <span class="tv">
+        <a href="mailto:azazshaikh2703@gmail.com">azazshaikh2703@gmail.com</a><br>
+        <a href="https://github.com/SHAIKH-AZAZ" target="_blank" rel="noopener">github.com/SHAIKH-AZAZ</a>
+      </span>
+    </div>
+    <div>
+      <span class="tl">sheet</span>
+      <span class="tv">01 of 01 &middot; rev 2026-11<br>scale 1:1 &middot; India &middot; UTC+5:30</span>
+    </div>
+  </div>
+  <div class="foot-line">
+    <span>&copy; 2026 Azaz Shaikh</span>
+    <span>Work section is the source of truth. Numbers in the case study are computed live in your browser.</span>
+  </div>
 </footer>
 
-<!-- ---------- scripts (drawing-kit, live cutting stock engine, tabs, linked highlight, table drag) ---------- -->
+<!-- ---------- scripts ---------- -->
 <script>
-/* ---- Blueprint backdrop helper (grid with axis bubbles A-E, 1-3, dimension chain) ---- */
-(() => {
-  const xs = [120, 470, 820, 1170, 1520], ys = [190, 540, 890];
-  let o = "";
-  xs.forEach((x, i) => o += `<line class="cl" x1="${x}" y1="40" x2="${x}" y2="990"/><circle cx="${x}" cy="40" r="20"/><text x="${x}" y="47" text-anchor="middle">${"ABCDE"[i]}</text>`);
-  ys.forEach((y, j) => o += `<line class="cl" x1="20" y1="${y}" x2="1590" y2="${y}"/><circle cx="20" cy="${y}" r="20"/><text x="20" y="${y + 7}" text-anchor="middle">${j + 1}</text>`);
-  const dims = ["grid-1 350", "grid-2 350", "grid-3 350", "grid-4 350"];
-  dims.forEach((d, i) => { if (xs[i + 1]) o += `<text class="sm" x="${(xs[i] + xs[i + 1]) / 2}" y="100" text-anchor="middle">${d}</text>`; });
-  for (const y of ys) for (const x of xs) o += `<rect class="col" x="${x - 15}" y="${y - 15}" width="30" height="30"/>`;
-  document.getElementById("heroBg").insertAdjacentHTML("afterbegin", `<svg class="blueprint" viewBox="0 0 1600 1010" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">${o}</svg>`);
-})();
-
-/* ---- Technical SVG Drawing Helpers (drawing-kit standards) ---- */
+/* ---- shared helpers (drawing-kit standards) ---- */
 const fmt = n => Math.round(n).toLocaleString("en-IN");
 const tick = (x1, y1, x2, y2) => `<line class="sv-dl" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
 const arrow = (x1, y1, x2, y2) => {
@@ -824,411 +828,320 @@ const arrow = (x1, y1, x2, y2) => {
   const head = (x, y, dx, dy) => `<polygon class="sv-dh" points="${x},${y} ${x - dx * a - dy * w},${y - dy * a + dx * w} ${x - dx * a + dy * w},${y - dy * a - dx * w}"/>`;
   return tick(x1, y1, x2, y2) + head(x2, y2, ux, uy) + head(x1, y1, -ux, -uy);
 };
-const dimLabel = (x, y, name, val, anchor = "middle") =>
-  `<text class="sv-dt" x="${x}" y="${y}" text-anchor="${anchor}">${name}<tspan class="sv-dv" dx="6">${typeof val === "number" ? fmt(val) : val}</tspan></text>`;
-const hDim = (x1, x2, y, name, val, labelBelow = false) =>
+const dimLabel = (x, y, name, val, anchor = "middle", cls = "") =>
+  `<text class="sv-dt${cls}" x="${x}" y="${y}" text-anchor="${anchor}">${name}<tspan class="sv-dv" dx="6">${typeof val === "number" ? fmt(val) : val}</tspan></text>`;
+const hDim = (x1, x2, y, name, val, labelBelow = false, cls = "") =>
   tick(x1, y - 10, x1, y + 10) + tick(x2, y - 10, x2, y + 10) + arrow(x1, y, x2, y) +
-  dimLabel((x1 + x2) / 2, labelBelow ? y + 22 : y - 10, name, val);
-const vDim = (x, y1, y2, dir, name, val) => {
-  const xa = x + dir * 18, anchor = dir < 0 ? "end" : "start", m = (y1 + y2) / 2;
-  return tick(x + dir * 8, y1, x + dir * 28, y1) + tick(x + dir * 8, y2, x + dir * 28, y2) + arrow(xa, y1, xa, y2) +
-    `<text class="sv-dt" x="${x + dir * 32}" y="${m - 2}" text-anchor="${anchor}">${name}</text>` +
-    `<text class="sv-dv" x="${x + dir * 32}" y="${m + 14}" text-anchor="${anchor}">${typeof val === "number" ? fmt(val) : val}</text>`;
-};
-const callout = (x, y, ty, txt, side = "right") => {
+  dimLabel((x1 + x2) / 2, labelBelow ? y + 22 : y - 10, name, val, "middle", cls);
+const callout = (x, y, ty, txt, side = "right", cls = "") => {
   const dx = side === "right" ? 34 : -34, anchor = side === "right" ? "start" : "end";
   return `<polyline class="sv-dim" points="${x},${y} ${x},${ty} ${x + dx},${ty}"/><circle cx="${x}" cy="${y}" r="2.5" fill="var(--dim)"/>` +
-    `<text class="sv-dt" x="${x + dx + (side === "right" ? 4 : -4)}" y="${ty + 4}" text-anchor="${anchor}">${txt}</text>`;
+    `<text class="sv-dt${cls}" x="${x + dx + (side === "right" ? 4 : -4)}" y="${ty + 4}" text-anchor="${anchor}">${txt}</text>`;
 };
 
-/* ---- Interactive Responsive Layout & Performance Budget Engine ---- */
-const inVpW = document.getElementById("inVpW");
-const inMargin = document.getElementById("inMargin");
-const inCols = document.getElementById("inCols");
-const inGutter = document.getElementById("inGutter");
-const inSpan = document.getElementById("inSpan");
-const inRtt = document.getElementById("inRtt");
-const inSsr = document.getElementById("inSsr");
+/* ---- hero backdrop: a beam elevation, not a generic grid ---- */
+(() => {
+  const xs = [250, 650, 1050, 1450], ys = [240, 700];
+  let o = "";
+  xs.forEach((x, i) => o += `<line class="cl" x1="${x}" y1="40" x2="${x}" y2="780"/><circle cx="${x}" cy="40" r="20"/><text x="${x}" y="47" text-anchor="middle">${"ABCD"[i]}</text>`);
+  ys.forEach((y, j) => o += `<line class="cl" x1="20" y1="${y}" x2="1590" y2="${y}"/><circle cx="26" cy="${y}" r="20"/><text x="26" y="${y + 7}" text-anchor="middle">${j + 1}</text>`);
+
+  // two columns + beam between them
+  [xs[0], xs[3]].forEach(x => o += `<rect x="${x - 22}" y="260" width="44" height="520" class="" stroke="currentColor" stroke-width="1.6"/>`);
+  o += `<rect x="250" y="400" width="1200" height="46" stroke="currentColor" stroke-width="1.6"/>`;
+  // beam rebars
+  o += `<line x1="250" y1="412" x2="1450" y2="412"/><line x1="250" y1="434" x2="1450" y2="434"/>`;
+  // stirrups
+  for (let x = 300; x <= 1400; x += 50) o += `<rect x="${x - 10}" y="405" width="20" height="36" stroke-width="1"/>`;
+
+  // dimension chains above the beam
+  o += hDim(250, 650, 366, "L1", 6500);
+  o += hDim(650, 1450, 366, "L2", 8000);
+
+  // CAD callouts
+  o += callout(980, 412, 300, "3-T16", "right");
+  o += callout(560, 446, 520, "T8 @ 150 c/c", "left");
+
+  // section marker A
+  o += `<line class="cl" x1="1270" y1="380" x2="1270" y2="466"/><circle cx="1270" cy="486" r="14"/><text x="1270" y="492" text-anchor="middle" font-size="14">A</text>`;
+
+  // ground hatch under columns
+  [xs[0], xs[3]].forEach(x => { for (let i = 0; i < 6; i++) o += `<line x1="${x - 30 + i * 10}" y1="788" x2="${x - 42 + i * 10}" y2="800"/>`; });
+
+  document.getElementById("heroBg").insertAdjacentHTML("afterbegin", `<svg class="blueprint" viewBox="0 0 1600 820" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">${o}</svg>`);
+})();
+
+/* ---- work vignettes: a hand-drawn fig per project ---- */
+(() => {
+  const container = document.getElementById("workViz");
+  if (!container) return;
+  const capEl = document.getElementById("vigFig"), nameEl = document.getElementById("vigName");
+
+  const figs = {
+    /* every fig composes to the sheet edge: a deliberate bleed, 3-4 real strings,
+       the subject carries the accent on hover. viewBox 340x300. */
+    v1: { fig: "fig 01 &middot; waste optimizer", name: "POC Waste Optimizer", svg: (() => {
+      let s = `<text class="sv-t k" x="0" y="30" font-size="13">PATTERN 01 &middot; 3 CUTS</text>`;
+      s += hDim(0, 146, 92, "C1", 4020) + hDim(150, 288, 92, "C2", 3110);
+      s += `<rect class="sv-box" x="0" y="118" width="440" height="58"/>`;
+      s += `<rect fill="var(--dim)" x="146" y="118" width="4" height="58"/><rect fill="var(--dim)" x="288" y="118" width="4" height="58"/>`;
+      s += `<text class="sv-t" x="0" y="252" font-size="12" font-weight="600">12 m stock</text>`;
+      return s;
+    })() },
+    v2: { fig: "fig 02 &middot; excel cleaner", name: "Excel cleaner", svg: (() => {
+      let s = `<rect class="sv-box" x="-8" y="54" width="470" height="250"/>`;
+      s += `<rect x="-7" y="55" width="468" height="33" fill="var(--fill)" stroke="none"/>`;
+      s += `<line x1="-8" y1="88" x2="462" y2="88" stroke-width="1.4"/>`;
+      s += `<text class="sv-t k" x="8" y="77" font-size="13">SHEET 01</text>`;
+      [98, 190, 290].forEach(x => s += `<line x1="${x}" y1="54" x2="${x}" y2="304" stroke-width="1"/>`);
+      [122, 156, 224, 258].forEach(y => s += `<line x1="-8" y1="${y}" x2="462" y2="${y}" stroke-width="1"/>`);
+      // filler bars, rows 1-2
+      s += `<rect x="14" y="112" width="64" height="9" rx="4" fill="var(--rule)"/><rect x="106" y="112" width="44" height="9" rx="4" fill="var(--rule)"/>`;
+      s += `<rect x="14" y="146" width="52" height="9" rx="4" fill="var(--rule)"/><rect x="106" y="146" width="30" height="9" rx="4" fill="var(--rule)"/>`;
+      // dirty row
+      s += `<rect x="-7" y="157" width="468" height="33" fill="var(--bad-tint)" stroke="none"/>`;
+      s += `<line x1="14" y1="186" x2="440" y2="160" stroke="var(--bad)" stroke-width="2"/>`;
+      s += `<text class="sv-t" x="14" y="180" font-size="12" fill="var(--bad)">macro</text>`;
+      // clean row
+      s += `<rect x="-7" y="191" width="468" height="33" fill="var(--accent-tint)" stroke="none"/>`;
+      s += `<path d="M16 206 l6 7 l12 -14" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+      s += `<text class="sv-t" x="42" y="212" font-size="12" fill="var(--accent-ink)" font-weight="700">42 rows valid</text>`;
+      return s;
+    })() },
+    v3: { fig: "fig 03 &middot; gym platform", name: "ShamGym", svg: (() => {
+      let s = "";
+      for (let i = 0; i < 7; i++) {
+        const on = i === 3;
+        s += `<text class="sv-t" x="${24 + i * 52}" y="30" text-anchor="middle" font-size="11" font-weight="700">${"MTWTFSS"[i]}</text>`;
+        s += on
+          ? `<rect class="sv-active" x="156" y="40" width="48" height="180" rx="5"/><text class="sv-t k" x="180" y="114" text-anchor="middle" font-size="12" fill="var(--accent-ink)">PT</text><text class="sv-t k" x="180" y="132" text-anchor="middle" font-size="12" fill="var(--accent-ink)">6:30</text>`
+          : `<rect class="sv-box" x="${i * 52}" y="64" width="48" height="156" rx="5"/>`;
+      }
+      return s;
+    })() },
+    v4: { fig: "fig 04 &middot; security portal", name: "Safe & Secure", svg: (() => {
+      let s = `<path d="M120 34 C156 56 196 66 222 70 L222 190 C222 260 166 306 120 330 C74 306 18 260 18 190 L18 70 C44 66 84 56 120 34 Z" fill="var(--surface)" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/>`;
+      s += `<path d="M96 172 l18 20 l34 -42" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>`;
+      return s;
+    })() },
+    v5: { fig: "fig 05 &middot; logistics", name: "FastShipment", svg: (() => {
+      let s = `<polyline points="10,256 86,188 150,214 232,120 330,52 390,10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-dasharray="8 6"/>`;
+      s += `<circle cx="10" cy="256" r="9" class="sv-box"/><circle cx="86" cy="188" r="9" class="sv-box"/><circle cx="150" cy="214" r="9" class="sv-box"/><circle cx="232" cy="120" r="9" class="sv-box"/>`;
+      s += `<circle cx="330" cy="52" r="11" class="sv-active"/>`;
+      s += `<text class="sv-t k" x="6" y="282" font-size="12">pickup</text>`;
+      s += `<text class="sv-t k" x="252" y="36" font-size="13" fill="var(--accent-ink)">delivered</text>`;
+      return s;
+    })() },
+    v6: { fig: "fig 06 &middot; agent graph", name: "LangGraph agent", svg: (() => {
+      let s = `<rect class="sv-box" x="0" y="128" width="84" height="40" rx="7"/><text class="sv-t k" x="42" y="152" text-anchor="middle" font-size="12">query</text>`;
+      s += `<rect class="sv-active" x="108" y="128" width="88" height="40" rx="7"/><text class="sv-t k" x="152" y="152" text-anchor="middle" font-size="12" fill="var(--accent-ink)">router</text>`;
+      s += `<rect class="sv-box" x="224" y="56" width="130" height="40" rx="7"/><text class="sv-t k" x="238" y="80" font-size="12">tool A</text>`;
+      s += `<rect class="sv-box" x="224" y="200" width="130" height="40" rx="7"/><text class="sv-t k" x="238" y="224" font-size="12">tool B</text>`;
+      s += `<path d="M152 128 V 76 H 218" fill="none" stroke="currentColor" stroke-width="2"/><path d="M212 70 l12 6 l-12 6 z" fill="currentColor"/>`;
+      s += `<path d="M152 168 V 220 H 218" fill="none" stroke="currentColor" stroke-width="2"/><path d="M212 214 l12 6 l-12 6 z" fill="currentColor"/>`;
+      s += `<path d="M224 220 C 190 258 150 240 150 182" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="5 5"/><path d="M144 184 l6 -12 l6 12 z" fill="currentColor"/>`;
+      return s;
+    })() }
+  };
+
+  const orders = Object.keys(figs);
+  container.insertAdjacentHTML("afterbegin", `<div class="vizfx">` +
+    orders.map(key => `<svg class="viz${key === orders[0] ? " on" : ""}" viewBox="0 0 340 300" data-viz="${key}" aria-hidden="true">${figs[key].svg}</svg>`).join("") +
+  `</div>`);
+
+  const on = key => {
+    container.querySelectorAll("svg.viz").forEach(s => s.classList.toggle("on", s.dataset.viz === key));
+    const f = figs[key];
+    if (f) { capEl.innerHTML = f.fig; nameEl.textContent = f.name; }
+  };
+  let current = "v1";
+  on(current);
+  document.querySelectorAll(".work-row[data-viz]").forEach(row => {
+    row.addEventListener("pointerenter", () => { current = row.dataset.viz; on(current); });
+    row.addEventListener("focusin", () => { current = row.dataset.viz; on(current); });
+  });
+})();
+
+/* ---- cutting-stock engine ---- */
+const inStockL = document.getElementById("inStockL");
+const inKerf = document.getElementById("inKerf");
+const cutRowsBox = document.getElementById("cutRows");
 const fieldMsg = document.getElementById("fieldMsg");
+const DEFAULT_CUTS = [4650, 3850, 3250];
 
-function renderLayoutEngine() {
-  const W = Math.max(360, Math.min(1920, parseFloat(inVpW.value) || 1440));
-  const M = Math.max(0, Math.min(120, parseFloat(inMargin.value) || 32));
-  const C = Math.max(2, Math.min(16, parseInt(inCols.value) || 12));
-  const G = Math.max(0, Math.min(60, parseFloat(inGutter.value) || 24));
-  let S = Math.max(1, Math.min(C, parseInt(inSpan.value) || 8));
-  if (parseInt(inSpan.value) > C) {
-    inSpan.value = C;
-    S = C;
+function ensureRows() {
+  const have = cutRowsBox.querySelectorAll(".field").length;
+  DEFAULT_CUTS.slice(have).forEach(v => addRow(true, v));
+  renumber();
+}
+
+function addRow(silent, val) {
+  if (cutRowsBox.querySelectorAll(".field").length >= 6) {
+    if (!silent) fieldMsg.textContent = "Six cuts is plenty for a demo.";
+    return;
   }
-  const rtt = Math.max(5, Math.min(300, parseFloat(inRtt.value) || 32));
-  const ssr = Math.max(2, Math.min(150, parseFloat(inSsr.value) || 14));
-  const paintTime = 8.4; // Fixed 60 FPS sub-task
+  if (!silent) fieldMsg.textContent = "";
+  const div = document.createElement("div");
+  div.className = "field";
+  div.innerHTML = `<label>Cut length ($l$)</label><div class="in"><input type="number" min="0" max="12000" step="50" value="${val ?? ""}" placeholder="0"><span class="unit">mm</span></div>`;
+  cutRowsBox.appendChild(div);
+  renumber();
+}
 
-  const fixedSpaces = 2 * M + (C - 1) * G;
-  if (fixedSpaces >= W - 40) {
-    fieldMsg.textContent = `Margins (${fmt(2 * M)} px) & Gutters (${fmt((C - 1) * G)} px) exceed canvas width (${fmt(W)} px).`;
+function renumber() {
+  cutRowsBox.querySelectorAll(".field").forEach((f, i) => f.querySelector("label").textContent = `Cut ${i + 1} length ($l_{${i + 1}}$)`);
+}
+
+document.getElementById("addCut").addEventListener("click", () => addRow(false));
+document.getElementById("removeCut").addEventListener("click", () => {
+  const rows = cutRowsBox.querySelectorAll(".field");
+  if (rows.length <= 1) { fieldMsg.textContent = "Keep at least one cut."; return; }
+  fieldMsg.textContent = "";
+  rows[rows.length - 1].remove();
+  renderCuttingStock();
+});
+cutRowsBox.addEventListener("input", e => {
+  if (e.target.matches("input")) { fieldMsg.textContent = ""; renderCuttingStock(); }
+});
+
+/* pattern search: try every priority ordering, keep distinct tails */
+function computePatterns(L, K, lens) {
+  const idx = lens.map((_, i) => i);
+  const perms = idx.length <= 1 ? [idx] : permsAll(idx);
+  const seen = new Map();
+  for (const p of perms) {
+    let rem = L, pieces = 0;
+    const counts = new Array(lens.length).fill(0);
+    for (const i of p) {
+      const c = lens[i];
+      for (;;) {
+        const cost = c + (pieces > 0 ? K : 0);
+        if (cost <= rem + 1e-9) { rem -= cost; counts[i]++; pieces++; } else break;
+      }
+    }
+    if (pieces === 0) continue;
+    const key = counts.join(",");
+    if (!seen.has(key)) seen.set(key, { counts, scrap: rem, pieces });
+  }
+  return [...seen.values()].sort((a, b) => a.scrap - b.scrap).slice(0, 3);
+}
+function permsAll(arr) {
+  if (arr.length <= 1) return [arr];
+  const out = [];
+  arr.forEach((x, i) => permsAll([...arr.slice(0, i), ...arr.slice(i + 1)]).forEach(r => out.push([x, ...r])));
+  return out;
+}
+
+function renderCuttingStock() {
+  const t0 = performance.now();
+  const L = parseFloat(inStockL.value) || 12000;
+  const K = Math.max(0, parseFloat(inKerf.value) || 0);
+  const lens = [...cutRowsBox.querySelectorAll("input")].map(i => Math.max(0, parseFloat(i.value) || 0));
+  const cuts = lens.map((len, i) => ({ len, name: `C${i + 1}` })).filter(c => c.len > 0);
+
+  const totalCutsLen = cuts.reduce((a, c) => a + c.len, 0);
+  const totalKerf = cuts.length > 1 ? (cuts.length - 1) * K : 0;
+  const totalRequired = totalCutsLen + totalKerf;
+
+  if (totalRequired > L) {
+    fieldMsg.textContent = `Demand is ${fmt(totalRequired)} mm; one ${fmt(L)} mm bar cannot cover it. Reduce a cut or increase the stock length.`;
     return;
   }
   fieldMsg.textContent = "";
 
-  const colWidth = (W - 2 * M - (C - 1) * G) / C;
-  const spanWidth = S * colWidth + (S - 1) * G;
-  const remCols = C - S;
-  const remWidth = remCols > 0 ? remCols * colWidth + (remCols - 1) * G : 0;
-  const totalLatency = rtt + ssr + paintTime;
+  const scrapLen = L - totalRequired;
+  const wastePercent = totalCutsLen > 0 ? (scrapLen / L) * 100 : 100;
 
-  // Update Metric Cards
-  document.getElementById("cardSpan").textContent = `${fmt(Math.round(spanWidth))} px`;
-  document.getElementById("cardCol").textContent = `${colWidth.toFixed(1)} px`;
-  document.getElementById("cardLat").textContent = `${Math.round(totalLatency)} ms`;
-  document.getElementById("cardFps").textContent = `16.6 ms`;
+  document.getElementById("cardWaste").textContent = `${wastePercent.toFixed(2)}%`;
+  document.getElementById("cardUsed").textContent = fmt(totalCutsLen);
+  document.getElementById("cardScrap").textContent = fmt(scrapLen);
 
-  // Draw technical SVG diagram (viewBox: 800 x 295)
-  const drawW = 700;
-  const ox = 50;
-  const scale = drawW / W;
-  const marginW_svg = M * scale;
-  const contentX = ox + marginW_svg;
-  const colW_svg = colWidth * scale;
-  const gutW_svg = G * scale;
-  const spanW_svg = spanWidth * scale;
-  const remW_svg = remWidth * scale;
+  /* main drawing */
+  const drawW = 860, ox = 70, oy = 96, barH = 64;
+  const scale = drawW / L;
+  let s = "";
+  s += `<g data-mark="util"><rect class="sv-box" x="${ox}" y="${oy}" width="${drawW}" height="${barH}" rx="4"/></g>`;
 
-  let o = "";
-
-  // 1. Viewport Outer Canvas Boundary
-  o += `<g data-mark="view">
-    <rect class="sv-box" x="${ox}" y="38" width="${drawW}" height="118" rx="6"/>
-  </g>`;
-
-  // 2. Safe Margins (Left & Right)
-  if (marginW_svg > 1) {
-    o += `<rect fill="var(--fill)" stroke="var(--rule)" stroke-dasharray="3 3" x="${ox}" y="38" width="${marginW_svg}" height="118"/>`;
-    o += `<rect fill="var(--fill)" stroke="var(--rule)" stroke-dasharray="3 3" x="${ox + drawW - marginW_svg}" y="38" width="${marginW_svg}" height="118"/>`;
-  }
-
-  // 3. Grid Column Guides
-  for (let i = 0; i < C; i++) {
-    const cx = contentX + i * (colW_svg + gutW_svg);
-    o += `<rect fill="none" stroke="var(--rule)" stroke-dasharray="2 2" x="${cx}" y="38" width="${colW_svg}" height="118"/>`;
-    if (colW_svg > 20) {
-      o += `<text class="sv-dv" x="${cx + colW_svg / 2}" y="52" text-anchor="middle" font-size="8.5" fill="var(--steel)">c${i + 1}</text>`;
-    }
-  }
-
-  // 4. Active Component Container
-  o += `<g data-mark="span">
-    <rect class="sv-active" x="${contentX}" y="38" width="${spanW_svg}" height="118" rx="6"/>
-    <text class="sv-t k" x="${contentX + spanW_svg / 2}" y="92" text-anchor="middle" font-size="12" fill="var(--accent-ink)">Active Container &middot; ${S} Columns</text>
-    <text class="sv-dv" x="${contentX + spanW_svg / 2}" y="110" text-anchor="middle" font-size="10.5">W = ${fmt(Math.round(spanWidth))} px &middot; Fluid Width</text>
-  </g>`;
-
-  // 5. Remaining Sidebar (if any)
-  if (remCols > 0) {
-    const remX = contentX + spanW_svg + gutW_svg;
-    o += `<g data-mark="remain">
-      <rect class="sv-box" x="${remX}" y="38" width="${remW_svg}" height="118" rx="6" stroke-dasharray="4 3"/>
-      <text class="sv-t k" x="${remX + remW_svg / 2}" y="92" text-anchor="middle" font-size="11">Sidebar &middot; ${remCols} Cols</text>
-      <text class="sv-dv" x="${remX + remW_svg / 2}" y="110" text-anchor="middle" font-size="10">${fmt(Math.round(remWidth))} px</text>
+  let curX = ox;
+  cuts.forEach((cut, idx) => {
+    const w = Math.max(3, cut.len * scale);
+    s += `<g data-mark="c${idx}">
+      <rect class="sv-active" x="${curX}" y="${oy}" width="${w}" height="${barH}" rx="2"/>
+      ${w >= 64 ? `<text class="sv-t k" x="${curX + w / 2}" y="${oy + barH / 2 + 5}" text-anchor="middle">${cut.name} &middot; ${fmt(cut.len)}</text>` : ""}
     </g>`;
-    if (remW_svg > 36) {
-      o += hDim(remX, remX + remW_svg, 176, "Sidebar W", Math.round(remWidth), true);
+    if (w >= 42) s += hDim(curX, curX + w, oy + barH + 26, `L${idx + 1}`, cut.len, true);
+    else s += callout(curX + w / 2, oy + barH, oy + barH + 44, `${cut.name} ${fmt(cut.len)}`, curX + w / 2 > ox + drawW - 120 ? "left" : "right");
+    curX += w;
+    if (idx < cuts.length - 1 && K > 0) {
+      const kw = Math.max(2.5, K * scale);
+      s += `<rect fill="var(--dim)" x="${curX}" y="${oy}" width="${kw}" height="${barH}"/>`;
+      curX += kw;
     }
-  }
-
-  // Dimension: Top Viewport
-  o += hDim(ox, ox + drawW, 20, "Viewport W", Math.round(W));
-
-  // Dimension: Active Span
-  o += hDim(contentX, contentX + spanW_svg, 176, "Span W", Math.round(spanWidth), true);
-
-  // Dimension: First Column Track (if space permits)
-  if (colW_svg > 24) {
-    o += `<g data-mark="col">` + hDim(contentX, contentX + colW_svg, 34, "Col w", colWidth.toFixed(1)) + `</g>`;
-  }
-
-  // 6. Request-to-Render Latency Waterfall Timeline
-  const waterY = 222;
-  const waterH = 34;
-  const rttW = Math.max(90, (rtt / totalLatency) * drawW);
-  const ssrW = Math.max(90, (ssr / totalLatency) * drawW);
-  const paintW = Math.max(90, drawW - rttW - ssrW);
-
-  // Timeline Header
-  o += `<text class="sv-dt" x="${ox}" y="210" font-size="9.5">FRAME &amp; LATENCY TIMELINE &middot; P95 TARGET: &lt; 100ms</text>`;
-  o += `<text class="sv-dv" x="${ox + drawW}" y="210" text-anchor="end" font-size="9.5">TOTAL P95: ${Math.round(totalLatency)} ms</text>`;
-
-  // Segment 1: RTT
-  o += `<g data-mark="lat">
-    <rect x="${ox}" y="${waterY}" width="${rttW}" height="${waterH}" rx="4" fill="#EBF3FF" stroke="var(--dim)" stroke-width="1.2"/>
-    <text class="sv-dt" x="${ox + rttW / 2}" y="${waterY + 15}" text-anchor="middle" font-size="9.5">1. Network RTT (${Math.round(rtt)} ms)</text>
-    <text class="sv-dv" x="${ox + rttW / 2}" y="${waterY + 27}" text-anchor="middle" font-size="8.5">Edge CDN Handshake</text>
-  </g>`;
-
-  // Segment 2: SSR
-  o += `<g data-mark="ssr">
-    <rect x="${ox + rttW}" y="${waterY}" width="${ssrW}" height="${waterH}" rx="4" fill="var(--fill)" stroke="var(--steel)" stroke-width="1.2"/>
-    <text class="sv-t k" x="${ox + rttW + ssrW / 2}" y="${waterY + 15}" text-anchor="middle" font-size="9.5">2. Server SSR (${Math.round(ssr)} ms)</text>
-    <text class="sv-dv" x="${ox + rttW + ssrW / 2}" y="${waterY + 27}" text-anchor="middle" font-size="8.5">Node Engine</text>
-  </g>`;
-
-  // Segment 3: DOM Paint (60 FPS)
-  o += `<g data-mark="fps">
-    <rect x="${ox + rttW + ssrW}" y="${waterY}" width="${paintW}" height="${waterH}" rx="4" fill="var(--accent-tint)" stroke="var(--accent)" stroke-width="1.2"/>
-    <text class="sv-t k" x="${ox + rttW + ssrW + paintW / 2}" y="${waterY + 15}" text-anchor="middle" font-size="9.5" fill="var(--accent-ink)">3. DOM Paint (${paintTime} ms)</text>
-    <text class="sv-dv" x="${ox + rttW + ssrW + paintW / 2}" y="${waterY + 27}" text-anchor="middle" font-size="8.5" fill="var(--accent-ink)">&le; 16.6ms (60 FPS)</text>
-  </g>`;
-
-  // CAD Title Block (Bottom-Right)
-  o += `<rect x="560" y="268" width="190" height="22" rx="3" fill="var(--fill)" stroke="var(--rule)"/>`;
-  o += `<text class="sv-dt" x="655" y="283" text-anchor="middle" font-size="9">DWG: LAYOUT-OPT-2026 &middot; REV 1.8</text>`;
-
-  document.getElementById("drawSvg").innerHTML = o;
-
-  // 7. Populate Metrics Table with Live Math
-  const tbody = document.getElementById("metricsTableBody");
-  const deviceCat = W >= 1200 ? "Fluid Desktop" : (W >= 768 ? "Fluid Tablet" : "Fluid Mobile");
-
-  tbody.innerHTML = `
-    <tr data-mark="view" tabindex="0">
-      <td><strong>Viewport W</strong></td>
-      <td>Total device canvas</td>
-      <td>$W$</td>
-      <td class="num">${fmt(W)} px</td>
-      <td><span class="badge ok">${deviceCat}</span></td>
-    </tr>
-    <tr data-mark="col" tabindex="0">
-      <td><strong>Column track</strong></td>
-      <td>Fluid CSS grid track</td>
-      <td>$\\frac{W - 2M - (C-1)G}{C}$</td>
-      <td class="num">${colWidth.toFixed(1)} px</td>
-      <td><span class="badge ok">1 of ${C} cols</span></td>
-    </tr>
-    <tr data-mark="span" tabindex="0">
-      <td><strong>Active container</strong></td>
-      <td>Component span width</td>
-      <td>$S \\cdot w_{\\text{col}} + (S-1)G$</td>
-      <td class="num">${fmt(Math.round(spanWidth))} px</td>
-      <td><span class="badge ok">${S} cols spanned</span></td>
-    </tr>
-    <tr data-mark="lat" tabindex="0">
-      <td><strong>P95 latency</strong></td>
-      <td>End-to-end user request</td>
-      <td>$T_{\\text{rtt}} + T_{\\text{ssr}} + T_{\\text{paint}}$</td>
-      <td class="num">${Math.round(totalLatency)} ms</td>
-      <td><span class="badge ${totalLatency <= 100 ? 'ok' : 'bad'}">${totalLatency <= 100 ? 'Sub-100ms verified' : 'Over budget'}</span></td>
-    </tr>
-    <tr data-mark="fps" tabindex="0">
-      <td><strong>Frame budget</strong></td>
-      <td>60 FPS frame deadline</td>
-      <td>$T_{\\text{frame}} \\le 16.67\\text{ ms}$</td>
-      <td class="num">8.4 ms paint</td>
-      <td><span class="badge ok">Zero dropped frames</span></td>
-    </tr>
-  `;
-
-  refreshLinkedHighlights();
-}
-
-/* ---- Architecture Diagram (Tab 2) ---- */
-function initArchDiagram() {
-  const el = document.getElementById("archSvg");
-  if (!el) return;
-
-  let o = "";
-
-  // 1. Faint CAD Grid & Axis Bubbles at Top
-  const axes = [
-    { x: 128, label: "A" },
-    { x: 362, label: "B" },
-    { x: 605, label: "C" },
-    { x: 848, label: "D" }
-  ];
-  axes.forEach(a => {
-    o += `<line class="sv-grid" x1="${a.x}" y1="18" x2="${a.x}" y2="350"/>`;
-    o += `<circle cx="${a.x}" cy="18" r="11" fill="var(--surface)" stroke="var(--steel)" stroke-width="1.2"/>`;
-    o += `<text x="${a.x}" y="22" font-size="11" font-weight="700" fill="var(--steel)" text-anchor="middle">${a.label}</text>`;
   });
 
-  // 2. Latency Dimension Chain across the top
-  o += hDim(40, 215, 48, "Client P95", "32 ms");
-  o += hDim(275, 450, 48, "Gateway P95", "58 ms");
-  o += hDim(510, 700, 48, "DP Solver P95", "14 ms");
-  o += hDim(760, 935, 48, "Store P95", "9 ms");
+  let scrapW = ox + drawW - curX;
+  if (scrapW > 2) {
+    s += `<g data-mark="scrap"><rect class="sv-bad" x="${curX}" y="${oy}" width="${scrapW}" height="${barH}" rx="2"/>
+      ${scrapW >= 46 ? `<text class="sv-t" x="${curX + scrapW / 2}" y="${oy + barH / 2 + 5}" text-anchor="middle">scrap</text>` : ""}</g>`;
+    if (scrapW >= 46) s += hDim(curX, curX + scrapW, oy + barH + 26, "tail", scrapLen, true, " bad");
+    else s += callout(curX + scrapW / 2, oy + barH, oy + barH + 44, `scrap ${fmt(scrapLen)}`, "right", " bad");
+  } else if (scrapLen > 0) {
+    s += callout(curX + scrapW / 2, oy + barH, oy + barH + 44, `scrap ${fmt(scrapLen)}`, "right", " bad");
+  } else {
+    s += `<line class="sv-dim" x1="${ox + drawW - 20}" y1="${oy + barH}" x2="${ox + drawW - 20}" y2="${oy + barH + 44}"/><line class="sv-dim" x1="${ox + drawW - 20}" y1="${oy + barH + 44}" x2="${ox + drawW + 14}" y2="${oy + barH + 44}"/><circle cx="${ox + drawW - 20}" cy="${oy + barH}" r="2.5" fill="var(--dim)"/>
+      <text class="sv-t k" x="${ox + drawW + 20}" y="${oy + barH + 48}" font-size="13">zero tail</text>`;
+  }
+  s += hDim(ox, ox + drawW, oy - 32, "Raw stock L", L);
+  document.getElementById("drawSvg").innerHTML = s;
 
-  // 3. Subsystem 01: Client Runtime (40 to 215, w=175)
-  o += `<g data-mark="layer-ui">
-    <rect class="sv-box" x="40" y="74" width="175" height="248" rx="8"/>
-    <path d="M40 82 Q40 74 48 74 H207 Q215 74 215 82 V102 H40 Z" fill="var(--fill)" stroke="var(--steel)" stroke-width="1.2"/>
-    <text class="sv-t k" x="128" y="92" text-anchor="middle" font-size="11">01 &middot; CLIENT RUNTIME</text>
+  /* result table */
+  let rows = `<tr data-mark="util" tabindex="0"><td><strong>Raw bar</strong></td><td>One standard stock length</td><td>$L$</td><td class="num">${fmt(L)} mm</td><td><span class="badge ok">input</span></td></tr>`;
+  cuts.forEach((c, i) => {
+    rows += `<tr data-mark="c${i}" tabindex="0"><td><strong>${c.name}</strong></td><td>Demanded cut</td><td>$l_{${i + 1}}$</td><td class="num">${fmt(c.len)} mm</td><td><span class="badge ok">cut</span></td></tr>`;
+  });
+  rows += `<tr data-mark="scrap" tabindex="0"><td><strong>Tail</strong></td><td>Off-cut, unusable</td><td>$L - \\sum l_i - (n-1)K$</td><td class="num">${fmt(scrapLen)} mm</td><td><span class="badge ${wastePercent > 5 ? "bad" : "ok"}">${wastePercent.toFixed(2)}% scrap</span></td></tr>`;
+  document.getElementById("metricsTableBody").innerHTML = rows;
 
-    <!-- Module 1: Next.js 14 -->
-    <rect x="48" y="112" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
-    <text class="sv-t k" x="56" y="128" font-size="10">Next.js 14 App Router</text>
-    <text class="sv-t" x="56" y="143" font-size="8.5">React Server Components &amp; SSR</text>
+  /* pattern sheet */
+  const fL = lens.filter(v => v > 0);
+  const pats = fL.length ? computePatterns(L, K, fL) : [];
+  const patList = document.getElementById("patList");
+  const note = document.getElementById("patNote");
+  if (pats.length === 0) {
+    patList.innerHTML = "";
+    note.textContent = "Enter at least one cut to see packings.";
+  } else {
+    const best = pats[0];
+    patList.innerHTML = pats.map((p, r) => {
+      const formula = p.counts.map((n, i) => n ? (n > 1 ? `${n}\\times l_{${i + 1}}` : `l_{${i + 1}}`) : null).filter(Boolean).join(" + ");
+      const scw = (p.scrap / L) * 100;
+      const kw = ((p.pieces - 1) * K) / L * 100;
+      let segs = "";
+      p.counts.forEach((n, i) => { for (let k = 0; k < n; k++) segs += `<div class="seg" style="flex:0 0 ${(fL[i] / L) * 100}%"></div>`; });
+      if (kw >= 0.4) segs += `<div class="kseg" style="flex:0 0 ${kw}%"></div>`;
+      if (scw >= 0.4) segs += `<div class="tseg" style="flex:${scw}"></div>`;
+      return `<div class="pat${r === 0 ? " best" : ""}" data-mark="p${r}">
+        <div class="pf">$${formula}$</div>
+        <div class="pat-bar">${segs}</div>
+        <div class="patscr">tail <b>${fmt(p.scrap)} mm</b> &middot; ${((p.scrap / L) * 100).toFixed(2)}%${r === 0 ? " <span class='badge ok'>best</span>" : ""}</div>
+      </div>`;
+    }).join("");
+    note.textContent = pats.length === 1
+      ? "Only one packing is feasible for this demand &mdash; nothing to choose between."
+      : `Same demand, ${pats.length} legal packings. The engine exists because the best one (green) is not the obvious one.`;
+  }
 
-    <!-- Module 2: Takeoff Table -->
-    <rect x="48" y="162" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
-    <text class="sv-t k" x="56" y="178" font-size="10">Takeoff Data Table</text>
-    <text class="sv-t" x="56" y="193" font-size="8.5">Virtualised DOM &middot; Sub-16ms</text>
+  const dt = performance.now() - t0;
+  document.getElementById("cardPerf").textContent = `${dt < 0.05 ? "<0.05" : dt.toFixed(2)} ms`;
 
-    <!-- Module 3: Zod Validator -->
-    <rect x="48" y="212" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
-    <text class="sv-t k" x="56" y="228" font-size="10">Zod Parameter Guard</text>
-    <text class="sv-t" x="56" y="243" font-size="8.5">Client-side Input Constraints</text>
-
-    <!-- Port Tag -->
-    <rect x="48" y="268" width="159" height="24" rx="4" fill="var(--fill)" stroke="var(--rule)"/>
-    <text class="sv-dt" x="128" y="284" text-anchor="middle" font-size="9">PORT 443 &middot; HTTPS / WSS</text>
-  </g>`;
-
-  // Bus 1: Client -> Gateway (215 to 275, gap=60)
-  o += arrow(215, 183, 275, 183);
-  o += `<rect x="226" y="158" width="38" height="17" rx="3" fill="var(--surface)" stroke="var(--rule)"/>`;
-  o += `<text class="sv-dv" x="245" y="170" text-anchor="middle" font-size="8.5">REST</text>`;
-  o += `<text class="sv-dv" x="245" y="202" text-anchor="middle" font-size="8.5">JSON</text>`;
-
-  // 4. Subsystem 02: Ingestion Service (275 to 450, w=175)
-  o += `<g data-mark="layer-api">
-    <rect class="sv-box" x="275" y="74" width="175" height="248" rx="8"/>
-    <path d="M275 82 Q275 74 283 74 H442 Q450 74 450 82 V102 H275 Z" fill="var(--fill)" stroke="var(--steel)" stroke-width="1.2"/>
-    <text class="sv-t k" x="362" y="92" text-anchor="middle" font-size="11">02 &middot; INGESTION GATEWAY</text>
-
-    <!-- Module 1: Express API -->
-    <rect x="283" y="112" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
-    <text class="sv-t k" x="291" y="128" font-size="10">Node.js / Express API</text>
-    <text class="sv-t" x="291" y="143" font-size="8.5">JWT Auth &amp; Rate Limiting</text>
-
-    <!-- Module 2: XLSX Sanitizer -->
-    <rect x="283" y="162" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
-    <text class="sv-t k" x="291" y="178" font-size="10">Streaming XLSX Sanitizer</text>
-    <text class="sv-t" x="291" y="193" font-size="8.5">Lossless Macro Stripping</text>
-
-    <!-- Module 3: Task Dispatcher -->
-    <rect x="283" y="212" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
-    <text class="sv-t k" x="291" y="228" font-size="10">Batch Task Dispatcher</text>
-    <text class="sv-t" x="291" y="243" font-size="8.5">Worker Thread Scheduler</text>
-
-    <!-- Port Tag -->
-    <rect x="283" y="268" width="159" height="24" rx="4" fill="var(--fill)" stroke="var(--rule)"/>
-    <text class="sv-dt" x="362" y="284" text-anchor="middle" font-size="9">PORT 3030 &middot; REST / IPC</text>
-  </g>`;
-
-  // Bus 2: Gateway -> Optimizer (450 to 510, gap=60)
-  o += arrow(450, 183, 510, 183);
-  o += `<rect x="461" y="158" width="38" height="17" rx="3" fill="var(--surface)" stroke="var(--rule)"/>`;
-  o += `<text class="sv-dv" x="480" y="170" text-anchor="middle" font-size="8">BUFFER</text>`;
-  o += `<text class="sv-dv" x="480" y="202" text-anchor="middle" font-size="8">IPC</text>`;
-
-  // 5. Subsystem 03: Computational Core (510 to 700, w=190 - Highlighted Accent)
-  o += `<g data-mark="layer-calc">
-    <rect class="sv-active" x="510" y="74" width="190" height="248" rx="8"/>
-    <path d="M510 82 Q510 74 518 74 H692 Q700 74 700 82 V102 H510 Z" fill="var(--accent-tint)" stroke="var(--accent)" stroke-width="1.6"/>
-    <text class="sv-t k" x="605" y="92" text-anchor="middle" font-size="11" fill="var(--accent-ink)">03 &middot; OPTIMIZER ENGINE</text>
-
-    <!-- Module 1: DP Solver -->
-    <rect x="518" y="112" width="174" height="42" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.2"/>
-    <text class="sv-t k" x="526" y="128" font-size="10" fill="var(--accent-ink)">1D Cutting-Stock DP</text>
-    <text class="sv-t" x="526" y="143" font-size="8.5">Dynamic Programming Array</text>
-
-    <!-- Module 2: Heuristic Pruner -->
-    <rect x="518" y="162" width="174" height="42" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.2"/>
-    <text class="sv-t k" x="526" y="178" font-size="10" fill="var(--accent-ink)">Heuristic Scrap Pruner</text>
-    <text class="sv-t" x="526" y="193" font-size="8.5">Combinatorial Waste Reducer</text>
-
-    <!-- Module 3: Worker Thread Pool -->
-    <rect x="518" y="212" width="174" height="42" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.2"/>
-    <text class="sv-t k" x="526" y="228" font-size="10" fill="var(--accent-ink)">Parallel Worker Pool</text>
-    <text class="sv-t" x="526" y="243" font-size="8.5">8-Core Non-blocking Math</text>
-
-    <!-- Port Tag -->
-    <rect x="518" y="268" width="174" height="24" rx="4" fill="var(--accent-tint)" stroke="var(--accent)"/>
-    <text class="sv-t k" x="605" y="284" text-anchor="middle" font-size="9" fill="var(--accent-ink)">PARALLEL &middot; 0.35% SCRAP</text>
-  </g>`;
-
-  // Bus 3: Optimizer -> Storage (700 to 760, gap=60)
-  o += arrow(700, 183, 760, 183);
-  o += `<rect x="711" y="158" width="38" height="17" rx="3" fill="var(--surface)" stroke="var(--rule)"/>`;
-  o += `<text class="sv-dv" x="730" y="170" text-anchor="middle" font-size="8.5">SQL</text>`;
-  o += `<text class="sv-dv" x="730" y="202" text-anchor="middle" font-size="8.5">ACID</text>`;
-
-  // 6. Subsystem 04: Persistence Store (760 to 935, w=175)
-  o += `<g data-mark="layer-db">
-    <rect class="sv-box" x="760" y="74" width="175" height="248" rx="8"/>
-    <path d="M760 82 Q760 74 768 74 H927 Q935 74 935 82 V102 H760 Z" fill="var(--fill)" stroke="var(--steel)" stroke-width="1.2"/>
-    <text class="sv-t k" x="848" y="92" text-anchor="middle" font-size="11">04 &middot; PERSISTENCE LAYER</text>
-
-    <!-- Module 1: PostgreSQL -->
-    <rect x="768" y="112" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
-    <text class="sv-t k" x="776" y="128" font-size="10">PostgreSQL 16</text>
-    <text class="sv-t" x="776" y="143" font-size="8.5">Schedules &amp; BOM Orders</text>
-
-    <!-- Module 2: MongoDB -->
-    <rect x="768" y="162" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
-    <text class="sv-t k" x="776" y="178" font-size="10">MongoDB Cluster</text>
-    <text class="sv-t" x="776" y="193" font-size="8.5">Raw Geometry Trees</text>
-
-    <!-- Module 3: Redis Memo -->
-    <rect x="768" y="212" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
-    <text class="sv-t k" x="776" y="228" font-size="10">In-Memory Cache (Redis)</text>
-    <text class="sv-t" x="776" y="243" font-size="8.5">Subproblem Memoization</text>
-
-    <!-- Port Tag -->
-    <rect x="768" y="268" width="159" height="24" rx="4" fill="var(--fill)" stroke="var(--rule)"/>
-    <text class="sv-dt" x="848" y="284" text-anchor="middle" font-size="9">PORT 5432 &middot; ACID POOL</text>
-  </g>`;
-
-  // 7. Bottom Feedback Bus: Return Stream to Client
-  o += `<path class="sv-active" d="M 848 356 L 605 356 L 362 356 L 128 356"/>`;
-  o += `<polygon fill="var(--accent)" points="128,356 137,351 137,361"/>`;
-  o += `<rect x="210" y="344" width="540" height="24" rx="4" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.2"/>`;
-  o += `<text class="sv-t k" x="480" y="360" text-anchor="middle" font-size="10.5" fill="var(--accent-ink)">&larr; Verified Cutting Schedule &amp; XLSX Export Stream (0.35% Scrap Waste Parity)</text>`;
-
-  // 8. CAD Blueprint Title Block (Bottom-Right)
-  o += `<rect x="735" y="386" width="200" height="26" rx="4" fill="var(--fill)" stroke="var(--rule)"/>`;
-  o += `<text class="sv-dt" x="835" y="402" text-anchor="middle" font-size="9.5">DWG: SYS-OPT-2026 &middot; REV 2.4</text>`;
-
-  el.innerHTML = o;
+  if (typeof refreshLinkedHighlights === "function") refreshLinkedHighlights();
+  if (window.renderMathInElement && !window.__katexReady) return; // katex pass happens on load
 }
 
-/* ---- Input event listeners ---- */
-[inStockL, inKerf, inCut1, inCut2, inCut3].forEach(el => {
-  el.addEventListener("input", renderCuttingStock);
-});
-
-/* ---- Tabs implementation ---- */
-(() => {
-  const tabs = [...document.querySelectorAll('.tabs [role="tab"]')];
-  const select = b => {
-    tabs.forEach(t => {
-      const on = t === b;
-      t.setAttribute("aria-selected", on);
-      t.tabIndex = on ? 0 : -1;
-      const p = document.getElementById(t.dataset.panel);
-      if (p) p.hidden = !on;
-      if (on) t.scrollIntoView({ inline: "nearest", block: "nearest" });
-    });
-    refreshLinkedHighlights();
-  };
-  tabs.forEach((b, i) => {
-    b.addEventListener("click", () => select(b));
-    b.addEventListener("keydown", e => {
-      const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
-      if (d) {
-        const n = tabs[(i + d + tabs.length) % tabs.length];
-        n.focus();
-        select(n);
-      }
-    });
-  });
-})();
-
-/* ---- Linked highlight across SVG, Cards, and Table rows ---- */
+/* ---- linked highlight ---- */
 function initLinkedHighlights() {
   document.querySelectorAll(".linked").forEach(root => {
     let pinned = null;
-
     const setupHits = () => {
       root.querySelectorAll("svg g[data-mark]").forEach(g => {
         g.querySelectorAll("path, line, polyline, circle, rect").forEach(el => {
@@ -1241,16 +1154,11 @@ function initLinkedHighlights() {
       });
     };
     setupHits();
-
     const light = m => {
       root.classList.toggle("has-hl", !!m);
-      root.querySelectorAll("[data-mark]").forEach(el => {
-        el.classList.toggle("hl", el.dataset.mark === m);
-      });
+      root.querySelectorAll("[data-mark]").forEach(el => el.classList.toggle("hl", el.dataset.mark === m));
     };
-
     const at = e => e.target.closest && e.target.closest("[data-mark]");
-
     root.addEventListener("pointerover", e => { const el = at(e); light(el ? el.dataset.mark : pinned); });
     root.addEventListener("pointerleave", () => light(pinned));
     root.addEventListener("focusin", e => { const el = at(e); if (el) light(el.dataset.mark); });
@@ -1260,12 +1168,10 @@ function initLinkedHighlights() {
       pinned = el && pinned !== el.dataset.mark ? el.dataset.mark : null;
       light(pinned || (el && el.dataset.mark));
     });
-
     root._refreshHits = setupHits;
     root._reapplyHl = () => light(pinned);
   });
 }
-
 function refreshLinkedHighlights() {
   document.querySelectorAll(".linked").forEach(root => {
     if (root._refreshHits) root._refreshHits();
@@ -1273,7 +1179,7 @@ function refreshLinkedHighlights() {
   });
 }
 
-/* ---- Button click ripple ---- */
+/* ---- button ripple ---- */
 document.addEventListener("pointerdown", e => {
   const b = e.target.closest(".btn");
   if (!b) return;
@@ -1286,10 +1192,10 @@ document.addEventListener("pointerdown", e => {
   s.addEventListener("animationend", () => s.remove());
 });
 
-/* ---- Wide tables: edge fades & mouse glide drag ---- */
+/* ---- wide tables: edge fades & mouse glide ---- */
 (() => {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  document.querySelectorAll(".table-scroll").forEach(el => {
+  document.querySelectorAll(".table-scroll, .draw-scroll").forEach(el => {
     const edges = () => {
       const max = el.scrollWidth - el.clientWidth;
       el.classList.toggle("can-drag", max > 1);
@@ -1299,7 +1205,6 @@ document.addEventListener("pointerdown", e => {
     el.addEventListener("scroll", edges, { passive: true });
     new ResizeObserver(edges).observe(el);
     edges();
-
     let x0 = 0, s0 = 0, lx = 0, v = 0, raf = 0, down = false;
     el.addEventListener("pointerdown", e => {
       if (e.pointerType !== "mouse" || e.button || el.scrollWidth <= el.clientWidth || e.target.closest("a,button,input,select")) return;
@@ -1333,29 +1238,25 @@ document.addEventListener("pointerdown", e => {
   });
 })();
 
-/* ---- One typing demo when scrolled into view ---- */
+/* ---- one orchestrated moment: typing demo on the demand list ---- */
 (() => {
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const section = document.getElementById("case");
   let ran = false;
-
   const observer = new IntersectionObserver(entries => {
     if (entries[0].isIntersecting && !ran) {
       ran = true;
       observer.disconnect();
-
-      const input = inCut1;
-      const targetStr = "4850";
+      const input = cutRowsBox.querySelector("input");
+      if (!input) return;
       const wrap = input.closest(".in");
       if (wrap) wrap.classList.add("typing");
-
       let current = "";
       input.value = "";
       let i = 0;
-
       const timer = setInterval(() => {
-        if (i < targetStr.length) {
-          current += targetStr[i++];
+        if (i < "4850".length) {
+          current += "4850"[i++];
           input.value = current;
           renderCuttingStock();
         } else {
@@ -1363,7 +1264,6 @@ document.addEventListener("pointerdown", e => {
           if (wrap) wrap.classList.remove("typing");
         }
       }, 70);
-
       const stop = () => {
         clearInterval(timer);
         if (wrap) wrap.classList.remove("typing");
@@ -1373,15 +1273,14 @@ document.addEventListener("pointerdown", e => {
       section.addEventListener("pointerdown", stop, { once: true });
       section.addEventListener("keydown", stop, { once: true });
     }
-  }, { threshold: 0.35 });
-
+  }, { threshold: 0.25 });
   if (section) observer.observe(section);
 })();
 
-/* ---- KaTeX auto-render & MutationObserver ---- */
+/* ---- load ---- */
 window.addEventListener("load", () => {
+  ensureRows();
   renderCuttingStock();
-  initArchDiagram();
   initLinkedHighlights();
 
   if (!window.renderMathInElement) return;
@@ -1391,6 +1290,7 @@ window.addEventListener("load", () => {
     ignoredTags: ["script", "noscript", "style", "textarea", "option", "svg"]
   };
   renderMathInElement(document.body, opts);
+  window.__katexReady = true;
 
   new MutationObserver(ms => ms.forEach(m => {
     const el = m.target.nodeType === 1 ? m.target : m.target.parentElement;
