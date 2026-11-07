@@ -55,7 +55,8 @@ a { color: inherit; text-decoration: none; }
 .wrap { width: min(1240px, 100% - 32px); margin-inline: auto; }
 
 /* ---------- typography ---------- */
-h1 { font-weight: 700; font-size: clamp(2.9rem, 7.6vw, 7rem); line-height: 1.02; letter-spacing: -.035em; }
+/* chisle: capped at 5.6rem so "Software that turns drawings" holds one line at 1240px — two-line h1 */
+h1 { font-weight: 700; font-size: clamp(2.6rem, 6.2vw, 5.6rem); line-height: 1.02; letter-spacing: -.035em; }
 h1 .l2 { display: block; color: var(--accent); padding-left: clamp(0px, 6vw, 110px); }
 h2 { font-weight: 700; font-size: clamp(2rem, 4.2vw, 3.4rem); line-height: 1.12; letter-spacing: -.03em; max-width: 22ch; }
 h3 { font-weight: 700; font-size: 1.15rem; line-height: 1.3; }
@@ -132,6 +133,7 @@ main > section + section, .hero-bg + section { border-top: 1px solid var(--rule)
 .hero { position: relative; padding-top: clamp(36px, 6vw, 72px); padding-bottom: clamp(56px, 8vw, 104px); }
 .hero-foot { display: grid; grid-template-columns: minmax(0, 36rem) auto; justify-content: space-between; align-items: end; gap: 32px; margin-top: clamp(28px, 4vw, 48px); }
 .hero-foot p { font-size: 1.1875rem; color: var(--ink-soft); line-height: 1.6; }
+.hero-foot mark { white-space: nowrap; }
 .actions { display: flex; gap: 12px; flex-wrap: wrap; }
 .blueprint {
   position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
@@ -159,10 +161,14 @@ main > section + section, .hero-bg + section { border-top: 1px solid var(--rule)
 .work-list { border-top: 1px solid var(--rule); margin-top: clamp(28px, 4vw, 44px); }
 .work-row {
   display: grid; grid-template-columns: 3rem minmax(0, 1fr) auto auto;
-  gap: 4px clamp(14px, 2.5vw, 28px); align-items: center;
+  gap: 4px clamp(14px, 2.5vw, 28px); align-items: start;
   padding: 22px 8px; border-bottom: 1px solid var(--rule);
   transition: background .15s, border-color .15s;
 }
+.work-row > .wi, .work-row > .wo { line-height: 1.4; padding-top: 1px; }
+.work-row > .badge { margin-top: 2px; white-space: nowrap; }
+.exp-row { grid-template-columns: 9rem minmax(0, 1fr) auto; }
+.exp-row .wi { color: var(--steel); }
 .work-row:hover, .work-row:focus-visible { background: var(--fill); }
 .wi { font-weight: 700; color: var(--steel); font-variant-numeric: tabular-nums; transition: color .15s; }
 .work-row:hover .wi, .work-row:focus-visible .wi { color: var(--accent); }
@@ -258,6 +264,8 @@ main > section + section, .hero-bg + section { border-top: 1px solid var(--rule)
 /* case metrics cards */
 .case-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
 .case-metrics .card { padding: 16px; gap: 4px; }
+.case-grid .fig, .case-grid .bb-right { transition: opacity .2s; }
+.case-grid.stale .fig, .case-grid.stale .bb-right { opacity: .35; pointer-events: none; }
 .case-metrics .metric-val { display: block; font-size: 1.3rem; font-weight: 700; color: var(--ink); }
 .case-metrics .metric-lbl { display: block; margin-top: 5px; font-size: .8125rem; color: var(--ink-soft); font-weight: 500; }
 .card { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 22px; box-shadow: var(--shadow); }
@@ -354,9 +362,15 @@ footer { padding-bottom: 40px; }
   .vs-head { display: none; }
   .vs-topic { font-size: .8125rem; color: var(--accent); }
   .nav-cta .btn-link, .status { display: none; }
-  .blueprint { opacity: .18; }
-  .work-row { grid-template-columns: 2.2rem minmax(0, 1fr); }
-  .wo { grid-column: 2; justify-self: start; }
+  .blueprint { opacity: .1; }
+  .brand, .nav .btn { white-space: nowrap; }
+  .nav .btn-solid { padding: 0 14px; }
+  .work-row { grid-template-columns: 2.2rem auto minmax(0, 1fr); gap: 10px 12px; }
+  .work-row > .wt { grid-column: 2 / -1; }
+  .work-row > .badge { grid-column: 2; }
+  .work-row > .wo { grid-column: 3; justify-self: start; }
+  .exp-row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .exp-row > * { grid-column: 1 !important; }
   .tblock { grid-template-columns: minmax(0, 1fr); }
   .tblock > div { border-left: 0; border-top: 1px solid var(--rule); }
   .tblock > div:first-child { border-top: 0; }
@@ -395,11 +409,11 @@ footer { padding-bottom: 40px; }
     <section class="wrap hero" id="top">
       <div class="kicker">
         <span>Azaz Shaikh &mdash; portfolio</span>
-        <span class="k2">rev 2026-11 &middot; scale 1:1 &middot; drawn by hand</span>
+        <span class="k2">rev 2026-11 &middot; scale 1:1</span>
       </div>
       <h1>Software that turns drawings<span class="l2">into cutting plans.</span></h1>
       <div class="hero-foot">
-        <p>Full-stack engineer. I build the whole pipeline &mdash; <mark class="good">read the drawing</mark>, compute every bar, and <mark class="good">pack 12&nbsp;m stock with the least scrap</mark> &mdash; plus the accounting, exports and dashboards around it.</p>
+        <p>Full-stack engineer. I build the whole pipeline &mdash; <mark class="good">read the drawing</mark>, compute every bar, pack 12&nbsp;m stock with the <mark class="good">least scrap</mark> &mdash; plus the accounting, exports and dashboards around it.</p>
         <div class="actions">
           <a class="btn btn-solid" href="#work">See deployed systems</a>
           <a class="btn" href="#case">Run the live engine</a>
@@ -442,7 +456,7 @@ footer { padding-bottom: 40px; }
             <span class="wt">
               <h3>POC Waste Optimizer</h3>
               <p class="wd">Plans how to cut 12&nbsp;m steel bar for a whole rebar schedule so the off-cut pile stays small &mdash; parsing, optimization and Excel export in one flow. The engine behind the case study below.</p>
-              <span class="wtags"><span>Next.js</span><span>cutting-stock</span><span>PostgreSQL</span></span>
+              <span class="wtags"><span>cutting-stock</span><span>rebar schedules</span><span>Excel export</span></span>
             </span>
             <span class="badge ok">Live</span>
             <span class="wo">visit <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></span>
@@ -516,7 +530,7 @@ footer { padding-bottom: 40px; }
     <div class="wrap">
       <p class="sec"><strong>02</strong> <span>&middot; case study</span></p>
       <h2>The cutting-stock engine, live.</h2>
-      <p class="lede">This is the exact formulation the optimizer runs, here in your browser. Type a demand list &mdash; it redraws the bar, recomputes every number and shows each one beside the formula that produced it.</p>
+      <p class="lede">A single-bar version of the cutting-stock problem, running in your browser. Type a demand list &mdash; it redraws the bar, recomputes every number and shows each one beside the formula that produced it.</p>
 
       <div class="case-grid linked">
         <figure class="fig wide">
@@ -570,7 +584,7 @@ footer { padding-bottom: 40px; }
               </div>
               <div class="card" data-mark="perf" tabindex="0">
                 <span class="metric-val" id="cardPerf">&mdash;</span>
-                <span class="metric-lbl">Compute + draw, ms</span>
+                <span class="metric-lbl">Compute + draw time</span>
               </div>
             </div>
 
@@ -596,7 +610,7 @@ footer { padding-bottom: 40px; }
         <!-- pattern sheet: same demand, different packings -->
         <figure class="fig" id="patterns">
           <figcaption>
-            <span>Pattern sheet &mdash; the same demand list, packed in every priority order. The tail is what the solver competes to shrink.</span>
+            <span>Pattern sheet &mdash; every way to fill one bar with these lengths. The tail is what the solver competes to shrink.</span>
             <strong>computed live for your inputs</strong>
           </figcaption>
           <div class="pats" id="patList"></div>
@@ -628,7 +642,7 @@ footer { padding-bottom: 40px; }
         <aside class="legend" aria-label="Reading the drawings">
           <span class="lt">Reading the drawings</span>
           <span class="li-row"><span class="sw piece"></span><span><b>Cut piece</b> &mdash; one demanded length, drawn to scale</span></span>
-          <span class="li-row"><span class="sw kerf"></span><span><b>Blade kerf</b> &mdash; 4&nbsp;mm real, drawn wider to stay visible</span></span>
+          <span class="li-row"><span class="sw kerf"></span><span><b>Blade kerf</b> &mdash; a few mm real, drawn wider to stay visible</span></span>
           <span class="li-row"><span class="sw tail"></span><span><b>Off-cut tail</b> &mdash; what becomes scrap</span></span>
         </aside>
       </div>
@@ -643,16 +657,16 @@ footer { padding-bottom: 40px; }
       <p class="lede">Two years of shipping real systems, one of breaking them carefully first.</p>
 
       <div class="work-list" style="max-width:72rem">
-        <div class="work-row exp-row" style="grid-template-columns:9rem minmax(0,1fr) auto">
-          <span class="wi" style="color:var(--steel)" aria-hidden="true">2024&ndash;<br>present</span>
+        <div class="work-row exp-row">
+          <span class="wi">2024&ndash;<br>present</span>
           <span class="wt">
             <h3>Full-stack IT engineer &middot; Buniyadbyte</h3>
             <p class="wd">Shipped the <a href="https://poc-waste-proper.vercel.app/" target="_blank" rel="noopener" style="color:var(--accent-ink);text-decoration:underline;font-weight:600">POC Waste Optimizer</a> end to end: CAD-file ingestion, the 1D cutting-stock engine, project dashboards and XLSX reporting. FastShipment and the LangGraph agent are also mine.</p>
           </span>
           <span class="wo">Ahmedabad, IN</span>
         </div>
-        <div class="work-row exp-row" style="grid-template-columns:9rem minmax(0,1fr) auto">
-          <span class="wi" style="color:var(--steel)" aria-hidden="true">2023&ndash;24</span>
+        <div class="work-row exp-row">
+          <span class="wi">2023&ndash;24</span>
           <span class="wt">
             <h3>QA intern, manual &amp; automation &middot; Maxgen Technologies</h3>
             <p class="wd">Built manual test matrices and regression suites across viewports and browsers; caught data-processing edge cases before they reached production.</p>
@@ -704,8 +718,8 @@ footer { padding-bottom: 40px; }
 
         <div class="vs-row">
           <div class="vs-topic">Material takeoff</div>
-          <div data-side="before">Manual spreadsheet estimation, and whatever falls off stays off: <mark class="bad">12% to 15% scrap</mark>.</div>
-          <div data-side="after">Cutting-stock plans computed per bar: <mark class="good">under 2.5% waste</mark> on customer schedules.</div>
+          <div data-side="before">Manual spreadsheet estimation, and whatever falls off stays off: 12% to 15% scrap.</div>
+          <div data-side="after">Cutting-stock plans computed per bar: under 2.5% waste on customer schedules.</div>
         </div>
 
         <div class="vs-row">
@@ -749,27 +763,22 @@ footer { padding-bottom: 40px; }
               <tr>
                 <td><strong>Interface</strong></td>
                 <td>React, Next.js, MUI, hand-rolled SVG and CSS</td>
-                <td>This page is drawn by hand, not from a template</td>
+                <td>The drawings and live engine on this page</td>
               </tr>
               <tr>
                 <td><strong>Server</strong></td>
-                <td>Node.js, Express, REST, queue workers</td>
-                <td>Import pipelines and report exports that run long</td>
+                <td>Node.js, Express, REST, background jobs</td>
+                <td>APIs and long-running exports</td>
               </tr>
               <tr>
                 <td><strong>Data</strong></td>
                 <td>MongoDB, PostgreSQL, Redis, XLSX/CSV pipelines</td>
-                <td>Schedules, orders, caches</td>
+                <td>Client data and spreadsheet imports</td>
               </tr>
               <tr>
                 <td><strong>Modeling &amp; AI</strong></td>
                 <td>1D cutting-stock DP, LangGraph/LangChain agents, document-vision extraction</td>
                 <td>The optimizer, and reading drawings so nobody retypes them</td>
-              </tr>
-              <tr>
-                <td><strong>Ship it</strong></td>
-                <td>Docker, CI pipelines, PM2</td>
-                <td>Four products currently serving traffic</td>
               </tr>
             </tbody>
           </table>
@@ -798,7 +807,7 @@ footer { padding-bottom: 40px; }
   <div class="tblock">
     <div>
       <span class="tl">drawn by</span>
-      <span class="tv">Azaz Shaikh &middot; full-stack engineer<br>This page, tokens to SVGs: hand-built</span>
+      <span class="tv">Azaz Shaikh &middot; full-stack engineer<br>Web, automation, optimization</span>
     </div>
     <div>
       <span class="tl">reach</span>
@@ -881,7 +890,7 @@ const callout = (x, y, ty, txt, side = "right", cls = "") => {
     /* every fig composes to the sheet edge: a deliberate bleed, 3-4 real strings,
        the subject carries the accent on hover. viewBox 340x300. */
     v1: { fig: "fig 01 &middot; waste optimizer", name: "POC Waste Optimizer", svg: (() => {
-      let s = `<text class="sv-t k" x="0" y="30" font-size="13">PATTERN 01 &middot; 3 CUTS</text>`;
+      let s = `<text class="sv-t k" x="0" y="30" font-size="13">PATTERN 01</text>`;
       s += hDim(0, 146, 92, "C1", 4020) + hDim(150, 288, 92, "C2", 3110);
       s += `<rect class="sv-box" x="0" y="118" width="440" height="58"/>`;
       s += `<rect fill="var(--dim)" x="146" y="118" width="4" height="58"/><rect fill="var(--dim)" x="288" y="118" width="4" height="58"/>`;
@@ -920,8 +929,8 @@ const callout = (x, y, ty, txt, side = "right", cls = "") => {
       return s;
     })() },
     v4: { fig: "fig 04 &middot; security portal", name: "Safe & Secure", svg: (() => {
-      let s = `<path d="M120 34 C156 56 196 66 222 70 L222 190 C222 260 166 306 120 330 C74 306 18 260 18 190 L18 70 C44 66 84 56 120 34 Z" fill="var(--surface)" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/>`;
-      s += `<path d="M96 172 l18 20 l34 -42" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>`;
+      let s = `<g transform="translate(68 0) scale(.85)"><path d="M120 34 C156 56 196 66 222 70 L222 190 C222 260 166 306 120 330 C74 306 18 260 18 190 L18 70 C44 66 84 56 120 34 Z" fill="var(--surface)" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/>`;
+      s += `<path d="M96 172 l18 20 l34 -42" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></g>`;
       return s;
     })() },
     v5: { fig: "fig 05 &middot; logistics", name: "FastShipment", svg: (() => {
@@ -1000,36 +1009,34 @@ document.getElementById("removeCut").addEventListener("click", () => {
   rows[rows.length - 1].remove();
   renderCuttingStock();
 });
-cutRowsBox.addEventListener("input", e => {
+document.getElementById("stockForm").addEventListener("input", e => {
   if (e.target.matches("input")) { fieldMsg.textContent = ""; renderCuttingStock(); }
 });
 
-/* pattern search: try every priority ordering, keep distinct tails */
+/* pattern search: every count vector n_i with  Σ n_i·l_i + (Σn_i − 1)·K ≤ L,
+   kept only when maximal (no further piece fits). Rank: smallest tail, then fewer pieces. */
 function computePatterns(L, K, lens) {
-  const idx = lens.map((_, i) => i);
-  const perms = idx.length <= 1 ? [idx] : permsAll(idx);
-  const seen = new Map();
-  for (const p of perms) {
-    let rem = L, pieces = 0;
-    const counts = new Array(lens.length).fill(0);
-    for (const i of p) {
-      const c = lens[i];
-      for (;;) {
-        const cost = c + (pieces > 0 ? K : 0);
-        if (cost <= rem + 1e-9) { rem -= cost; counts[i]++; pieces++; } else break;
-      }
+  const out = [], counts = new Array(lens.length).fill(0);
+  const minLen = Math.min(...lens);
+  let nodes = 0; // chisle: node cap keeps tiny cut lengths from exploding the search
+  const walk = (i, used, pieces) => {
+    if (++nodes > 50000) return;
+    if (i === lens.length) {
+      const rem = L - used;
+      if (pieces > 0 && rem < minLen + K) out.push({ counts: [...counts], scrap: rem, pieces });
+      return;
     }
-    if (pieces === 0) continue;
-    const key = counts.join(",");
-    if (!seen.has(key)) seen.set(key, { counts, scrap: rem, pieces });
-  }
-  return [...seen.values()].sort((a, b) => a.scrap - b.scrap).slice(0, 3);
-}
-function permsAll(arr) {
-  if (arr.length <= 1) return [arr];
-  const out = [];
-  arr.forEach((x, i) => permsAll([...arr.slice(0, i), ...arr.slice(i + 1)]).forEach(r => out.push([x, ...r])));
-  return out;
+    const cost = lens[i] + K;
+    const max = Math.floor((L - used + (pieces === 0 ? K : 0)) / cost);
+    for (let n = max; n >= 0; n--) {
+      const add = n === 0 ? 0 : n * lens[i] + (pieces + n - 1) * K - (pieces > 0 ? (pieces - 1) * K : 0);
+      counts[i] = n;
+      walk(i + 1, used + add, pieces + n);
+    }
+    counts[i] = 0;
+  };
+  walk(0, 0, 0);
+  return out.sort((a, b) => a.scrap - b.scrap || a.pieces - b.pieces).slice(0, 3);
 }
 
 function renderCuttingStock() {
@@ -1043,11 +1050,14 @@ function renderCuttingStock() {
   const totalKerf = cuts.length > 1 ? (cuts.length - 1) * K : 0;
   const totalRequired = totalCutsLen + totalKerf;
 
+  const caseGrid = document.querySelector(".case-grid");
   if (totalRequired > L) {
     fieldMsg.textContent = `Demand is ${fmt(totalRequired)} mm; one ${fmt(L)} mm bar cannot cover it. Reduce a cut or increase the stock length.`;
+    caseGrid.classList.add("stale");
     return;
   }
   fieldMsg.textContent = "";
+  caseGrid.classList.remove("stale");
 
   const scrapLen = L - totalRequired;
   const wastePercent = totalCutsLen > 0 ? (scrapLen / L) * 100 : 100;
@@ -1127,8 +1137,8 @@ function renderCuttingStock() {
       </div>`;
     }).join("");
     note.textContent = pats.length === 1
-      ? "Only one packing is feasible for this demand &mdash; nothing to choose between."
-      : `Same demand, ${pats.length} legal packings. The engine exists because the best one (green) is not the obvious one.`;
+      ? "Only one packing fits this demand, so there is nothing to choose between."
+      : `Top ${pats.length} packings that fit one bar, ranked by tail. The green one leaves the least scrap.`;
   }
 
   const dt = performance.now() - t0;
