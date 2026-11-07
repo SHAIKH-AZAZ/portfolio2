@@ -1,0 +1,1404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Azaz Shaikh — Full-Stack Engineer &amp; Business Automation Specialist</title>
+<meta name="description" content="Portfolio of Azaz Shaikh. Full-stack software engineer specialising in scalable web systems, business automation workflows, logistics algorithms, and data-driven platforms.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- KaTeX for formula formatting & live arithmetic -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+/* ---------- tokens: blueprint SaaS house style (white background, Material family, engineering drawing touches) ---------- */
+:root {
+  --bg: #FFFFFF;
+  --surface: #FFFFFF;
+  --fill: #F2F6FA;
+  --ink: #2A3547;
+  --ink-soft: #5A6A85;
+  --steel: #7C8FAC;
+  --rule: #DFE5EF;
+  --accent: #008C1F;
+  --accent-tint: #E8FBDA;
+  --accent-ink: #006B18;
+  --accent-2: #49BEFF;
+  --dim: #2563EB;
+  --bad: #C2410C;
+  --bad-tint: #FDECE7;
+  --shadow: 0 1px 2px rgba(42,53,71,.06), 0 8px 24px rgba(42,53,71,.06);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; margin: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 1rem/1.6 "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  font-variant-numeric: tabular-nums;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+.skip { position: absolute; left: -9999px; }
+.skip:focus { left: 16px; top: 16px; background: var(--surface); padding: 8px 12px; z-index: 50; border: 1px solid var(--rule); }
+.wrap { width: min(1240px, 100% - 32px); margin-inline: auto; }
+
+/* ---------- typography ---------- */
+h1 { font-weight: 700; font-size: clamp(2.9rem, 7.6vw, 7rem); line-height: 1.02; letter-spacing: -.035em; }
+h1 .l2 { display: block; color: var(--accent); padding-left: clamp(0px, 6vw, 110px); }
+h2 { font-weight: 700; font-size: clamp(2rem, 4.2vw, 3.4rem); line-height: 1.12; letter-spacing: -.03em; max-width: 22ch; }
+h3 { font-weight: 700; font-size: 1.15rem; line-height: 1.3; }
+.lede { margin-top: 20px; max-width: 38rem; color: var(--ink-soft); font-size: 1.1875rem; }
+.fine { margin-top: 14px; font-size: .875rem; color: var(--ink-soft); max-width: 44rem; }
+
+mark.good, mark.bad {
+  padding: 1px 6px;
+  border-radius: 4px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  font-weight: 600;
+}
+mark.good { background: var(--accent-tint); color: var(--accent-ink); }
+mark.bad { background: var(--bad-tint); color: #B4472B; }
+
+/* ---------- layout & sections ---------- */
+section { padding-block: clamp(64px, 10vw, 128px); }
+main > section + section, .hero-bg + section { border-top: 1px solid var(--rule); }
+
+/* ---------- nav ---------- */
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 20px; }
+.brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.25rem; color: var(--accent); }
+.brand .mark { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-tint); display: grid; place-items: center; color: var(--accent); font-weight: 700; font-size: 1rem; }
+.nav ul { display: flex; gap: 28px; list-style: none; padding: 0; }
+.nav ul a { color: var(--ink-soft); font-weight: 500; transition: color .15s; }
+.nav ul a:hover { color: var(--ink); }
+.nav-cta { display: flex; gap: 10px; align-items: center; }
+
+/* ---------- buttons: lift + ring on hover, ripple on click ---------- */
+.btn {
+  position: relative; overflow: hidden; isolation: isolate;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 22px;
+  border-radius: 8px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink);
+  font: inherit; font-weight: 600; cursor: pointer;
+  box-shadow: 0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.08);
+  transition: box-shadow .2s, transform .2s, border-color .2s, color .2s;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent), 0 2px 4px rgba(16,24,40,.06), 0 12px 24px -6px rgba(16,24,40,.14);
+}
+.btn:active { transform: translateY(0); }
+.btn:not(.btn-solid):hover { border-color: var(--accent); color: var(--accent); }
+.btn-solid { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-solid:hover { filter: brightness(1.08); }
+.btn-link { border: 0; background: transparent; box-shadow: none; padding: 0 10px; color: var(--ink-soft); }
+.btn-link:hover { color: var(--ink); transform: none; box-shadow: none; }
+.ripple {
+  position: absolute; border-radius: 50%; pointer-events: none; z-index: -1;
+  background: currentColor; opacity: .28; transform: scale(0);
+  animation: ripple .55s ease-out forwards;
+}
+@keyframes ripple { to { transform: scale(1); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .btn:hover { transform: none; } .ripple { display: none; } }
+
+/* ---------- hero with faint blueprint backdrop ---------- */
+.hero-bg { position: relative; overflow: hidden; }
+.hero { position: relative; padding-top: clamp(40px, 8vw, 96px); padding-bottom: clamp(56px, 8vw, 104px); }
+.hero-foot { display: grid; grid-template-columns: minmax(0, 36rem) auto; justify-content: space-between; align-items: end; gap: 32px; margin-top: clamp(28px, 4vw, 48px); }
+.hero-foot p { font-size: 1.1875rem; color: var(--ink-soft); line-height: 1.6; }
+.actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.blueprint {
+  position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+  color: var(--steel); opacity: .25; fill: none; stroke: currentColor; stroke-width: 1.2;
+  -webkit-mask-image: linear-gradient(105deg, rgba(0,0,0,.4) 0 35%, #000 70%);
+  mask-image: linear-gradient(105deg, rgba(0,0,0,.4) 0 35%, #000 70%);
+}
+.blueprint text { fill: currentColor; stroke: none; font: 600 20px "Plus Jakarta Sans", sans-serif; }
+.blueprint .sm { font-size: 13px; font-weight: 500; }
+.blueprint .cl { stroke-dasharray: 24 6 4 6; stroke-width: .9; }
+.blueprint .col { fill: currentColor; }
+
+.pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.pill {
+  display: inline-flex; align-items: center; gap: 8px; padding: 7px 15px; border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--rule); font-size: .875rem; font-weight: 500;
+  box-shadow: 0 1px 3px rgba(42,53,71,.05);
+}
+.pill strong { color: var(--accent); font-weight: 700; }
+.ti { width: 18px; height: 18px; flex: none; stroke-width: 1.8; vertical-align: middle; }
+.pill .ti { color: var(--accent); }
+
+/* ---------- cards & grid ---------- */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: clamp(36px, 5vw, 56px); }
+.card {
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 22px;
+  box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px;
+  transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+a.card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 0 0 3px var(--accent-tint), var(--shadow); }
+.card p { font-size: .9375rem; color: var(--ink-soft); flex-grow: 1; line-height: 1.55; }
+.tile {
+  width: 52px; height: 52px; border-radius: 12px; background: var(--accent-tint); color: var(--accent);
+  display: grid; place-items: center; margin-bottom: 4px;
+}
+.tile .ti { width: 31px; height: 31px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.tags span { font-size: .8125rem; font-weight: 600; color: var(--ink-soft); background: var(--fill); border-radius: 6px; padding: 3px 8px; }
+.card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.card-ext { color: var(--steel); font-size: .875rem; display: inline-flex; align-items: center; gap: 2px; }
+a.card:hover .card-ext { color: var(--accent); }
+
+/* ---------- experience strip ---------- */
+.exp-list { display: flex; flex-direction: column; gap: 18px; margin-top: clamp(36px, 5vw, 56px); }
+.exp-card {
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 22px;
+  box-shadow: var(--shadow); display: grid; grid-template-columns: 14rem minmax(0, 1fr); gap: 24px;
+}
+.exp-meta h3 { font-size: 1.15rem; color: var(--ink); }
+.exp-company { display: block; font-weight: 700; color: var(--accent); font-size: .9375rem; margin-top: 4px; }
+.exp-period { display: block; font-size: .8125rem; color: var(--ink-soft); margin-top: 4px; }
+.exp-body p { font-size: .9375rem; color: var(--ink-soft); line-height: 1.6; }
+.exp-body ul { margin-top: 10px; padding-left: 20px; font-size: .9375rem; color: var(--ink-soft); }
+.exp-body li { margin-bottom: 4px; }
+
+/* ---------- numbered steps (for sequences) ---------- */
+.steps { list-style: none; padding: 0; counter-reset: s; margin-top: clamp(32px, 5vw, 48px); max-width: 48rem; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 3rem minmax(0, 1fr); padding-block: 20px; border-top: 1px solid var(--rule); }
+.steps li:last-child { border-bottom: 1px solid var(--rule); }
+.steps li::before { content: counter(s); font-weight: 700; font-size: 1.5rem; line-height: 1.1; color: var(--accent); }
+.steps h3 { margin-bottom: 6px; }
+.steps p { color: var(--ink-soft); font-size: .9375rem; }
+
+/* ---------- comparison table (before / after) ---------- */
+.vs { margin-top: clamp(36px, 5vw, 56px); border-top: 1px solid var(--rule); }
+.vs-row { display: grid; grid-template-columns: 11rem minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 3.5vw, 48px); padding-block: 18px; border-bottom: 1px solid var(--rule); }
+.vs-head { font-weight: 700; font-size: clamp(1.15rem, 1.8vw, 1.35rem); }
+.vs-head > div:nth-child(2) { color: var(--ink-soft); padding-left: 30px; }
+.vs-head > div:nth-child(3) { color: var(--accent); padding-left: 30px; }
+.vs-topic { font-weight: 700; font-size: .9375rem; color: var(--ink); }
+.vs-row > [data-side] { position: relative; padding-left: 30px; font-size: .9375rem; }
+.vs-row > [data-side="before"] { color: var(--ink-soft); }
+.vs-row > [data-side]::before { content: ""; position: absolute; left: 0; top: 2px; width: 20px; height: 20px; border-radius: 50%; }
+.vs-row > [data-side]::after { content: ""; position: absolute; left: 4px; top: 6px; width: 12px; height: 12px; -webkit-mask: var(--ic) center / contain no-repeat; mask: var(--ic) center / contain no-repeat; }
+.vs-row > [data-side="before"]::before { background: var(--bad-tint); }
+.vs-row > [data-side="after"]::before { background: var(--accent-tint); }
+.vs-row > [data-side="before"]::after { background: var(--bad); --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M18 6L6 18M6 6l12 12'/%3E%3C/svg%3E"); }
+.vs-row > [data-side="after"]::after { background: var(--accent); --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E"); }
+
+/* ---------- tabs: sideways scroll, no scrollbar, no vertical overflow ---------- */
+.tabs {
+  display: flex; gap: 4px; margin-top: clamp(32px, 5vw, 48px);
+  overflow-x: auto; overflow-y: hidden; scrollbar-width: none; overscroll-behavior-x: contain;
+  box-shadow: inset 0 -1px 0 var(--rule);
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tabs button {
+  font: inherit; font-weight: 600; padding: 12px 18px; border: 0; background: none;
+  color: var(--ink-soft); border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap;
+}
+.tabs button:hover { color: var(--ink); }
+.tabs button[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+.tabs button:focus-visible { outline-offset: -3px; }
+.panel { margin-top: 24px; }
+
+/* ---------- interactive case study layout ---------- */
+.bb { display: grid; grid-template-columns: minmax(0, 22rem) minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); align-items: start; }
+.bb > * { min-width: 0; }
+.field-group { border: 1px solid var(--rule); border-radius: 12px; padding: 18px; background: var(--surface); box-shadow: var(--shadow); margin-bottom: 16px; }
+.field-group h4 { font-size: .875rem; font-weight: 700; color: var(--ink-soft); margin-bottom: 12px; }
+.field { display: grid; grid-template-columns: minmax(0, 1fr) 8rem; align-items: center; gap: 10px; padding: 6px 0; font-size: .875rem; }
+.field label { color: var(--ink); font-weight: 500; }
+.field .in { display: flex; align-items: center; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); transition: border-color .15s, box-shadow .15s; }
+.field .in:focus-within, .field .in.typing { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-tint); }
+.field input { width: 100%; border: 0; background: none; font: inherit; font-weight: 600; text-align: right; padding: 7px 8px; color: var(--ink); }
+.field input:focus { outline: none; }
+.field .unit { padding-right: 8px; font-size: .8125rem; color: var(--ink-soft); font-weight: 500; user-select: none; }
+.field-msg { font-size: .8125rem; color: var(--bad); margin-top: 8px; min-height: 1.2em; }
+
+.bb-right { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+
+/* ---------- drawing card & SVG classes (drawing-kit) ---------- */
+.fig { border: 1px solid var(--rule); border-radius: 12px; padding: 18px; background: var(--surface); box-shadow: var(--shadow); }
+.fig figcaption { font-size: .8125rem; color: var(--ink-soft); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+.fig figcaption strong { color: var(--accent); font-weight: 600; }
+.fig svg { width: 100%; height: auto; display: block; overflow: visible; }
+
+.sv-box { fill: var(--fill); stroke: var(--steel); stroke-width: 1.5; }
+.sv-grid { stroke: var(--rule); stroke-width: 1; stroke-dasharray: 4 4; }
+.sv-active { fill: color-mix(in srgb, var(--accent) 12%, #fff); stroke: var(--accent); stroke-width: 2.2; stroke-dasharray: none; }
+.sv-bad { fill: color-mix(in srgb, var(--bad) 12%, #fff); stroke: var(--bad); stroke-width: 2; stroke-dasharray: 4 3; }
+.sv-rod { fill: none; stroke: var(--ink); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.sv-dim { stroke: var(--steel); stroke-width: 1; fill: none; }
+.sv-dl { stroke: var(--dim); stroke-width: 1.6; }
+.sv-dh { fill: var(--dim); }
+.sv-dt { fill: var(--dim); font: 700 13px "Plus Jakarta Sans", system-ui, sans-serif; }
+.sv-dv { fill: var(--ink); font: 600 12px "Plus Jakarta Sans", system-ui, sans-serif; }
+.sv-t { fill: var(--ink-soft); font: 500 12px "Plus Jakarta Sans", system-ui, sans-serif; paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+.sv-t.k { fill: var(--ink); font-weight: 700; }
+
+/* ---------- linked highlight (data-mark on every copy of a thing) ---------- */
+.linked [data-mark] { transition: opacity .15s, transform .2s, box-shadow .2s, border-color .2s, background-color .15s; cursor: pointer; }
+.linked.has-hl [data-mark]:not(.hl) { opacity: .28; }
+.linked svg g.hl { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--accent) 55%, transparent)); }
+.linked svg g.hl .sv-active, .linked svg g.hl .sv-box { stroke: var(--accent) !important; fill: var(--accent-tint) !important; }
+.linked svg g.hl .sv-t { fill: var(--accent-ink); font-weight: 700; }
+.linked .card.hl { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-tint), var(--shadow); }
+.linked tr.hl td { background: var(--accent-tint); color: var(--accent-ink); font-weight: 600; }
+.sv-hit { fill: none; stroke: transparent; stroke-width: 14px; pointer-events: stroke; }
+
+/* ---------- wide tables with scroll, fade & glide ---------- */
+.table-box { border: 1px solid var(--rule); border-radius: 12px; padding: 6px 14px; background: var(--surface); box-shadow: var(--shadow); }
+.table-scroll { position: relative; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--rule) transparent; padding-bottom: 6px; }
+.table-scroll.can-drag { cursor: grab; }
+.table-scroll.dragging { cursor: grabbing; user-select: none; }
+.table-scroll::-webkit-scrollbar { height: 6px; }
+.table-scroll::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 99px; }
+.table-scroll.fade-r { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); }
+.table-scroll.fade-l { -webkit-mask-image: linear-gradient(to right, transparent, #000 32px); mask-image: linear-gradient(to right, transparent, #000 32px); }
+.table-scroll.fade-l.fade-r { -webkit-mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent); }
+
+table { border-collapse: collapse; width: 100%; min-width: 600px; font-size: .9375rem; }
+th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+th { font-weight: 600; color: var(--ink-soft); font-size: .8125rem; }
+td.num, th.num { text-align: right; }
+tbody tr:last-child td { border-bottom: 0; }
+.badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; font-size: .75rem; font-weight: 600; }
+.badge.ok { background: var(--accent-tint); color: var(--accent-ink); }
+.badge.dim { background: #E8EFFF; color: var(--dim); }
+.badge.bad { background: var(--bad-tint); color: var(--bad); }
+
+/* ---------- case metrics cards ---------- */
+.case-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+.case-metrics .card { padding: 16px; gap: 4px; }
+.case-metrics .metric-val { font-size: 1.4rem; font-weight: 700; color: var(--ink); }
+.case-metrics .metric-lbl { font-size: .8125rem; color: var(--ink-soft); font-weight: 500; }
+
+/* ---------- closing + footer ---------- */
+.closing h2 { max-width: 22ch; font-size: clamp(2.2rem, 5vw, 4rem); }
+.closing p { margin-top: 20px; max-width: 38rem; font-size: 1.125rem; color: var(--ink-soft); }
+.closing .actions { margin-top: 32px; }
+footer { padding-block: 28px; font-size: .875rem; color: var(--ink-soft); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--rule); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 960px) {
+  .nav ul { display: none; }
+  .bb { grid-template-columns: minmax(0, 1fr); }
+  .exp-card { grid-template-columns: 1fr; gap: 12px; }
+}
+@media (max-width: 640px) {
+  .hero-foot { grid-template-columns: 1fr; }
+  .fig figcaption { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .vs-row { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .vs-head { display: none; }
+  .vs-topic { font-size: .8125rem; color: var(--accent); }
+  .nav-cta .btn-link { display: none; }
+  .blueprint { opacity: .18; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ---------- nav ---------- -->
+<header class="wrap nav">
+  <a class="brand" href="#top">
+    <span class="mark" aria-hidden="true">AS</span>
+    Azaz Shaikh
+  </a>
+  <nav aria-label="Primary">
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#case">Case study</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#how">How I work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="nav-cta">
+    <a class="btn btn-link" href="https://github.com/SHAIKH-AZAZ" target="_blank" rel="noopener">GitHub</a>
+    <a class="btn btn-solid" href="#contact">Get in touch</a>
+  </div>
+</header>
+
+<main id="main">
+  <!-- ---------- hero with blueprint backdrop ---------- -->
+  <div class="hero-bg" id="heroBg">
+    <section class="wrap hero" id="top">
+      <h1>Full-stack engineer.<span class="l2">Business automation specialist.</span></h1>
+      <div class="hero-foot">
+        <p>I engineer <mark class="good">scalable web systems</mark>, <mark class="good">business automation workflows</mark>, and custom <mark class="good">optimization algorithms</mark> that eliminate friction, cut waste, and drive business growth.</p>
+        <div class="actions">
+          <a class="btn btn-solid" href="#work">Explore deployed systems</a>
+          <a class="btn" href="#contact">Start a project</a>
+        </div>
+      </div>
+      <div class="pills">
+        <span class="pill">
+          <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 8l-4 4l4 4"/><path d="M17 8l4 4l-4 4"/><path d="M14 4l-4 16"/>
+          </svg>
+          <strong>Full-stack</strong> Next.js, React, Node.js, Python
+        </span>
+        <span class="pill">
+          <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M6 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M8.6 8.6l10.4 10.4"/><path d="M8.6 15.4l3.4 -3.4m2 -2l5 -5"/>
+          </svg>
+          <strong>Optimization</strong> 1D cutting-stock algorithms &amp; waste minimisation
+        </span>
+        <span class="pill">
+          <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/><path d="M9 12l2 2l4 -4"/>
+          </svg>
+          <strong>AI &amp; Data</strong> LangChain, LangGraph multi-step agents, ETL pipelines
+        </span>
+      </div>
+    </section>
+  </div>
+
+  <!-- ---------- selected work cards (deployed systems from azazshaikh.info) ---------- -->
+  <section id="work">
+    <div class="wrap">
+      <h2>Deployed systems &amp; products</h2>
+      <p class="lede">Production applications engineered to solve real operational bottlenecks permanently.</p>
+      <div class="cards">
+        <a class="card" href="https://poc-waste-proper.vercel.app/" target="_blank" rel="noopener">
+          <div class="card-head">
+            <span class="tile" aria-hidden="true">
+              <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M6 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M8.6 8.6l10.4 10.4"/><path d="M8.6 15.4l3.4 -3.4m2 -2l5 -5"/>
+              </svg>
+            </span>
+            <span class="card-ext">Live demo &nearr;</span>
+          </div>
+          <h3>POC Waste Optimizer</h3>
+          <p>Industrial optimization platform built on custom cutting-stock algorithms to minimize raw material waste from 12% to under 2.5% and streamline schedule takeoff.</p>
+          <div class="tags"><span>Next.js</span><span>Algorithms</span><span>PostgreSQL</span><span>Dynamic Programming</span></div>
+        </a>
+
+        <a class="card" href="https://excel-cleaner-one.vercel.app/" target="_blank" rel="noopener">
+          <div class="card-head">
+            <span class="tile" aria-hidden="true">
+              <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"/><path d="M8 11l4 4l4 -4"/><path d="M8 15l4 -4l4 4"/>
+              </svg>
+            </span>
+            <span class="card-ext">Live demo &nearr;</span>
+          </div>
+          <h3>Excel Cleaner Tool</h3>
+          <p>High-throughput data sanitiser that strips corrupt macros, bloated objects, and chaotic styling from XLSX sheets to deliver structured, validated datasets.</p>
+          <div class="tags"><span>Next.js</span><span>Regex</span><span>Batch Processing</span><span>Data Sanitation</span></div>
+        </a>
+
+        <a class="card" href="https://shamgym.vercel.app/" target="_blank" rel="noopener">
+          <div class="card-head">
+            <span class="tile" aria-hidden="true">
+              <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21h18"/><path d="M5 21v-14l8 -4v18"/><path d="M19 21v-10l-6 -4"/><path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/>
+              </svg>
+            </span>
+            <span class="card-ext">Live demo &nearr;</span>
+          </div>
+          <h3>ShamGym platform</h3>
+          <p>Production strength &amp; conditioning platform featuring responsive class schedules, trainer rosters, dynamic membership plans, and automated trial booking.</p>
+          <div class="tags"><span>Next.js</span><span>Responsive UI</span><span>Fluid CSS</span><span>Booking Flow</span></div>
+        </a>
+
+        <a class="card" href="https://www.safeandsecuresecurityservice.com/" target="_blank" rel="noopener">
+          <div class="card-head">
+            <span class="tile" aria-hidden="true">
+              <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/><path d="M12 11m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12l0 2.5"/>
+              </svg>
+            </span>
+            <span class="card-ext">Live demo &nearr;</span>
+          </div>
+          <h3>Safe &amp; Secure Security Service</h3>
+          <p>Commercial portal for a Gujarat security agency covering VIP protection and event security, with a multi-scenario request form that generates quotes in real time.</p>
+          <div class="tags"><span>Next.js</span><span>Quote Engine</span><span>Technical SEO</span></div>
+        </a>
+
+        <a class="card" href="#case">
+          <div class="card-head">
+            <span class="tile" aria-hidden="true">
+              <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M14 9h7"/><path d="M14 15h7"/><path d="M3 9h6"/><path d="M3 15h6"/>
+              </svg>
+            </span>
+            <span class="card-ext">Architecture</span>
+          </div>
+          <h3>FastShipment logistics engine</h3>
+          <p>End-to-end logistics platform with automated order management, secure checkout, real-time shipment tracking with dynamic updates, and carrier dispatch tools.</p>
+          <div class="tags"><span>Python</span><span>Checkout Engine</span><span>Shipment Tracking</span><span>Microservices</span></div>
+        </a>
+
+        <a class="card" href="#case">
+          <div class="card-head">
+            <span class="tile" aria-hidden="true">
+              <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16v16h-16z"/><path d="M9 4v16"/><path d="M14 4v16"/><path d="M4 9h16"/><path d="M4 14h16"/>
+              </svg>
+            </span>
+            <span class="card-ext">Architecture</span>
+          </div>
+          <h3>LangGraph multi-step AI agent</h3>
+          <p>Stateful orchestration agent capable of tool execution, conditional branching, persistent memory, and autonomous task completion for enterprise workflows.</p>
+          <div class="tags"><span>LangGraph</span><span>LangChain</span><span>Vector DB</span><span>AI Agents</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- one deep case study (layout geometry & web performance engine) ---------- -->
+  <section id="case">
+    <div class="wrap">
+      <h2>Case study: responsive layout &amp; performance engine</h2>
+      <p class="lede">An interactive layout geometry and web performance budget engine. Demonstrating fluid CSS grid track math, active container spanning, and sub-100ms frame lifecycle execution. Formula renders live in KaTeX: $\text{Span Width} = \frac{W - 2M - (C-1)G}{C} \times S + (S-1)G$.</p>
+
+      <div class="tabs" role="tablist" aria-label="Case study views">
+        <button type="button" role="tab" aria-selected="true" aria-controls="p-engine" id="t-engine" data-panel="p-engine">Live layout &amp; performance engine</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="p-arch" id="t-arch" data-panel="p-arch" tabindex="-1">System architecture</button>
+      </div>
+
+      <!-- Tab 1: Live Layout & Performance Engine -->
+      <div class="panel linked" id="p-engine" role="tabpanel" aria-labelledby="t-engine">
+        <div class="bb">
+          <!-- Form on the left -->
+          <form class="bb-form" id="stockForm" onsubmit="return false">
+            <div class="field-group">
+              <h4>Viewport &amp; grid geometry</h4>
+              <div class="field">
+                <label for="inVpW">Viewport width ($W$)</label>
+                <div class="in"><input type="number" id="inVpW" value="1440" min="360" max="1920" step="10"><span class="unit">px</span></div>
+              </div>
+              <div class="field">
+                <label for="inMargin">Safe page margin ($M$)</label>
+                <div class="in"><input type="number" id="inMargin" value="32" min="8" max="96" step="4"><span class="unit">px</span></div>
+              </div>
+              <div class="field">
+                <label for="inCols">Grid columns ($C$)</label>
+                <div class="in"><input type="number" id="inCols" value="12" min="4" max="16" step="1"><span class="unit">cols</span></div>
+              </div>
+              <div class="field">
+                <label for="inGutter">Column gutter ($G$)</label>
+                <div class="in"><input type="number" id="inGutter" value="24" min="4" max="48" step="2"><span class="unit">px</span></div>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <h4>Component &amp; performance budget</h4>
+              <div class="field">
+                <label for="inSpan">Component span ($S$)</label>
+                <div class="in"><input type="number" id="inSpan" value="8" min="1" max="12" step="1"><span class="unit">cols</span></div>
+              </div>
+              <div class="field">
+                <label for="inRtt">Network RTT ($T_{\text{rtt}}$)</label>
+                <div class="in"><input type="number" id="inRtt" value="32" min="5" max="250" step="1"><span class="unit">ms</span></div>
+              </div>
+              <div class="field">
+                <label for="inSsr">Server SSR compute ($T_{\text{ssr}}$)</label>
+                <div class="in"><input type="number" id="inSsr" value="14" min="2" max="100" step="1"><span class="unit">ms</span></div>
+              </div>
+              <div class="field-msg" id="fieldMsg"></div>
+            </div>
+          </form>
+
+          <!-- Live drawing & result cards on the right -->
+          <div class="bb-right">
+            <figure class="fig">
+              <figcaption>
+                <span>Live layout blueprint: fluid tracks, active container span &amp; frame budget</span>
+                <strong>Hover any mark to link</strong>
+              </figcaption>
+              <svg id="drawSvg" viewBox="0 0 800 295" role="img" aria-label="Responsive layout geometry and performance blueprint diagram"></svg>
+            </figure>
+
+            <div class="case-metrics">
+              <div class="card" data-mark="span" tabindex="0">
+                <span class="metric-val" id="cardSpan">909 px</span>
+                <span class="metric-lbl">Active component span</span>
+              </div>
+              <div class="card" data-mark="col" tabindex="0">
+                <span class="metric-val" id="cardCol">92.6 px</span>
+                <span class="metric-lbl">Single column track</span>
+              </div>
+              <div class="card" data-mark="lat" tabindex="0">
+                <span class="metric-val" id="cardLat">54 ms</span>
+                <span class="metric-lbl">Total P95 latency</span>
+              </div>
+              <div class="card" data-mark="fps" tabindex="0">
+                <span class="metric-val" id="cardFps">16.6 ms</span>
+                <span class="metric-lbl">60 FPS paint budget</span>
+              </div>
+            </div>
+
+            <div class="table-box">
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Mark</th>
+                      <th>Layout / budget metric</th>
+                      <th>Mathematical formula</th>
+                      <th class="num">Computed value</th>
+                      <th>Engineering status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="metricsTableBody">
+                    <!-- Populated dynamically with live formulas -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: System Architecture -->
+      <div class="panel linked" id="p-arch" role="tabpanel" aria-labelledby="t-arch" hidden>
+        <figure class="fig">
+          <figcaption>
+            <span>POC Waste Optimizer architecture: Client &rarr; Ingestion Gateway &rarr; Cutting-Stock Engine &rarr; Database Cache</span>
+            <strong>Hover any subsystem</strong>
+          </figcaption>
+          <svg viewBox="0 0 960 425" role="img" aria-label="System architecture blueprint" id="archSvg"></svg>
+        </figure>
+
+        <div class="table-box" style="margin-top:18px">
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Subsystem layer</th>
+                  <th>Core modules</th>
+                  <th>Data contract / protocol</th>
+                  <th class="num">P95 latency</th>
+                  <th>Reliability</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-mark="layer-ui" tabindex="0">
+                  <td><strong>01 &middot; Client runtime</strong></td>
+                  <td>Next.js 14 App Router, Virtualised Takeoff Table, Zod Parameter Guards</td>
+                  <td>HTTPS / WSS &middot; JSON Payload</td>
+                  <td class="num">&lt; 32 ms</td>
+                  <td><span class="badge ok">100% verified</span></td>
+                </tr>
+                <tr data-mark="layer-api" tabindex="0">
+                  <td><strong>02 &middot; Ingestion gateway</strong></td>
+                  <td>Express REST API, Lossless XLSX Sanitizer, Worker Pool Scheduler</td>
+                  <td>REST &middot; Multipart Stream</td>
+                  <td class="num">&lt; 58 ms</td>
+                  <td><span class="badge ok">Sub-100ms</span></td>
+                </tr>
+                <tr data-mark="layer-calc" tabindex="0">
+                  <td><strong>03 &middot; Optimizer engine</strong></td>
+                  <td>1D Cutting-Stock DP, Heuristic Pattern Pruner, 8-Thread Worker Pool</td>
+                  <td>IPC &middot; Zero-copy ArrayBuffer</td>
+                  <td class="num">&lt; 14 ms</td>
+                  <td><span class="badge ok">0.35% scrap parity</span></td>
+                </tr>
+                <tr data-mark="layer-db" tabindex="0">
+                  <td><strong>04 &middot; Persistence layer</strong></td>
+                  <td>PostgreSQL 16 (BOM Orders), MongoDB (Takeoff Trees), Redis Cache</td>
+                  <td>TCP &middot; Replicated ACID Pool</td>
+                  <td class="num">&lt; 9 ms</td>
+                  <td><span class="badge ok">ACID compliant</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- experience section ---------- -->
+  <section id="experience">
+    <div class="wrap">
+      <h2>Professional experience</h2>
+      <p class="lede">Engineering journey and hands-on industry work delivering production software.</p>
+      <div class="exp-list">
+        <article class="exp-card">
+          <div class="exp-meta">
+            <h3>Full Stack IT Engineer</h3>
+            <span class="exp-company">Buniyadbyte</span>
+            <span class="exp-period">2024 &mdash; Present &middot; India</span>
+          </div>
+          <div class="exp-body">
+            <p>Developed and shipped <a href="https://poc-waste-proper.vercel.app/" target="_blank" rel="noopener" style="color:var(--accent-ink);text-decoration:underline;font-weight:700">POC Waste Optimizer &nearr;</a>, a high-performance Bar Cutting Optimization web application that eliminated manual takeoff errors and cut steel scrap from 12% to under 2.5%.</p>
+            <ul>
+              <li>Engineered custom 1D cutting-stock algorithms and dynamic programming heuristics for complex structural schedules.</li>
+              <li>Built full project management dashboards, DWG/DXF/PDF CAD takeoff data pipelines, and XLSX report generation engines.</li>
+              <li>Architected resilient REST microservices handling heavy concurrent calculations with sub-second response times.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="exp-card">
+          <div class="exp-meta">
+            <h3>QA Manual &amp; Automation Intern</h3>
+            <span class="exp-company">Maxgen Web Technologies</span>
+            <span class="exp-period">2023 &mdash; 2024 &middot; India</span>
+          </div>
+          <div class="exp-body">
+            <p>Secured the quality and reliability of commercial web applications by designing rigorous manual test matrices and automated regression testing suites.</p>
+            <ul>
+              <li>Created end-to-end test scenarios across responsive screen viewports and browser environments.</li>
+              <li>Identified critical edge-case bugs in data processing workflows prior to production releases.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- how I work (steps & before/after comparison) ---------- -->
+  <section id="how">
+    <div class="wrap">
+      <h2>How I work</h2>
+      <p class="lede">A disciplined pipeline from operational bottleneck to running production software.</p>
+      <ol class="steps">
+        <li>
+          <div>
+            <h3>Discovery &amp; constraint mapping</h3>
+            <p>Identify real-world operational friction, calculate mathematical constraints, and establish strict data contracts before touching code.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Architect with typed domain engines</h3>
+            <p>Isolate pure business logic into verified algorithms. Design strongly-typed interfaces across client and server with zero framework lock-in.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Build accessible, zero-overflow UI</h3>
+            <p>Construct fluid layouts with clamp math, accessible keyboard navigation, and custom scroll containers that never trigger phantom scrollbars or phone zoom-outs.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Verify at 1440px and 390px with real data</h3>
+            <p>Audit page widths with automated headless browser tests, confirm zero uncaught console errors, and verify exact arithmetic parity against source numbers.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="vs">
+        <div class="vs-row vs-head" aria-hidden="true">
+          <div></div>
+          <div>Before / Manual workflow</div>
+          <div>After / My engineering standard</div>
+        </div>
+
+        <div class="vs-row">
+          <div class="vs-topic">Material takeoff</div>
+          <div data-side="before">Manual spreadsheet estimation with <mark class="bad">10% to 15% scrap waste</mark>.</div>
+          <div data-side="after">Algorithmic cutting-stock optimization with <mark class="good">scrap minimised below 2.5%</mark>.</div>
+        </div>
+
+        <div class="vs-row">
+          <div class="vs-topic">Data ingestion</div>
+          <div data-side="before">Corrupted XLSX files with macros and <mark class="bad">broken cell formulas</mark>.</div>
+          <div data-side="after">Automated macro stripping and <mark class="good">clean structured data output</mark>.</div>
+        </div>
+
+        <div class="vs-row">
+          <div class="vs-topic">Architecture</div>
+          <div data-side="before">Monolithic components with <mark class="bad">mixed rendering and business logic</mark>.</div>
+          <div data-side="after">Clean state machines with <mark class="good">isolated domain engines</mark> and typed contracts.</div>
+        </div>
+
+        <div class="vs-row">
+          <div class="vs-topic">Responsive UI</div>
+          <div data-side="before">Fixed-pixel breakpoints causing <mark class="bad">horizontal page overflow</mark> on mobile.</div>
+          <div data-side="after">Fluid clamp layouts with <mark class="good">zero scroll jitter</mark> across 320px to 1800px.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- services / disciplines ---------- -->
+  <section id="services">
+    <div class="wrap">
+      <h2>Engineering services</h2>
+      <p class="lede">From core infrastructure to user-facing flows, I build technical solutions mapped directly to business growth.</p>
+      <div class="cards">
+        <div class="card">
+          <span class="tile" aria-hidden="true">
+            <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M14 9h7"/><path d="M14 15h7"/><path d="M3 9h6"/><path d="M3 15h6"/>
+            </svg>
+          </span>
+          <h3>Enterprise applications</h3>
+          <p>Internal tools, interactive dashboards, and operations management portals built to unify company workflows and eliminate manual spreadsheets.</p>
+          <div class="tags"><span>Next.js</span><span>PostgreSQL</span><span>Role-Based Auth</span><span>Dashboards</span></div>
+        </div>
+
+        <div class="card">
+          <span class="tile" aria-hidden="true">
+            <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M6 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M8.6 8.6l10.4 10.4"/><path d="M8.6 15.4l3.4 -3.4m2 -2l5 -5"/>
+            </svg>
+          </span>
+          <h3>Algorithm development</h3>
+          <p>Custom logic engineering for complex mathematical challenges: 1D cutting stock, route scheduling, inventory optimization, and polygon geometry.</p>
+          <div class="tags"><span>Dynamic Programming</span><span>Heuristics</span><span>Geometry Math</span></div>
+        </div>
+
+        <div class="card">
+          <span class="tile" aria-hidden="true">
+            <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21h18"/><path d="M5 21v-14l8 -4v18"/><path d="M19 21v-10l-6 -4"/><path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/>
+            </svg>
+          </span>
+          <h3>SaaS architectures</h3>
+          <p>Scalable web foundations with robust security, sub-100ms response times, and automated background jobs that scale effortlessly.</p>
+          <div class="tags"><span>Node.js</span><span>Express</span><span>REST APIs</span><span>Worker Pools</span></div>
+        </div>
+
+        <div class="card">
+          <span class="tile" aria-hidden="true">
+            <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/><path d="M9 12l2 2l4 -4"/>
+            </svg>
+          </span>
+          <h3>AI agents &amp; data pipelines</h3>
+          <p>Retrieval-Augmented Generation (RAG) and multi-step autonomous agents using LangChain and LangGraph wired directly into business databases.</p>
+          <div class="tags"><span>LangChain</span><span>LangGraph</span><span>ETL Pipelines</span><span>Vector DB</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- closing CTA ---------- -->
+  <section class="closing" id="contact">
+    <div class="wrap">
+      <h2>Let's build something durable.</h2>
+      <p>I partner with forward-thinking teams to engineer robust web platforms, automated workflows, and custom algorithms. Available for full-stack engineering and remote roles.</p>
+      <div class="actions">
+        <a class="btn btn-solid" href="mailto:azazshaikh2703@gmail.com">Email azazshaikh2703@gmail.com</a>
+        <a class="btn" href="https://www.linkedin.com/in/mohammadazaz-shaikh-421937322" target="_blank" rel="noopener">LinkedIn profile</a>
+        <a class="btn" href="https://github.com/SHAIKH-AZAZ" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span>&copy; 2026 Azaz Shaikh &middot; Full-Stack Engineer</span>
+  <span>Built in the blueprint SaaS house style</span>
+</footer>
+
+<!-- ---------- scripts (drawing-kit, live cutting stock engine, tabs, linked highlight, table drag) ---------- -->
+<script>
+/* ---- Blueprint backdrop helper (grid with axis bubbles A-E, 1-3, dimension chain) ---- */
+(() => {
+  const xs = [120, 470, 820, 1170, 1520], ys = [190, 540, 890];
+  let o = "";
+  xs.forEach((x, i) => o += `<line class="cl" x1="${x}" y1="40" x2="${x}" y2="990"/><circle cx="${x}" cy="40" r="20"/><text x="${x}" y="47" text-anchor="middle">${"ABCDE"[i]}</text>`);
+  ys.forEach((y, j) => o += `<line class="cl" x1="20" y1="${y}" x2="1590" y2="${y}"/><circle cx="20" cy="${y}" r="20"/><text x="20" y="${y + 7}" text-anchor="middle">${j + 1}</text>`);
+  const dims = ["grid-1 350", "grid-2 350", "grid-3 350", "grid-4 350"];
+  dims.forEach((d, i) => { if (xs[i + 1]) o += `<text class="sm" x="${(xs[i] + xs[i + 1]) / 2}" y="100" text-anchor="middle">${d}</text>`; });
+  for (const y of ys) for (const x of xs) o += `<rect class="col" x="${x - 15}" y="${y - 15}" width="30" height="30"/>`;
+  document.getElementById("heroBg").insertAdjacentHTML("afterbegin", `<svg class="blueprint" viewBox="0 0 1600 1010" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">${o}</svg>`);
+})();
+
+/* ---- Technical SVG Drawing Helpers (drawing-kit standards) ---- */
+const fmt = n => Math.round(n).toLocaleString("en-IN");
+const tick = (x1, y1, x2, y2) => `<line class="sv-dl" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
+const arrow = (x1, y1, x2, y2) => {
+  const n = Math.hypot(x2 - x1, y2 - y1) || 1, ux = (x2 - x1) / n, uy = (y2 - y1) / n, a = 7, w = 3.5;
+  const head = (x, y, dx, dy) => `<polygon class="sv-dh" points="${x},${y} ${x - dx * a - dy * w},${y - dy * a + dx * w} ${x - dx * a + dy * w},${y - dy * a - dx * w}"/>`;
+  return tick(x1, y1, x2, y2) + head(x2, y2, ux, uy) + head(x1, y1, -ux, -uy);
+};
+const dimLabel = (x, y, name, val, anchor = "middle") =>
+  `<text class="sv-dt" x="${x}" y="${y}" text-anchor="${anchor}">${name}<tspan class="sv-dv" dx="6">${typeof val === "number" ? fmt(val) : val}</tspan></text>`;
+const hDim = (x1, x2, y, name, val, labelBelow = false) =>
+  tick(x1, y - 10, x1, y + 10) + tick(x2, y - 10, x2, y + 10) + arrow(x1, y, x2, y) +
+  dimLabel((x1 + x2) / 2, labelBelow ? y + 22 : y - 10, name, val);
+const vDim = (x, y1, y2, dir, name, val) => {
+  const xa = x + dir * 18, anchor = dir < 0 ? "end" : "start", m = (y1 + y2) / 2;
+  return tick(x + dir * 8, y1, x + dir * 28, y1) + tick(x + dir * 8, y2, x + dir * 28, y2) + arrow(xa, y1, xa, y2) +
+    `<text class="sv-dt" x="${x + dir * 32}" y="${m - 2}" text-anchor="${anchor}">${name}</text>` +
+    `<text class="sv-dv" x="${x + dir * 32}" y="${m + 14}" text-anchor="${anchor}">${typeof val === "number" ? fmt(val) : val}</text>`;
+};
+const callout = (x, y, ty, txt, side = "right") => {
+  const dx = side === "right" ? 34 : -34, anchor = side === "right" ? "start" : "end";
+  return `<polyline class="sv-dim" points="${x},${y} ${x},${ty} ${x + dx},${ty}"/><circle cx="${x}" cy="${y}" r="2.5" fill="var(--dim)"/>` +
+    `<text class="sv-dt" x="${x + dx + (side === "right" ? 4 : -4)}" y="${ty + 4}" text-anchor="${anchor}">${txt}</text>`;
+};
+
+/* ---- Interactive Responsive Layout & Performance Budget Engine ---- */
+const inVpW = document.getElementById("inVpW");
+const inMargin = document.getElementById("inMargin");
+const inCols = document.getElementById("inCols");
+const inGutter = document.getElementById("inGutter");
+const inSpan = document.getElementById("inSpan");
+const inRtt = document.getElementById("inRtt");
+const inSsr = document.getElementById("inSsr");
+const fieldMsg = document.getElementById("fieldMsg");
+
+function renderLayoutEngine() {
+  const W = Math.max(360, Math.min(1920, parseFloat(inVpW.value) || 1440));
+  const M = Math.max(0, Math.min(120, parseFloat(inMargin.value) || 32));
+  const C = Math.max(2, Math.min(16, parseInt(inCols.value) || 12));
+  const G = Math.max(0, Math.min(60, parseFloat(inGutter.value) || 24));
+  let S = Math.max(1, Math.min(C, parseInt(inSpan.value) || 8));
+  if (parseInt(inSpan.value) > C) {
+    inSpan.value = C;
+    S = C;
+  }
+  const rtt = Math.max(5, Math.min(300, parseFloat(inRtt.value) || 32));
+  const ssr = Math.max(2, Math.min(150, parseFloat(inSsr.value) || 14));
+  const paintTime = 8.4; // Fixed 60 FPS sub-task
+
+  const fixedSpaces = 2 * M + (C - 1) * G;
+  if (fixedSpaces >= W - 40) {
+    fieldMsg.textContent = `Margins (${fmt(2 * M)} px) & Gutters (${fmt((C - 1) * G)} px) exceed canvas width (${fmt(W)} px).`;
+    return;
+  }
+  fieldMsg.textContent = "";
+
+  const colWidth = (W - 2 * M - (C - 1) * G) / C;
+  const spanWidth = S * colWidth + (S - 1) * G;
+  const remCols = C - S;
+  const remWidth = remCols > 0 ? remCols * colWidth + (remCols - 1) * G : 0;
+  const totalLatency = rtt + ssr + paintTime;
+
+  // Update Metric Cards
+  document.getElementById("cardSpan").textContent = `${fmt(Math.round(spanWidth))} px`;
+  document.getElementById("cardCol").textContent = `${colWidth.toFixed(1)} px`;
+  document.getElementById("cardLat").textContent = `${Math.round(totalLatency)} ms`;
+  document.getElementById("cardFps").textContent = `16.6 ms`;
+
+  // Draw technical SVG diagram (viewBox: 800 x 295)
+  const drawW = 700;
+  const ox = 50;
+  const scale = drawW / W;
+  const marginW_svg = M * scale;
+  const contentX = ox + marginW_svg;
+  const colW_svg = colWidth * scale;
+  const gutW_svg = G * scale;
+  const spanW_svg = spanWidth * scale;
+  const remW_svg = remWidth * scale;
+
+  let o = "";
+
+  // 1. Viewport Outer Canvas Boundary
+  o += `<g data-mark="view">
+    <rect class="sv-box" x="${ox}" y="38" width="${drawW}" height="118" rx="6"/>
+  </g>`;
+
+  // 2. Safe Margins (Left & Right)
+  if (marginW_svg > 1) {
+    o += `<rect fill="var(--fill)" stroke="var(--rule)" stroke-dasharray="3 3" x="${ox}" y="38" width="${marginW_svg}" height="118"/>`;
+    o += `<rect fill="var(--fill)" stroke="var(--rule)" stroke-dasharray="3 3" x="${ox + drawW - marginW_svg}" y="38" width="${marginW_svg}" height="118"/>`;
+  }
+
+  // 3. Grid Column Guides
+  for (let i = 0; i < C; i++) {
+    const cx = contentX + i * (colW_svg + gutW_svg);
+    o += `<rect fill="none" stroke="var(--rule)" stroke-dasharray="2 2" x="${cx}" y="38" width="${colW_svg}" height="118"/>`;
+    if (colW_svg > 20) {
+      o += `<text class="sv-dv" x="${cx + colW_svg / 2}" y="52" text-anchor="middle" font-size="8.5" fill="var(--steel)">c${i + 1}</text>`;
+    }
+  }
+
+  // 4. Active Component Container
+  o += `<g data-mark="span">
+    <rect class="sv-active" x="${contentX}" y="38" width="${spanW_svg}" height="118" rx="6"/>
+    <text class="sv-t k" x="${contentX + spanW_svg / 2}" y="92" text-anchor="middle" font-size="12" fill="var(--accent-ink)">Active Container &middot; ${S} Columns</text>
+    <text class="sv-dv" x="${contentX + spanW_svg / 2}" y="110" text-anchor="middle" font-size="10.5">W = ${fmt(Math.round(spanWidth))} px &middot; Fluid Width</text>
+  </g>`;
+
+  // 5. Remaining Sidebar (if any)
+  if (remCols > 0) {
+    const remX = contentX + spanW_svg + gutW_svg;
+    o += `<g data-mark="remain">
+      <rect class="sv-box" x="${remX}" y="38" width="${remW_svg}" height="118" rx="6" stroke-dasharray="4 3"/>
+      <text class="sv-t k" x="${remX + remW_svg / 2}" y="92" text-anchor="middle" font-size="11">Sidebar &middot; ${remCols} Cols</text>
+      <text class="sv-dv" x="${remX + remW_svg / 2}" y="110" text-anchor="middle" font-size="10">${fmt(Math.round(remWidth))} px</text>
+    </g>`;
+    if (remW_svg > 36) {
+      o += hDim(remX, remX + remW_svg, 176, "Sidebar W", Math.round(remWidth), true);
+    }
+  }
+
+  // Dimension: Top Viewport
+  o += hDim(ox, ox + drawW, 20, "Viewport W", Math.round(W));
+
+  // Dimension: Active Span
+  o += hDim(contentX, contentX + spanW_svg, 176, "Span W", Math.round(spanWidth), true);
+
+  // Dimension: First Column Track (if space permits)
+  if (colW_svg > 24) {
+    o += `<g data-mark="col">` + hDim(contentX, contentX + colW_svg, 34, "Col w", colWidth.toFixed(1)) + `</g>`;
+  }
+
+  // 6. Request-to-Render Latency Waterfall Timeline
+  const waterY = 222;
+  const waterH = 34;
+  const rttW = Math.max(90, (rtt / totalLatency) * drawW);
+  const ssrW = Math.max(90, (ssr / totalLatency) * drawW);
+  const paintW = Math.max(90, drawW - rttW - ssrW);
+
+  // Timeline Header
+  o += `<text class="sv-dt" x="${ox}" y="210" font-size="9.5">FRAME &amp; LATENCY TIMELINE &middot; P95 TARGET: &lt; 100ms</text>`;
+  o += `<text class="sv-dv" x="${ox + drawW}" y="210" text-anchor="end" font-size="9.5">TOTAL P95: ${Math.round(totalLatency)} ms</text>`;
+
+  // Segment 1: RTT
+  o += `<g data-mark="lat">
+    <rect x="${ox}" y="${waterY}" width="${rttW}" height="${waterH}" rx="4" fill="#EBF3FF" stroke="var(--dim)" stroke-width="1.2"/>
+    <text class="sv-dt" x="${ox + rttW / 2}" y="${waterY + 15}" text-anchor="middle" font-size="9.5">1. Network RTT (${Math.round(rtt)} ms)</text>
+    <text class="sv-dv" x="${ox + rttW / 2}" y="${waterY + 27}" text-anchor="middle" font-size="8.5">Edge CDN Handshake</text>
+  </g>`;
+
+  // Segment 2: SSR
+  o += `<g data-mark="ssr">
+    <rect x="${ox + rttW}" y="${waterY}" width="${ssrW}" height="${waterH}" rx="4" fill="var(--fill)" stroke="var(--steel)" stroke-width="1.2"/>
+    <text class="sv-t k" x="${ox + rttW + ssrW / 2}" y="${waterY + 15}" text-anchor="middle" font-size="9.5">2. Server SSR (${Math.round(ssr)} ms)</text>
+    <text class="sv-dv" x="${ox + rttW + ssrW / 2}" y="${waterY + 27}" text-anchor="middle" font-size="8.5">Node Engine</text>
+  </g>`;
+
+  // Segment 3: DOM Paint (60 FPS)
+  o += `<g data-mark="fps">
+    <rect x="${ox + rttW + ssrW}" y="${waterY}" width="${paintW}" height="${waterH}" rx="4" fill="var(--accent-tint)" stroke="var(--accent)" stroke-width="1.2"/>
+    <text class="sv-t k" x="${ox + rttW + ssrW + paintW / 2}" y="${waterY + 15}" text-anchor="middle" font-size="9.5" fill="var(--accent-ink)">3. DOM Paint (${paintTime} ms)</text>
+    <text class="sv-dv" x="${ox + rttW + ssrW + paintW / 2}" y="${waterY + 27}" text-anchor="middle" font-size="8.5" fill="var(--accent-ink)">&le; 16.6ms (60 FPS)</text>
+  </g>`;
+
+  // CAD Title Block (Bottom-Right)
+  o += `<rect x="560" y="268" width="190" height="22" rx="3" fill="var(--fill)" stroke="var(--rule)"/>`;
+  o += `<text class="sv-dt" x="655" y="283" text-anchor="middle" font-size="9">DWG: LAYOUT-OPT-2026 &middot; REV 1.8</text>`;
+
+  document.getElementById("drawSvg").innerHTML = o;
+
+  // 7. Populate Metrics Table with Live Math
+  const tbody = document.getElementById("metricsTableBody");
+  const deviceCat = W >= 1200 ? "Fluid Desktop" : (W >= 768 ? "Fluid Tablet" : "Fluid Mobile");
+
+  tbody.innerHTML = `
+    <tr data-mark="view" tabindex="0">
+      <td><strong>Viewport W</strong></td>
+      <td>Total device canvas</td>
+      <td>$W$</td>
+      <td class="num">${fmt(W)} px</td>
+      <td><span class="badge ok">${deviceCat}</span></td>
+    </tr>
+    <tr data-mark="col" tabindex="0">
+      <td><strong>Column track</strong></td>
+      <td>Fluid CSS grid track</td>
+      <td>$\\frac{W - 2M - (C-1)G}{C}$</td>
+      <td class="num">${colWidth.toFixed(1)} px</td>
+      <td><span class="badge ok">1 of ${C} cols</span></td>
+    </tr>
+    <tr data-mark="span" tabindex="0">
+      <td><strong>Active container</strong></td>
+      <td>Component span width</td>
+      <td>$S \\cdot w_{\\text{col}} + (S-1)G$</td>
+      <td class="num">${fmt(Math.round(spanWidth))} px</td>
+      <td><span class="badge ok">${S} cols spanned</span></td>
+    </tr>
+    <tr data-mark="lat" tabindex="0">
+      <td><strong>P95 latency</strong></td>
+      <td>End-to-end user request</td>
+      <td>$T_{\\text{rtt}} + T_{\\text{ssr}} + T_{\\text{paint}}$</td>
+      <td class="num">${Math.round(totalLatency)} ms</td>
+      <td><span class="badge ${totalLatency <= 100 ? 'ok' : 'bad'}">${totalLatency <= 100 ? 'Sub-100ms verified' : 'Over budget'}</span></td>
+    </tr>
+    <tr data-mark="fps" tabindex="0">
+      <td><strong>Frame budget</strong></td>
+      <td>60 FPS frame deadline</td>
+      <td>$T_{\\text{frame}} \\le 16.67\\text{ ms}$</td>
+      <td class="num">8.4 ms paint</td>
+      <td><span class="badge ok">Zero dropped frames</span></td>
+    </tr>
+  `;
+
+  refreshLinkedHighlights();
+}
+
+/* ---- Architecture Diagram (Tab 2) ---- */
+function initArchDiagram() {
+  const el = document.getElementById("archSvg");
+  if (!el) return;
+
+  let o = "";
+
+  // 1. Faint CAD Grid & Axis Bubbles at Top
+  const axes = [
+    { x: 128, label: "A" },
+    { x: 362, label: "B" },
+    { x: 605, label: "C" },
+    { x: 848, label: "D" }
+  ];
+  axes.forEach(a => {
+    o += `<line class="sv-grid" x1="${a.x}" y1="18" x2="${a.x}" y2="350"/>`;
+    o += `<circle cx="${a.x}" cy="18" r="11" fill="var(--surface)" stroke="var(--steel)" stroke-width="1.2"/>`;
+    o += `<text x="${a.x}" y="22" font-size="11" font-weight="700" fill="var(--steel)" text-anchor="middle">${a.label}</text>`;
+  });
+
+  // 2. Latency Dimension Chain across the top
+  o += hDim(40, 215, 48, "Client P95", "32 ms");
+  o += hDim(275, 450, 48, "Gateway P95", "58 ms");
+  o += hDim(510, 700, 48, "DP Solver P95", "14 ms");
+  o += hDim(760, 935, 48, "Store P95", "9 ms");
+
+  // 3. Subsystem 01: Client Runtime (40 to 215, w=175)
+  o += `<g data-mark="layer-ui">
+    <rect class="sv-box" x="40" y="74" width="175" height="248" rx="8"/>
+    <path d="M40 82 Q40 74 48 74 H207 Q215 74 215 82 V102 H40 Z" fill="var(--fill)" stroke="var(--steel)" stroke-width="1.2"/>
+    <text class="sv-t k" x="128" y="92" text-anchor="middle" font-size="11">01 &middot; CLIENT RUNTIME</text>
+
+    <!-- Module 1: Next.js 14 -->
+    <rect x="48" y="112" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
+    <text class="sv-t k" x="56" y="128" font-size="10">Next.js 14 App Router</text>
+    <text class="sv-t" x="56" y="143" font-size="8.5">React Server Components &amp; SSR</text>
+
+    <!-- Module 2: Takeoff Table -->
+    <rect x="48" y="162" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
+    <text class="sv-t k" x="56" y="178" font-size="10">Takeoff Data Table</text>
+    <text class="sv-t" x="56" y="193" font-size="8.5">Virtualised DOM &middot; Sub-16ms</text>
+
+    <!-- Module 3: Zod Validator -->
+    <rect x="48" y="212" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
+    <text class="sv-t k" x="56" y="228" font-size="10">Zod Parameter Guard</text>
+    <text class="sv-t" x="56" y="243" font-size="8.5">Client-side Input Constraints</text>
+
+    <!-- Port Tag -->
+    <rect x="48" y="268" width="159" height="24" rx="4" fill="var(--fill)" stroke="var(--rule)"/>
+    <text class="sv-dt" x="128" y="284" text-anchor="middle" font-size="9">PORT 443 &middot; HTTPS / WSS</text>
+  </g>`;
+
+  // Bus 1: Client -> Gateway (215 to 275, gap=60)
+  o += arrow(215, 183, 275, 183);
+  o += `<rect x="226" y="158" width="38" height="17" rx="3" fill="var(--surface)" stroke="var(--rule)"/>`;
+  o += `<text class="sv-dv" x="245" y="170" text-anchor="middle" font-size="8.5">REST</text>`;
+  o += `<text class="sv-dv" x="245" y="202" text-anchor="middle" font-size="8.5">JSON</text>`;
+
+  // 4. Subsystem 02: Ingestion Service (275 to 450, w=175)
+  o += `<g data-mark="layer-api">
+    <rect class="sv-box" x="275" y="74" width="175" height="248" rx="8"/>
+    <path d="M275 82 Q275 74 283 74 H442 Q450 74 450 82 V102 H275 Z" fill="var(--fill)" stroke="var(--steel)" stroke-width="1.2"/>
+    <text class="sv-t k" x="362" y="92" text-anchor="middle" font-size="11">02 &middot; INGESTION GATEWAY</text>
+
+    <!-- Module 1: Express API -->
+    <rect x="283" y="112" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
+    <text class="sv-t k" x="291" y="128" font-size="10">Node.js / Express API</text>
+    <text class="sv-t" x="291" y="143" font-size="8.5">JWT Auth &amp; Rate Limiting</text>
+
+    <!-- Module 2: XLSX Sanitizer -->
+    <rect x="283" y="162" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
+    <text class="sv-t k" x="291" y="178" font-size="10">Streaming XLSX Sanitizer</text>
+    <text class="sv-t" x="291" y="193" font-size="8.5">Lossless Macro Stripping</text>
+
+    <!-- Module 3: Task Dispatcher -->
+    <rect x="283" y="212" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
+    <text class="sv-t k" x="291" y="228" font-size="10">Batch Task Dispatcher</text>
+    <text class="sv-t" x="291" y="243" font-size="8.5">Worker Thread Scheduler</text>
+
+    <!-- Port Tag -->
+    <rect x="283" y="268" width="159" height="24" rx="4" fill="var(--fill)" stroke="var(--rule)"/>
+    <text class="sv-dt" x="362" y="284" text-anchor="middle" font-size="9">PORT 3030 &middot; REST / IPC</text>
+  </g>`;
+
+  // Bus 2: Gateway -> Optimizer (450 to 510, gap=60)
+  o += arrow(450, 183, 510, 183);
+  o += `<rect x="461" y="158" width="38" height="17" rx="3" fill="var(--surface)" stroke="var(--rule)"/>`;
+  o += `<text class="sv-dv" x="480" y="170" text-anchor="middle" font-size="8">BUFFER</text>`;
+  o += `<text class="sv-dv" x="480" y="202" text-anchor="middle" font-size="8">IPC</text>`;
+
+  // 5. Subsystem 03: Computational Core (510 to 700, w=190 - Highlighted Accent)
+  o += `<g data-mark="layer-calc">
+    <rect class="sv-active" x="510" y="74" width="190" height="248" rx="8"/>
+    <path d="M510 82 Q510 74 518 74 H692 Q700 74 700 82 V102 H510 Z" fill="var(--accent-tint)" stroke="var(--accent)" stroke-width="1.6"/>
+    <text class="sv-t k" x="605" y="92" text-anchor="middle" font-size="11" fill="var(--accent-ink)">03 &middot; OPTIMIZER ENGINE</text>
+
+    <!-- Module 1: DP Solver -->
+    <rect x="518" y="112" width="174" height="42" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.2"/>
+    <text class="sv-t k" x="526" y="128" font-size="10" fill="var(--accent-ink)">1D Cutting-Stock DP</text>
+    <text class="sv-t" x="526" y="143" font-size="8.5">Dynamic Programming Array</text>
+
+    <!-- Module 2: Heuristic Pruner -->
+    <rect x="518" y="162" width="174" height="42" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.2"/>
+    <text class="sv-t k" x="526" y="178" font-size="10" fill="var(--accent-ink)">Heuristic Scrap Pruner</text>
+    <text class="sv-t" x="526" y="193" font-size="8.5">Combinatorial Waste Reducer</text>
+
+    <!-- Module 3: Worker Thread Pool -->
+    <rect x="518" y="212" width="174" height="42" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.2"/>
+    <text class="sv-t k" x="526" y="228" font-size="10" fill="var(--accent-ink)">Parallel Worker Pool</text>
+    <text class="sv-t" x="526" y="243" font-size="8.5">8-Core Non-blocking Math</text>
+
+    <!-- Port Tag -->
+    <rect x="518" y="268" width="174" height="24" rx="4" fill="var(--accent-tint)" stroke="var(--accent)"/>
+    <text class="sv-t k" x="605" y="284" text-anchor="middle" font-size="9" fill="var(--accent-ink)">PARALLEL &middot; 0.35% SCRAP</text>
+  </g>`;
+
+  // Bus 3: Optimizer -> Storage (700 to 760, gap=60)
+  o += arrow(700, 183, 760, 183);
+  o += `<rect x="711" y="158" width="38" height="17" rx="3" fill="var(--surface)" stroke="var(--rule)"/>`;
+  o += `<text class="sv-dv" x="730" y="170" text-anchor="middle" font-size="8.5">SQL</text>`;
+  o += `<text class="sv-dv" x="730" y="202" text-anchor="middle" font-size="8.5">ACID</text>`;
+
+  // 6. Subsystem 04: Persistence Store (760 to 935, w=175)
+  o += `<g data-mark="layer-db">
+    <rect class="sv-box" x="760" y="74" width="175" height="248" rx="8"/>
+    <path d="M760 82 Q760 74 768 74 H927 Q935 74 935 82 V102 H760 Z" fill="var(--fill)" stroke="var(--steel)" stroke-width="1.2"/>
+    <text class="sv-t k" x="848" y="92" text-anchor="middle" font-size="11">04 &middot; PERSISTENCE LAYER</text>
+
+    <!-- Module 1: PostgreSQL -->
+    <rect x="768" y="112" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
+    <text class="sv-t k" x="776" y="128" font-size="10">PostgreSQL 16</text>
+    <text class="sv-t" x="776" y="143" font-size="8.5">Schedules &amp; BOM Orders</text>
+
+    <!-- Module 2: MongoDB -->
+    <rect x="768" y="162" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
+    <text class="sv-t k" x="776" y="178" font-size="10">MongoDB Cluster</text>
+    <text class="sv-t" x="776" y="193" font-size="8.5">Raw Geometry Trees</text>
+
+    <!-- Module 3: Redis Memo -->
+    <rect x="768" y="212" width="159" height="42" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
+    <text class="sv-t k" x="776" y="228" font-size="10">In-Memory Cache (Redis)</text>
+    <text class="sv-t" x="776" y="243" font-size="8.5">Subproblem Memoization</text>
+
+    <!-- Port Tag -->
+    <rect x="768" y="268" width="159" height="24" rx="4" fill="var(--fill)" stroke="var(--rule)"/>
+    <text class="sv-dt" x="848" y="284" text-anchor="middle" font-size="9">PORT 5432 &middot; ACID POOL</text>
+  </g>`;
+
+  // 7. Bottom Feedback Bus: Return Stream to Client
+  o += `<path class="sv-active" d="M 848 356 L 605 356 L 362 356 L 128 356"/>`;
+  o += `<polygon fill="var(--accent)" points="128,356 137,351 137,361"/>`;
+  o += `<rect x="210" y="344" width="540" height="24" rx="4" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.2"/>`;
+  o += `<text class="sv-t k" x="480" y="360" text-anchor="middle" font-size="10.5" fill="var(--accent-ink)">&larr; Verified Cutting Schedule &amp; XLSX Export Stream (0.35% Scrap Waste Parity)</text>`;
+
+  // 8. CAD Blueprint Title Block (Bottom-Right)
+  o += `<rect x="735" y="386" width="200" height="26" rx="4" fill="var(--fill)" stroke="var(--rule)"/>`;
+  o += `<text class="sv-dt" x="835" y="402" text-anchor="middle" font-size="9.5">DWG: SYS-OPT-2026 &middot; REV 2.4</text>`;
+
+  el.innerHTML = o;
+}
+
+/* ---- Input event listeners ---- */
+[inStockL, inKerf, inCut1, inCut2, inCut3].forEach(el => {
+  el.addEventListener("input", renderCuttingStock);
+});
+
+/* ---- Tabs implementation ---- */
+(() => {
+  const tabs = [...document.querySelectorAll('.tabs [role="tab"]')];
+  const select = b => {
+    tabs.forEach(t => {
+      const on = t === b;
+      t.setAttribute("aria-selected", on);
+      t.tabIndex = on ? 0 : -1;
+      const p = document.getElementById(t.dataset.panel);
+      if (p) p.hidden = !on;
+      if (on) t.scrollIntoView({ inline: "nearest", block: "nearest" });
+    });
+    refreshLinkedHighlights();
+  };
+  tabs.forEach((b, i) => {
+    b.addEventListener("click", () => select(b));
+    b.addEventListener("keydown", e => {
+      const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (d) {
+        const n = tabs[(i + d + tabs.length) % tabs.length];
+        n.focus();
+        select(n);
+      }
+    });
+  });
+})();
+
+/* ---- Linked highlight across SVG, Cards, and Table rows ---- */
+function initLinkedHighlights() {
+  document.querySelectorAll(".linked").forEach(root => {
+    let pinned = null;
+
+    const setupHits = () => {
+      root.querySelectorAll("svg g[data-mark]").forEach(g => {
+        g.querySelectorAll("path, line, polyline, circle, rect").forEach(el => {
+          if (el.classList.contains("sv-hit")) return;
+          const h = el.cloneNode();
+          h.setAttribute("class", "sv-hit");
+          h.removeAttribute("style");
+          g.insertBefore(h, el);
+        });
+      });
+    };
+    setupHits();
+
+    const light = m => {
+      root.classList.toggle("has-hl", !!m);
+      root.querySelectorAll("[data-mark]").forEach(el => {
+        el.classList.toggle("hl", el.dataset.mark === m);
+      });
+    };
+
+    const at = e => e.target.closest && e.target.closest("[data-mark]");
+
+    root.addEventListener("pointerover", e => { const el = at(e); light(el ? el.dataset.mark : pinned); });
+    root.addEventListener("pointerleave", () => light(pinned));
+    root.addEventListener("focusin", e => { const el = at(e); if (el) light(el.dataset.mark); });
+    root.addEventListener("focusout", () => light(pinned));
+    root.addEventListener("click", e => {
+      const el = at(e);
+      pinned = el && pinned !== el.dataset.mark ? el.dataset.mark : null;
+      light(pinned || (el && el.dataset.mark));
+    });
+
+    root._refreshHits = setupHits;
+    root._reapplyHl = () => light(pinned);
+  });
+}
+
+function refreshLinkedHighlights() {
+  document.querySelectorAll(".linked").forEach(root => {
+    if (root._refreshHits) root._refreshHits();
+    if (root._reapplyHl) root._reapplyHl();
+  });
+}
+
+/* ---- Button click ripple ---- */
+document.addEventListener("pointerdown", e => {
+  const b = e.target.closest(".btn");
+  if (!b) return;
+  const r = b.getBoundingClientRect();
+  const size = Math.hypot(r.width, r.height) * 2;
+  const s = document.createElement("span");
+  s.className = "ripple";
+  s.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - r.left - size / 2}px;top:${e.clientY - r.top - size / 2}px`;
+  b.append(s);
+  s.addEventListener("animationend", () => s.remove());
+});
+
+/* ---- Wide tables: edge fades & mouse glide drag ---- */
+(() => {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll(".table-scroll").forEach(el => {
+    const edges = () => {
+      const max = el.scrollWidth - el.clientWidth;
+      el.classList.toggle("can-drag", max > 1);
+      el.classList.toggle("fade-l", el.scrollLeft > 2);
+      el.classList.toggle("fade-r", el.scrollLeft < max - 2);
+    };
+    el.addEventListener("scroll", edges, { passive: true });
+    new ResizeObserver(edges).observe(el);
+    edges();
+
+    let x0 = 0, s0 = 0, lx = 0, v = 0, raf = 0, down = false;
+    el.addEventListener("pointerdown", e => {
+      if (e.pointerType !== "mouse" || e.button || el.scrollWidth <= el.clientWidth || e.target.closest("a,button,input,select")) return;
+      cancelAnimationFrame(raf);
+      down = true;
+      x0 = lx = e.clientX;
+      s0 = el.scrollLeft;
+      v = 0;
+      el.setPointerCapture(e.pointerId);
+      el.classList.add("dragging");
+    });
+    el.addEventListener("pointermove", e => {
+      if (!down) return;
+      v = lx - e.clientX;
+      lx = e.clientX;
+      el.scrollLeft = s0 - (e.clientX - x0);
+    });
+    const end = () => {
+      if (!down) return;
+      down = false;
+      if (reduce || Math.abs(v) < 1) return el.classList.remove("dragging");
+      const g = () => {
+        v *= 0.92;
+        el.scrollLeft += v;
+        Math.abs(v) > 0.4 ? raf = requestAnimationFrame(g) : el.classList.remove("dragging");
+      };
+      raf = requestAnimationFrame(g);
+    };
+    el.addEventListener("pointerup", end);
+    el.addEventListener("pointercancel", end);
+  });
+})();
+
+/* ---- One typing demo when scrolled into view ---- */
+(() => {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const section = document.getElementById("case");
+  let ran = false;
+
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !ran) {
+      ran = true;
+      observer.disconnect();
+
+      const input = inCut1;
+      const targetStr = "4850";
+      const wrap = input.closest(".in");
+      if (wrap) wrap.classList.add("typing");
+
+      let current = "";
+      input.value = "";
+      let i = 0;
+
+      const timer = setInterval(() => {
+        if (i < targetStr.length) {
+          current += targetStr[i++];
+          input.value = current;
+          renderCuttingStock();
+        } else {
+          clearInterval(timer);
+          if (wrap) wrap.classList.remove("typing");
+        }
+      }, 70);
+
+      const stop = () => {
+        clearInterval(timer);
+        if (wrap) wrap.classList.remove("typing");
+        section.removeEventListener("pointerdown", stop);
+        section.removeEventListener("keydown", stop);
+      };
+      section.addEventListener("pointerdown", stop, { once: true });
+      section.addEventListener("keydown", stop, { once: true });
+    }
+  }, { threshold: 0.35 });
+
+  if (section) observer.observe(section);
+})();
+
+/* ---- KaTeX auto-render & MutationObserver ---- */
+window.addEventListener("load", () => {
+  renderCuttingStock();
+  initArchDiagram();
+  initLinkedHighlights();
+
+  if (!window.renderMathInElement) return;
+  const opts = {
+    delimiters: [{ left: "$", right: "$", display: false }],
+    throwOnError: false,
+    ignoredTags: ["script", "noscript", "style", "textarea", "option", "svg"]
+  };
+  renderMathInElement(document.body, opts);
+
+  new MutationObserver(ms => ms.forEach(m => {
+    const el = m.target.nodeType === 1 ? m.target : m.target.parentElement;
+    if (el && el.textContent.includes("$") && !el.closest(".katex") && !el.closest("svg")) {
+      renderMathInElement(el, opts);
+    }
+  })).observe(document.body, { childList: true, subtree: true, characterData: true });
+});
+</script>
+</body>
+</html>
