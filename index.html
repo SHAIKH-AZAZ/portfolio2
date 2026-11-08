@@ -12,6 +12,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<!-- flagship demo (stageshow kit, built from .agents/skills/stageshow/examples/cut-plan); the static fig 01 stays as fallback -->
+<link rel="stylesheet" href="work-demo.css">
+<script defer src="work-demo.js"></script>
 <style>
 /* ---------- tokens: blueprint SaaS house style ---------- */
 :root {
@@ -196,6 +199,8 @@ main > section + section, .hero-bg + section { border-top: 1px solid var(--rule)
 .vig .vizfx { position: relative; margin: 0 18px; width: calc(100% - 36px); aspect-ratio: 340 / 300; }
 .vig .viz { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity .25s; color: var(--steel); }
 .vig .viz.on { opacity: 1; color: var(--accent); }
+.vig-demo { position: absolute; inset: 0; }
+.vig.has-demo .viz[data-viz="v1"] { visibility: hidden; }
 .vig-cap { margin-top: auto; display: flex; justify-content: space-between; gap: 12px; font-size: .8125rem; color: var(--ink-soft); border-top: 1px solid var(--rule); padding: 10px 18px 12px; }
 .vig-cap strong { color: var(--ink); font-weight: 700; }
 
@@ -958,7 +963,20 @@ const callout = (x, y, ty, txt, side = "right", cls = "") => {
     orders.map(key => `<svg class="viz${key === orders[0] ? " on" : ""}" viewBox="0 0 340 300" data-viz="${key}" aria-hidden="true">${figs[key].svg}</svg>`).join("") +
   `</div>`);
 
+  /* fig 01 is a live demo: mounted while row 01 is the active row, unmounted
+     on any other row so it restarts on return. No script → static fig stays. */
+  const demoBox = Object.assign(document.createElement("div"), { className: "vig-demo" });
+  container.querySelector(".vizfx").append(demoBox);
+  let unmount = null;
+  const demo = key => {
+    const want = key === "v1" && container.offsetWidth > 0 && typeof window.mountCutPlan === "function";
+    if (want && !unmount) { unmount = window.mountCutPlan(demoBox); container.classList.add("has-demo"); }
+    else if (!want && unmount) { unmount(); unmount = null; container.classList.remove("has-demo"); }
+  };
+  addEventListener("DOMContentLoaded", () => demo(current));
+
   const on = key => {
+    demo(key);
     container.querySelectorAll("svg.viz").forEach(s => s.classList.toggle("on", s.dataset.viz === key));
     const f = figs[key];
     if (f) { capEl.innerHTML = f.fig; nameEl.textContent = f.name; }
