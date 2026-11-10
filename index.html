@@ -8,6 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
 <style>
 :root {
   --bg: #FFFFFF; --fill: #F2F6FA;
@@ -35,9 +38,9 @@ a { color: inherit; }
 .ti { width: 1.25em; height: 1.25em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 section { padding-block: clamp(64px, 9vw, 120px); border-top: 1px solid var(--rule); }
 section[id], div[id] { scroll-margin-top: 76px; }
-h2 { font-size: clamp(2rem, 4.2vw, 3.2rem); line-height: 1.12; letter-spacing: -.03em; font-weight: 700; max-width: 22ch; }
+h2 { font-size: clamp(2rem, 4.2vw, 3.4rem); line-height: 1.12; letter-spacing: -.03em; font-weight: 700; max-width: 20ch; }
 h3 { font-size: 1.0625rem; line-height: 1.35; font-weight: 700; letter-spacing: -.01em; }
-.lede { font-size: 1.1875rem; color: var(--ink-soft); max-width: 40rem; margin-top: 18px; }
+.lede { font-size: 1.1875rem; color: var(--ink-soft); max-width: 38rem; margin-top: 18px; }
 .kicker { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-weight: 700; font-size: .9375rem; margin-bottom: 14px; }
 .kicker .ti { width: 1.15em; height: 1.15em; }
 mark.good, mark.bad { font-weight: 600; padding: 1px 6px; border-radius: 4px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
@@ -55,7 +58,7 @@ code { background: var(--fill); border: 1px solid var(--rule); border-radius: 4p
 }
 .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-up); border-color: var(--accent); }
 .btn.solid { background: var(--accent); border-color: var(--accent); color: #fff; }
-.btn.small { min-height: 36px; padding: 0 12px; font-size: .875rem; }
+.btn.small { min-height: 40px; padding: 0 12px; font-size: .875rem; }
 .ripple { position: absolute; border-radius: 50%; background: currentColor; opacity: .22; transform: scale(0); animation: rip .55s ease-out forwards; pointer-events: none; }
 @keyframes rip { to { transform: scale(2.6); opacity: 0; } }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -75,9 +78,9 @@ code { background: var(--fill); border: 1px solid var(--rule); border-radius: 4p
 .hero .wrap { position: relative; }
 .avail { display: inline-flex; align-items: center; gap: 8px; font-size: .875rem; font-weight: 600; color: var(--ink-soft); border: 1px solid var(--rule); background: #fff; border-radius: 999px; padding: 5px 12px; margin-bottom: 26px; }
 .avail i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
-h1 { font-size: clamp(2.6rem, 7vw, 6.2rem); line-height: 1.02; letter-spacing: -.035em; font-weight: 700; }
+h1 { font-size: clamp(2.9rem, 7.6vw, 7rem); line-height: 1.02; letter-spacing: -.035em; font-weight: 700; }
 h1 span { display: block; color: var(--accent); padding-left: clamp(0px, 5vw, 80px); }
-.hero-row { display: grid; grid-template-columns: minmax(0, 40rem) auto; gap: 28px; align-items: end; justify-content: space-between; margin-top: 30px; }
+.hero-row { display: grid; grid-template-columns: minmax(0, 38rem) auto; gap: 28px; align-items: end; justify-content: space-between; margin-top: 30px; }
 .hero-row .lede { margin-top: 0; }
 .hero-cta { display: flex; gap: 10px; flex-wrap: wrap; }
 .loop { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: clamp(36px, 5vw, 60px); }
@@ -111,7 +114,7 @@ h1 span { display: block; color: var(--accent); padding-left: clamp(0px, 5vw, 80
 .grp:first-child { margin-top: 0; }
 .field { display: grid; grid-template-columns: minmax(0, 1fr) 7.5rem; align-items: center; gap: 10px; padding: 4px 0; font-size: .9375rem; }
 .in { display: flex; align-items: center; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
-.in:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-tint); }
+.in:focus-within, .in.typing { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-tint); }
 .in input { width: 100%; min-width: 0; border: 0; background: none; outline: 0; color: var(--ink); font: inherit; font-weight: 600; text-align: right; padding: 7px 8px; }
 .in u { text-decoration: none; color: var(--steel); font-size: .8125rem; padding-right: 8px; white-space: nowrap; }
 .in.big input { text-align: left; font-family: var(--mono); font-size: 1rem; padding: 10px 12px; }
@@ -131,6 +134,7 @@ h1 span { display: block; color: var(--accent); padding-left: clamp(0px, 5vw, 80
 .sv-t { font: 600 11px "Plus Jakarta Sans", sans-serif; fill: var(--ink); paint-order: stroke; stroke: var(--fill); stroke-width: 4px; }
 .sv-t.d { fill: var(--dim); }
 .sv-t.c { font-family: var(--mono); fill: var(--accent-ink); }
+.sv-hit { fill: none; stroke: transparent; stroke-width: 14px; pointer-events: stroke; }
 .sv-lead { stroke: var(--accent-ink); stroke-width: 1; fill: none; }
 .has-hl g[data-mark]:not(.hl) { opacity: .25; }
 .has-hl g[data-mark].hl .sv-bar { stroke-width: 3.4; }
@@ -139,18 +143,23 @@ h1 span { display: block; color: var(--accent); padding-left: clamp(0px, 5vw, 80
 .tokens { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 .tok { border: 1px solid var(--rule); border-radius: 8px; padding: 6px 10px; background: #fff; font-size: .8125rem; color: var(--ink-soft); line-height: 1.35; }
 .tok b { display: block; font-family: var(--mono); font-size: .9375rem; color: var(--accent-ink); }
-.note { margin-top: 12px; padding: 10px 12px; border-radius: 8px; font-size: .875rem; background: #FFF8E6; color: #7A5200; border: 1px solid #F5E2B0; }
+.note { margin-top: 12px; padding: 10px 12px; border-radius: 8px; font-size: .875rem; background: var(--fill); color: var(--ink-soft); border: 1px solid var(--rule); }
 .reject { margin-top: 14px; padding: 14px 16px; border-radius: 8px; background: var(--bad-tint); color: var(--bad); font-weight: 600; font-size: .9375rem; }
 .reject small { display: block; font-weight: 500; margin-top: 2px; }
 
-.table-scroll { position: relative; overflow-x: auto; margin-top: 14px; border: 1px solid var(--rule); border-radius: 10px; scrollbar-width: thin; }
+.table-scroll { position: relative; overflow-x: auto; overscroll-behavior-x: contain; margin-top: 14px; border: 1px solid var(--rule); border-radius: 10px; scrollbar-width: thin; scrollbar-color: var(--rule) transparent; }
+.table-scroll.can-drag { cursor: grab; } .table-scroll.dragging { cursor: grabbing; user-select: none; }
+.table-scroll::-webkit-scrollbar { height: 6px; } .table-scroll::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 99px; }
+.table-scroll.fade-r { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); }
+.table-scroll.fade-l { -webkit-mask-image: linear-gradient(to right, transparent, #000 32px); mask-image: linear-gradient(to right, transparent, #000 32px); }
+.table-scroll.fade-l.fade-r { -webkit-mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent); }
 table { border-collapse: collapse; width: 100%; font-size: .9375rem; }
 th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
 th { font-size: .8125rem; color: var(--ink-soft); font-weight: 600; background: var(--fill); }
 tr:last-child td { border-bottom: 0; }
 td.n, th.n { text-align: right; }
 td.wrapcell { white-space: normal; min-width: 14rem; }
-tr[data-mark] { cursor: default; transition: background .15s; }
+tr[data-mark] { cursor: pointer; transition: background .15s; }
 tr[data-mark].hl td { background: var(--accent-tint); }
 tr.total td { font-weight: 700; background: var(--fill); }
 
@@ -270,6 +279,7 @@ tr.total td { font-weight: 700; background: var(--fill); }
 
 /* closing */
 .closing h2 { font-size: clamp(2.4rem, 6vw, 4.6rem); max-width: 16ch; }
+.katex { font-size: 1.04em; }
 .closing .hero-cta { margin-top: 28px; }
 footer { border-top: 1px solid var(--rule); padding: 22px 0 36px; color: var(--ink-soft); font-size: .875rem; }
 footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
@@ -344,7 +354,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
       <a href="#experience">Experience</a>
       <a href="#stack">Tech stack</a>
     </nav>
-    <a class="btn solid small" href="#contact">Contact</a>
+    <a class="btn solid" href="#contact">Contact</a>
   </div>
 </header>
 
@@ -736,11 +746,11 @@ function schedule(bars, g) {
     if (x.kind === "spaced") {
       nos = (Math.floor(g.L / x.spacing) + 1) * (x.legs / 2);
       cut = 2 * (a + h) + 8 * x.dia;
-      how = "nos = L ÷ " + x.spacing + " + 1 · cut = 2(a + h) + 8d";
+      how = "$\\lfloor L / " + x.spacing + " \\rfloor + 1$ nos, cut $2(a + h) + 8d$";
     } else {
       nos = x.n;
       cut = g.L + 2 * g.ld * x.dia;
-      how = "cut = L + 2 × " + g.ld + "d";
+      how = "cut $L + 2 \\times " + g.ld + "d$";
     }
     return { text: x.text, kind: x.kind, dia: x.dia, nos: nos, cut: cut, how: how, kg: nos * cut / 1000 * KG_PER_M[x.dia] };
   });
@@ -806,22 +816,67 @@ function renderMark() {
     h += '<tr data-mark="m' + i + '" tabindex="0"><td class="mono">' + esc(r.text) + '</td><td class="n">' + fmt(r.nos) + '</td><td class="n">' + fmt(r.cut) + " mm</td><td>" + r.how + '</td><td class="n">' + r.kg.toFixed(2) + " kg</td></tr>";
   });
   h += '<tr class="total"><td colspan="4">Steel for this label</td><td class="n">' + tot.toFixed(2) + " kg</td></tr></tbody></table></div>";
-  h += '<p class="hint">a = b − 2c = ' + fmt(s.a) + ", h = D − 2c = " + fmt(s.h) + ". Example rules, kept simple for the demo.</p>";
+  h += '<p class="hint">$a = b - 2c$ = ' + fmt(s.a) + ", $h = D - 2c$ = " + fmt(s.h) + ". Example rules, kept simple for the demo.</p>";
   out.innerHTML = h;
+  $("d1fig").querySelectorAll("g[data-mark] line, g[data-mark] path").forEach(function (el) {
+    var hit = el.cloneNode(); hit.setAttribute("class", "sv-hit"); el.parentNode.insertBefore(hit, el);
+  });
+  wideTable(out.querySelector(".table-scroll"));
+  if (relight) relight();
+}
+var relight = null;
+
+/* wide tables: edge fades + mouse drag with a short glide */
+function wideTable(el) {
+  if (!el) return;
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches, x0 = 0, s0 = 0, lx = 0, v = 0, raf = 0, down = false;
+  function edges() { var max = el.scrollWidth - el.clientWidth; el.classList.toggle("can-drag", max > 1); el.classList.toggle("fade-l", el.scrollLeft > 2); el.classList.toggle("fade-r", el.scrollLeft < max - 2); }
+  el.addEventListener("scroll", edges, { passive: true });
+  if (window.ResizeObserver) new ResizeObserver(edges).observe(el);
+  edges();
+  el.addEventListener("pointerdown", function (e) {
+    if (e.pointerType !== "mouse" || e.button || el.scrollWidth <= el.clientWidth || e.target.closest("a,button,input,select")) return;
+    cancelAnimationFrame(raf); down = true; x0 = lx = e.clientX; s0 = el.scrollLeft; v = 0; el.setPointerCapture(e.pointerId); el.classList.add("dragging");
+  });
+  el.addEventListener("pointermove", function (e) { if (!down) return; v = lx - e.clientX; lx = e.clientX; el.scrollLeft = s0 - (e.clientX - x0); });
+  function end() {
+    if (!down) return; down = false;
+    if (reduce || Math.abs(v) < 1) { el.classList.remove("dragging"); return; }
+    (function glide() { v *= .92; el.scrollLeft += v; if (Math.abs(v) > .4) raf = requestAnimationFrame(glide); else el.classList.remove("dragging"); })();
+  }
+  el.addEventListener("pointerup", end); el.addEventListener("pointercancel", end);
 }
 
 /* linked highlight: table row <-> bars in the drawing */
 (function () {
-  var root = $("d1out");
+  var root = $("d1out"), pinned = null;
   function set(mark) {
     root.classList.toggle("has-hl", !!mark);
     root.querySelectorAll("[data-mark]").forEach(function (el) { el.classList.toggle("hl", el.getAttribute("data-mark") === mark); });
   }
   function from(e) { var t = e.target.closest && e.target.closest("[data-mark]"); return t ? t.getAttribute("data-mark") : null; }
-  root.addEventListener("pointerover", function (e) { set(from(e)); });
-  root.addEventListener("pointerleave", function () { set(null); });
-  root.addEventListener("focusin", function (e) { set(from(e)); });
-  root.addEventListener("focusout", function () { set(null); });
+  root.addEventListener("pointerover", function (e) { set(from(e) || pinned); });
+  root.addEventListener("pointerleave", function () { set(pinned); });
+  root.addEventListener("focusin", function (e) { var m = from(e); if (m) set(m); });
+  root.addEventListener("focusout", function () { set(pinned); });
+  root.addEventListener("click", function (e) { var m = from(e); pinned = m && pinned !== m ? m : null; set(pinned || m); });   /* tap pins it */
+  relight = function () { if (pinned && !root.querySelector('[data-mark="' + pinned + '"]')) pinned = null; set(pinned); };
+})();
+
+/* the one moment: the label types itself the first time the demo scrolls into view */
+(function () {
+  var box = $("d1"), inp = $("mk"), text = inp.value, timer = 0;
+  if (!window.IntersectionObserver || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  function stop() { if (!timer) return; clearInterval(timer); timer = 0; inp.parentNode.classList.remove("typing"); if (!inp.value) inp.value = text; renderMark(); }
+  box.addEventListener("pointerdown", stop); box.addEventListener("keydown", stop);
+  var io = new IntersectionObserver(function (en) {
+    if (!en[0].isIntersecting) return;
+    io.disconnect();
+    var i = 0; inp.value = ""; inp.parentNode.classList.add("typing");
+    $("d1read").innerHTML = '<p class="hint">Reading the label…</p>'; $("d1fig").style.opacity = ".45";
+    timer = setInterval(function () { inp.value = text.slice(0, ++i); if (i >= text.length) stop(); }, 70);
+  }, { threshold: .35 });
+  io.observe(box);
 })();
 
 /* ───────── 2. cutting stock ───────── */
@@ -1032,7 +1087,10 @@ function renderStack(group) {
   [].forEach.call($("stackTabs").children, function (b) {
     var on = b.getAttribute("data-g") === group;
     b.setAttribute("aria-selected", String(on));
-    if (on && b.scrollIntoView) b.scrollIntoView({ inline: "nearest", block: "nearest" });
+    if (on) {                                       /* scroll the strip only, never the page */
+      var st = b.parentNode, l = b.offsetLeft - st.offsetLeft, r = l + b.offsetWidth;
+      if (l < st.scrollLeft) st.scrollLeft = l; else if (r > st.scrollLeft + st.clientWidth) st.scrollLeft = r - st.clientWidth;
+    }
   });
   var n = 0, first = -1, keep = false;
   $("stackGrid").innerHTML = STACK.map(function (t, i) {
@@ -1099,6 +1157,17 @@ document.addEventListener("pointerdown", function (e) {
   var r = b.getBoundingClientRect(), d = Math.max(r.width, r.height), s = document.createElement("span");
   s.className = "ripple"; s.style.cssText = "width:" + d + "px;height:" + d + "px;left:" + (e.clientX - r.left - d / 2) + "px;top:" + (e.clientY - r.top - d / 2) + "px";
   b.appendChild(s); setTimeout(function () { s.remove(); }, 600);
+});
+
+document.querySelectorAll(".table-scroll").forEach(wideTable);
+addEventListener("load", function () {
+  if (!window.renderMathInElement) return;
+  var opts = { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false, ignoredTags: ["script", "noscript", "style", "textarea", "option", "svg"] };
+  renderMathInElement(document.body, opts);
+  new MutationObserver(function (ms) { ms.forEach(function (m) {
+    var el = m.target.nodeType === 1 ? m.target : m.target.parentElement;
+    if (el && el.textContent.indexOf("$") >= 0 && !el.closest(".katex")) renderMathInElement(el, opts);
+  }); }).observe(document.body, { childList: true, subtree: true, characterData: true });
 });
 
 setRows(DEFAULT_ROWS);
