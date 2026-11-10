@@ -209,6 +209,52 @@ tr.total td { font-weight: 700; background: var(--fill); }
 .go:hover { text-decoration: underline; }
 .priv { font-size: .8125rem; color: var(--steel); white-space: nowrap; }
 
+
+/* tech stack */
+.tabs { display: flex; gap: 4px; margin-top: 32px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; box-shadow: inset 0 -1px 0 var(--rule); }
+.tabs::-webkit-scrollbar { display: none; }
+.tabs button { flex: none; font: inherit; font-weight: 600; font-size: .9375rem; color: var(--ink-soft); background: none; border: 0; border-bottom: 2px solid transparent; padding: 10px 14px; cursor: pointer; white-space: nowrap; transition: color .15s, border-color .15s; }
+.tabs button:hover { color: var(--ink); }
+.tabs button[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+.tabs button:focus-visible { outline-offset: -3px; }
+.tabs button small { font-size: .75rem; font-weight: 600; color: var(--steel); background: var(--fill); border-radius: 999px; padding: 1px 7px; margin-left: 6px; }
+.tabs button[aria-selected="true"] small { background: var(--accent-tint); color: var(--accent-ink); }
+.stack-wrap { display: grid; grid-template-columns: minmax(0, 21rem) minmax(0, 1fr); gap: 16px; margin-top: 20px; align-items: start; }
+.stack-wrap > * { min-width: 0; }
+.tool-view { position: sticky; top: 80px; z-index: 5; background: #fff; border: 1px solid var(--rule); border-radius: 12px; box-shadow: var(--shadow); padding: 22px; min-height: 17rem; }
+.tv-in { animation: tv .28s ease; }
+@keyframes tv { from { opacity: 0; transform: translateY(6px); } }
+.tv-logo { width: 64px; height: 64px; border-radius: 14px; background: var(--fill); border: 1px solid var(--rule); display: grid; place-items: center; margin-bottom: 16px; flex: none; }
+.tv-logo img, .tv-logo .mg { width: 38px; height: 38px; }
+.tv-logo .mg { font-size: .75rem; }
+.tv-name { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.tv-name em { font-style: normal; font-size: .75rem; font-weight: 600; color: var(--accent-ink); background: var(--accent-tint); border-radius: 4px; padding: 1px 8px; }
+.tv-use { color: var(--ink-soft); margin-top: 6px; }
+.tv-keys { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.tv-keys span { font-size: .8125rem; font-weight: 600; color: var(--ink-soft); background: var(--fill); border: 1px solid var(--rule); border-radius: 999px; padding: 2px 10px; }
+.tv-hint { color: var(--steel); font-size: .8125rem; margin-top: 18px; }
+.stack { display: grid; grid-template-columns: repeat(auto-fill, minmax(7.6rem, 1fr)); gap: 10px; --mx: -999px; --my: -999px; }
+.tool {
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px;
+  min-height: 98px; padding: 14px 8px; background: #fff; border: 1px solid var(--rule); border-radius: 12px;
+  font: inherit; font-weight: 600; font-size: .8125rem; line-height: 1.25; color: var(--ink); text-align: center; cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  animation: pop .32s ease backwards; animation-delay: calc(var(--i) * 18ms);
+}
+@keyframes pop { from { opacity: 0; transform: translateY(8px) scale(.96); } }
+.tool img, .mg { width: 30px; height: 30px; flex: none; }
+.tool img { transition: transform .18s ease; }
+.mg { display: grid; place-items: center; border-radius: 8px; background: var(--accent-tint); color: var(--accent-ink); font-size: .625rem; font-weight: 700; }
+/* glow that follows the cursor: a lit border plus a soft wash */
+.tool::before, .tool::after { content: ""; position: absolute; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .25s ease; }
+.tool::before { inset: -1px; padding: 1.5px; background: radial-gradient(170px circle at calc(var(--mx) - var(--x)) calc(var(--my) - var(--y)), var(--accent), transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); }
+.tool::after { inset: 0; background: radial-gradient(150px circle at calc(var(--mx) - var(--x)) calc(var(--my) - var(--y)), rgba(0,140,31,.10), transparent 70%); }
+.stack.lit .tool::before, .stack.lit .tool::after { opacity: 1; }
+.tool:hover { transform: translateY(-2px); box-shadow: var(--shadow-up); }
+.tool:hover img { transform: scale(1.12); }
+.tool[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-tint); }
+
 /* steps, timeline, skills */
 .steps { margin-top: 40px; max-width: 820px; counter-reset: s; }
 .step { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 8px; padding: 20px 0; border-top: 1px solid var(--rule); }
@@ -238,6 +284,12 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
   .demo-body { grid-template-columns: minmax(0, 1fr); }
   .demo-form { border-right: 0; border-bottom: 1px solid var(--rule); }
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stack-wrap { grid-template-columns: minmax(0, 1fr); }
+  .tool-view { top: 68px; min-height: 0; padding: 14px 16px; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 14px; align-items: start; }
+  .tv-logo { width: 48px; height: 48px; margin: 0; }
+  .tv-logo img, .tv-logo .mg { width: 28px; height: 28px; }
+  .tv-hint { display: none; }
+  .tv-keys { margin-top: 8px; }
   .pipe { grid-template-columns: minmax(0, 1fr); }
   .pipe > div { border-right: 0; border-bottom: 1px solid var(--rule); }
   .pipe > div:last-child { border-bottom: 0; }
@@ -248,6 +300,9 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
   .stats, .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .plans { grid-template-columns: minmax(0, 1fr); }
   .cards { grid-template-columns: minmax(0, 1fr); }
+  .stack { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .tool { min-height: 88px; }
+  .tool-view { min-height: 9.5rem; }
   .job { grid-template-columns: minmax(0, 1fr); gap: 6px; }
   .step { grid-template-columns: 2.2rem minmax(0, 1fr); }
   .nav .btn { padding: 0 12px; }
@@ -287,6 +342,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
       <a href="#work">Other work</a>
       <a href="#how">How I work</a>
       <a href="#experience">Experience</a>
+      <a href="#stack">Tech stack</a>
     </nav>
     <a class="btn solid small" href="#contact">Contact</a>
   </div>
@@ -595,16 +651,19 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
       </div>
     </div>
 
-    <div class="table-scroll" style="margin-top: 40px">
-      <table>
-        <thead><tr><th>I use</th><th>Tools</th></tr></thead>
-        <tbody>
-          <tr><td><b>To build</b></td><td class="wrapcell">React, Node.js, Express, REST APIs, MongoDB, PostgreSQL</td></tr>
-          <tr><td><b>To test</b></td><td class="wrapcell">Selenium WebDriver, TestNG, Pytest, Postman; manual, regression, exploratory and API testing</td></tr>
-          <tr><td><b>To ship</b></td><td class="wrapcell">Docker, GitHub Actions, Jenkins, AWS, Nginx, Linux</td></tr>
-          <tr><td><b>Languages</b></td><td class="wrapcell">TypeScript, JavaScript, Python, Java, SQL</td></tr>
-        </tbody>
-      </table>
+  </div>
+</section>
+
+
+<!-- ───────── Tech stack ───────── -->
+<section id="stack">
+  <div class="wrap">
+    <h2>Tech stack and tools.</h2>
+    <p class="lede">Each one is here because I've used it on real work. Point at a tool to see what I use it for.</p>
+    <div class="tabs" id="stackTabs" role="tablist" aria-label="Filter the stack"></div>
+    <div class="stack-wrap">
+      <div class="tool-view" id="toolView" aria-live="polite"></div>
+      <div class="stack" id="stackGrid"></div>
     </div>
   </div>
 </section>
@@ -915,6 +974,111 @@ function runChecks() {
   $("chk").innerHTML = h;
   $("chkSum").textContent = pass + " of " + cases.length + " pass. Ran in your browser just now, in " + (ms < 1 ? "under 1" : ms.toFixed(0)) + " ms.";
 }
+
+
+/* ───────── tech stack ───────── */
+/* group, name, what I use it for, keywords, icon file, short mark used when there is no logo */
+var STACK = [
+  ["Languages", "TypeScript", "Typed code for apps and APIs", "Types · Interfaces · Safer refactors", "typescript", "TY"],
+  ["Languages", "JavaScript", "The language of the browser and Node", "ES6+ · Async · DOM", "javascript", "JA"],
+  ["Languages", "Python", "Scripts, automation and test code", "Automation · Pytest · Data", "python", "PY"],
+  ["Languages", "Java", "Selenium test automation", "OOP · WebDriver · TestNG", "java", "JA"],
+  ["Languages", "SQL", "Querying and checking data", "Joins · Filters · Data checks", "", "SQL"],
+  ["Languages", "HTML5 and CSS3", "Structure and layout of every page", "Semantic · Grid · Responsive", "html5", "HT"],
+  ["Build", "React", "Interfaces made of reusable components", "Hooks · State · Forms", "react", "RE"],
+  ["Build", "Next.js", "React apps and client websites", "Routing · SEO · Server rendering", "nextjs", "NE"],
+  ["Build", "Node.js", "Server-side JavaScript", "APIs · Services · Scripts", "nodejs", "NO"],
+  ["Build", "Express.js", "REST APIs on Node", "Routes · Middleware · Validation", "express", "EX"],
+  ["Build", "REST APIs", "Designing and consuming endpoints", "Requests · Errors · Data shape", "", "API"],
+  ["Build", "MongoDB", "Document database", "Schemas · Queries · Indexes", "mongodb", "MO"],
+  ["Build", "PostgreSQL", "Relational database", "Tables · Relations · Queries", "postgresql", "PO"],
+  ["Build", "LangChain and LangGraph", "AI agents that work in steps", "Tools · Memory · Branching", "", "LC"],
+  ["Test", "Manual testing", "Finding what breaks before users do", "Functional · Regression · Exploratory", "", "QA"],
+  ["Test", "Selenium WebDriver", "Browser tests that run on their own", "Java · Regression suites · Locators", "selenium", "SE"],
+  ["Test", "TestNG", "Organising and running Java tests", "Suites · Assertions · Reports", "", "NG"],
+  ["Test", "Pytest", "Tests in Python", "Fixtures · Parametrised · Asserts", "pytest", "PY"],
+  ["Test", "Postman", "API testing", "Correctness · Response time · Data integrity", "postman", "PO"],
+  ["Test", "Jira", "Bug reports tracked to closure", "Defect life cycle · Sprints · Traceability", "jira", "JI"],
+  ["Ship", "Docker", "The same environment everywhere", "Images · Compose · Containers", "docker", "DO"],
+  ["Ship", "GitHub Actions", "Test and deploy on every merge", "Workflows · Build · Deploy", "githubactions", "GI"],
+  ["Ship", "Jenkins", "Build and deployment pipelines", "Jobs · Stages · Automation", "jenkins", "JE"],
+  ["Ship", "AWS", "Cloud hosting and storage", "EC2 · S3 · RDS · IAM · Lambda · CloudWatch", "amazonwebservices", "AW"],
+  ["Ship", "Nginx", "Reverse proxy in front of apps", "Proxy · SSL/TLS · Routing", "nginx", "NG"],
+  ["Ship", "PM2", "Keeping Node services running", "Restarts · Logs · Processes", "", "PM2"],
+  ["Ship", "Linux and Bash", "Servers and shell scripts", "Shell · Config · Scripting", "bash", "LI"],
+  ["Tools", "Git and GitHub", "Version control and code review", "Branches · Pull requests · Issues", "git", "GI"],
+  ["Tools", "VS Code", "Main editor", "Debugging · Extensions", "vscode", "VS"],
+  ["Tools", "IntelliJ IDEA", "Java and Selenium work", "Java · Refactoring", "intellij", "IN"],
+  ["Tools", "Chrome DevTools", "Inspecting pages and network calls", "Network · Console · Performance", "chrome", "CH"],
+  ["Tools", "npm and Webpack", "Packages and bundling", "Dependencies · Scripts · Builds", "npm", "NP"]
+];
+var stackGroup = "Everything", stackSel = 0;
+function toolLogo(t, px) {
+  return t[4] ? '<img src="icons/' + t[4] + '.svg" width="' + px + '" height="' + px + '" alt="" data-m="' + t[5] + '">' : '<span class="mg">' + t[5] + "</span>";
+}
+function showTool(i) {
+  stackSel = i;
+  var t = STACK[i];
+  [].forEach.call($("stackGrid").children, function (el) { el.setAttribute("aria-pressed", String(+el.getAttribute("data-i") === i)); });
+  $("toolView").innerHTML =
+    '<div class="tv-logo tv-in">' + toolLogo(t, 38) + '</div><div class="tv-in">' +
+    '<h3 class="tv-name">' + esc(t[1]) + "<em>" + t[0] + "</em></h3>" +
+    '<p class="tv-use">' + esc(t[2]) + "</p>" +
+    '<div class="tv-keys">' + t[3].split(" · ").map(function (k) { return "<span>" + esc(k) + "</span>"; }).join("") + "</div>" +
+    '<p class="tv-hint">Point at, tab to or tap any tool.</p></div>';
+}
+function renderStack(group) {
+  stackGroup = group;
+  [].forEach.call($("stackTabs").children, function (b) {
+    var on = b.getAttribute("data-g") === group;
+    b.setAttribute("aria-selected", String(on));
+    if (on && b.scrollIntoView) b.scrollIntoView({ inline: "nearest", block: "nearest" });
+  });
+  var n = 0, first = -1, keep = false;
+  $("stackGrid").innerHTML = STACK.map(function (t, i) {
+    if (group !== "Everything" && t[0] !== group) return "";
+    if (first < 0) first = i;
+    if (i === stackSel) keep = true;
+    return '<button class="tool" type="button" data-i="' + i + '" aria-pressed="false" style="--i:' + (n++) + '">' + toolLogo(t, 30) + "<span>" + esc(t[1]) + "</span></button>";
+  }).join("");
+  showTool(keep ? stackSel : first);
+  placeGlow();
+}
+/* each tile needs its own offset so one cursor position lights every border near it */
+function placeGlow() {
+  var g = $("stackGrid").getBoundingClientRect();
+  [].forEach.call($("stackGrid").children, function (el) {
+    var r = el.getBoundingClientRect();
+    el.style.setProperty("--x", (r.left - g.left) + "px"); el.style.setProperty("--y", (r.top - g.top) + "px");
+  });
+}
+(function () {
+  var groups = ["Everything"], grid = $("stackGrid");
+  STACK.forEach(function (t) { if (groups.indexOf(t[0]) < 0) groups.push(t[0]); });
+  $("stackTabs").innerHTML = groups.map(function (g) {
+    var n = g === "Everything" ? STACK.length : STACK.filter(function (t) { return t[0] === g; }).length;
+    return '<button type="button" role="tab" aria-selected="false" data-g="' + g + '">' + g + "<small>" + n + "</small></button>";
+  }).join("");
+  $("stackTabs").addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) renderStack(b.getAttribute("data-g")); });
+  function pick(e) { var b = e.target.closest && e.target.closest(".tool"); if (b && +b.getAttribute("data-i") !== stackSel) showTool(+b.getAttribute("data-i")); }
+  grid.addEventListener("pointerover", function (e) { if (e.pointerType === "mouse") pick(e); });
+  grid.addEventListener("focusin", pick);
+  grid.addEventListener("click", pick);
+  grid.addEventListener("pointermove", function (e) {
+    if (e.pointerType !== "mouse") return;
+    var g = grid.getBoundingClientRect();
+    grid.style.setProperty("--mx", (e.clientX - g.left) + "px"); grid.style.setProperty("--my", (e.clientY - g.top) + "px");
+    grid.classList.add("lit");
+  });
+  grid.addEventListener("pointerleave", function () { grid.classList.remove("lit"); });
+  addEventListener("resize", placeGlow);
+  /* a logo that fails to load falls back to its short mark */
+  $("stack").addEventListener("error", function (e) {
+    var im = e.target; if (im.tagName !== "IMG") return;
+    var m = document.createElement("span"); m.className = "mg"; m.textContent = im.getAttribute("data-m"); im.replaceWith(m);
+  }, true);
+  renderStack("Everything");
+})();
 
 /* ───────── wiring ───────── */
 ["mk", "gL", "gB", "gD", "gC", "gA"].forEach(function (id) { $(id).addEventListener("input", renderMark); });
