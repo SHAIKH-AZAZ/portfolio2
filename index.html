@@ -3,7 +3,45 @@
 <head>
 <meta charset="utf-8">
 <meta name="theme-color" content="#070709">
-<script>try { if (localStorage.getItem("theme") === "light") document.documentElement.setAttribute("data-theme", "light"); } catch (e) {}</script>
+<script>
+try { if (localStorage.getItem("theme") === "light") document.documentElement.setAttribute("data-theme", "light"); } catch (e) {}
+/* intro: hide the content, let the hero plan draw itself, then bring the content in. Skipped for reduced motion.
+   A reload mid-page or a leftover #section would open below the hero, so the page always opens at the top. */
+(function () {
+  var root = document.documentElement, RUN = 2600, over = false;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  root.classList.add("pre");
+  try { history.scrollRestoration = "manual"; if (location.hash) history.replaceState(null, "", location.pathname + location.search); } catch (e) {}   // a leftover #section would drag the page off the hero
+  function pin() { if (!over && (scrollY || scrollX)) scrollTo(0, 0); }
+  addEventListener("scroll", pin);
+  function end() {
+    if (over) return; over = true;
+    root.classList.remove("pre", "draw"); root.classList.add("booted");
+    removeEventListener("scroll", pin);
+  }
+  setTimeout(end, 4500);                                   // never leave the page hidden
+  window.__intro = function () {       // called right after the hero plan is parsed, so it does not wait for fonts or CDN scripts
+    var svg = document.querySelector(".hero-bg"), pct = document.getElementById("introPct");
+    if (!svg) return end();
+    var els = [].slice.call(svg.querySelectorAll("path, rect, circle, text")), xs = els.map(function (el) { return el.getBBox().x; });
+    var lo = Math.min.apply(null, xs), span = Math.max.apply(null, xs) - lo || 1;
+    els.forEach(function (el, i) {
+      var d = (xs[i] - lo) / span * 1.5;                     // starts at once on the left edge of the plan, later further right
+      var dashed = el.closest("[stroke-dasharray]"), draw = el.tagName !== "text" && !dashed;
+      if (draw) el.setAttribute("pathLength", "1");
+      el.classList.add(draw ? "dr" : "df"); el.style.setProperty("--d", (draw ? d : d + .3).toFixed(2) + "s");
+    });
+    root.classList.add("draw");
+    var clock = function () { return document.timeline.currentTime; }, t0 = clock();
+    (function tick() {
+      if (over) return;
+      var k = Math.min(1, (clock() - t0) / RUN); if (pct) pct.textContent = Math.round(k * 100) + "%";
+      if (k < 1) requestAnimationFrame(tick); else end();
+    })();
+    addEventListener("pointerdown", end, { once: true }); addEventListener("keydown", end, { once: true });
+  };
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Azaz Shaikh — Software developer & QA engineer</title>
 <meta name="description" content="Azaz Shaikh builds, tests and ships software for work people still do by hand: reading structural drawings, computing every steel bar, and planning how to cut it.">
@@ -71,6 +109,30 @@ mark.good { background: var(--accent-tint); color: var(--accent-ink); }
 mark.bad { background: var(--bad-tint); color: var(--bad); }
 code, .mono { font-family: var(--mono); font-size: .875em; }
 code { background: var(--fill); border: 1px solid var(--rule); border-radius: 4px; padding: 1px 5px; white-space: nowrap; }
+
+/* intro: the hero's own plan draws itself, left to right, then the content steps in over it.
+   html.pre is set by the script in <head>, so without JS (or with reduced motion) none of this applies. */
+html.pre { overflow: hidden; }
+html.pre .nav, html.pre .hero .wrap > * { opacity: 0; }
+html.pre:not(.draw) .hero-bg, html.pre .hero-dots { opacity: 0; }
+html.pre.draw .hero-bg { opacity: 1; color: var(--ink-soft); -webkit-mask-image: none; mask-image: none; transition: none; }
+@media (min-width: 961px) { html.pre.draw .hero-bg { transform: translateX(-21%); } }   /* drawn centre-stage, then it slides aside for the text */
+html.pre.draw .hero-dots { opacity: 1; }
+.hero-bg, .hero-dots { transition: opacity .9s ease, color .9s ease, transform 1s cubic-bezier(.76, 0, .24, 1); }
+html.pre .hero-bg .dr { stroke-dasharray: 1; stroke-dashoffset: 1; animation: intro-draw .9s cubic-bezier(.4, 0, .2, 1) var(--d, 0s) forwards; }
+html.pre .hero-bg .df { opacity: 0; animation: intro-in .35s ease var(--d, 0s) forwards; }
+@keyframes intro-draw { to { stroke-dashoffset: 0; } }
+@keyframes intro-in { to { opacity: 1; } }
+.intro-scan { display: none; position: absolute; left: 0; right: 0; top: 44vh; height: 1px; background: var(--dim); pointer-events: none; }
+.intro-scan b { position: absolute; left: 16px; bottom: 6px; font: 600 .75rem var(--mono); color: var(--dim); }
+html.pre.draw .intro-scan { display: block; animation: intro-scan 2.6s cubic-bezier(.4, 0, .2, 1) forwards; }
+@keyframes intro-scan { from { clip-path: inset(-30px 100% -30px 0); } to { clip-path: inset(-30px 0 -30px 0); } }
+html.booted .nav { animation: intro-in .6s ease backwards; }
+html.booted .hero .wrap > * { animation: rise .7s cubic-bezier(.22, 1, .36, 1) backwards; }
+html.booted .hero .wrap > :nth-child(2) { animation-delay: .08s; }
+html.booted .hero .wrap > :nth-child(3) { animation-delay: .16s; }
+html.booted .hero .wrap > :nth-child(4) { animation-delay: .24s; }
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } }
 
 /* buttons */
 .btn {
@@ -399,6 +461,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 </head>
 <body>
 
+
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-code" viewBox="0 0 24 24"><path d="M7 8l-4 4l4 4"/><path d="M17 8l4 4l-4 4"/><path d="M14 4l-4 16"/></symbol>
   <symbol id="i-bug" viewBox="0 0 24 24"><path d="M9 9v-1a3 3 0 0 1 6 0v1"/><path d="M8 9h8a6 6 0 0 1 1 3v3a5 5 0 0 1 -10 0v-3a6 6 0 0 1 1 -3"/><path d="M3 13l4 0"/><path d="M17 13l4 0"/><path d="M12 20l0 -6"/><path d="M4 19l3.35 -2"/><path d="M20 19l-3.35 -2"/><path d="M4 7l3.75 2.4"/><path d="M20 7l-3.75 2.4"/></symbol>
@@ -444,6 +507,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 
 <section class="hero">
   <canvas class="hero-dots" id="heroDots" aria-hidden="true"></canvas>
+  <div class="intro-scan" aria-hidden="true"><b id="introPct">0%</b></div>
   <svg class="hero-bg" viewBox="0 0 1440 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke="currentColor">
     <g stroke-width="1" stroke-dasharray="14 5 2 5">
       <path d="M760 40V600M1000 40V600M1240 40V600M700 180H1400M700 420H1400"/>
@@ -477,6 +541,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
     </g>
     </g>
   </svg>
+  <script>if (window.__intro) __intro();</script>
   <div class="wrap">
     <div class="avail"><i></i>Open to software developer and QA roles</div>
     <h1>I build the software <span>people still do by hand.</span></h1>
