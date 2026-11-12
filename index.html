@@ -3,7 +3,45 @@
 <head>
 <meta charset="utf-8">
 <meta name="theme-color" content="#070709">
-<script>try { if (localStorage.getItem("theme") === "light") document.documentElement.setAttribute("data-theme", "light"); } catch (e) {}</script>
+<script>
+try { if (localStorage.getItem("theme") === "light") document.documentElement.setAttribute("data-theme", "light"); } catch (e) {}
+/* intro: hide the content, let the hero plan draw itself, then bring the content in. Skipped for reduced motion.
+   A reload mid-page or a leftover #section would open below the hero, so the page always opens at the top. */
+(function () {
+  var root = document.documentElement, RUN = 2600, over = false;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  root.classList.add("pre");
+  try { history.scrollRestoration = "manual"; if (location.hash) history.replaceState(null, "", location.pathname + location.search); } catch (e) {}   // a leftover #section would drag the page off the hero
+  function pin() { if (!over && (scrollY || scrollX)) scrollTo(0, 0); }
+  addEventListener("scroll", pin);
+  function end() {
+    if (over) return; over = true;
+    root.classList.remove("pre", "draw"); root.classList.add("booted");
+    removeEventListener("scroll", pin);
+  }
+  setTimeout(end, 4500);                                   // never leave the page hidden
+  window.__intro = function () {       // called right after the hero plan is parsed, so it does not wait for fonts or CDN scripts
+    var svg = document.querySelector(".hero-bg"), pct = document.getElementById("introPct");
+    if (!svg) return end();
+    var els = [].slice.call(svg.querySelectorAll("path, rect, circle, text")), xs = els.map(function (el) { return el.getBBox().x; });
+    var lo = Math.min.apply(null, xs), span = Math.max.apply(null, xs) - lo || 1;
+    els.forEach(function (el, i) {
+      var d = (xs[i] - lo) / span * 1.5;                     // starts at once on the left edge of the plan, later further right
+      var dashed = el.closest("[stroke-dasharray]"), draw = el.tagName !== "text" && !dashed;
+      if (draw) el.setAttribute("pathLength", "1");
+      el.classList.add(draw ? "dr" : "df"); el.style.setProperty("--d", (draw ? d : d + .3).toFixed(2) + "s");
+    });
+    root.classList.add("draw");
+    var clock = function () { return document.timeline.currentTime; }, t0 = clock();
+    (function tick() {
+      if (over) return;
+      var k = Math.min(1, (clock() - t0) / RUN); if (pct) pct.textContent = Math.round(k * 100) + "%";
+      if (k < 1) requestAnimationFrame(tick); else setTimeout(end, 180);   // a beat on the finished drawing
+    })();
+    addEventListener("pointerdown", end, { once: true }); addEventListener("keydown", end, { once: true });
+  };
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Azaz Shaikh — Software developer & QA engineer</title>
 <meta name="description" content="Azaz Shaikh builds, tests and ships software for work people still do by hand: reading structural drawings, computing every steel bar, and planning how to cut it.">
@@ -29,6 +67,7 @@
   --shadow: 0 1px 2px rgba(0,0,0,.5), 0 8px 24px rgba(0,0,0,.35);
   --shadow-up: 0 2px 4px rgba(0,0,0,.55), 0 14px 32px rgba(0,0,0,.5);
   --plan-op: .34;
+  --card: var(--fill);   /* resolved here, so a flooded card (which re-points --fill) keeps its own block colour */
   --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   color-scheme: dark;
 }
@@ -71,6 +110,35 @@ mark.bad { background: var(--bad-tint); color: var(--bad); }
 code, .mono { font-family: var(--mono); font-size: .875em; }
 code { background: var(--fill); border: 1px solid var(--rule); border-radius: 4px; padding: 1px 5px; white-space: nowrap; }
 
+/* intro: the hero's own plan draws itself, left to right, then the content steps in over it.
+   html.pre is set by the script in <head>, so without JS (or with reduced motion) none of this applies. */
+html.pre { overflow: hidden; }
+html.pre .nav, html.pre .hero .wrap > * { opacity: 0; }
+html.pre:not(.draw) .hero-bg, html.pre .hero-dots { opacity: 0; }
+/* the plan's left-side fade is two registered numbers, so it can ease in instead of popping */
+@property --mk1 { syntax: "<number>"; inherits: false; initial-value: .18; }
+@property --mk2 { syntax: "<number>"; inherits: false; initial-value: .35; }
+html.pre.draw .hero-bg { opacity: 1; color: var(--ink-soft); --mk1: 1; --mk2: 1; transition: none; }
+@media (min-width: 961px) { html.pre.draw .hero-bg { transform: translateX(-21%); } }   /* drawn centre-stage, then it glides aside for the text */
+html.pre.draw .hero-dots { opacity: 1; }
+.hero-bg { will-change: transform, opacity; transition: opacity 1.3s cubic-bezier(.65, 0, .35, 1), color 1.3s cubic-bezier(.65, 0, .35, 1), transform 1.3s cubic-bezier(.65, 0, .35, 1), --mk1 1.3s cubic-bezier(.65, 0, .35, 1), --mk2 1.3s cubic-bezier(.65, 0, .35, 1); }
+.hero-dots { transition: opacity 1.2s ease; }
+html.pre .hero-bg .dr { stroke-dasharray: 1; stroke-dashoffset: 1; animation: intro-draw 1s cubic-bezier(.65, 0, .35, 1) var(--d, 0s) forwards; }
+html.pre .hero-bg .df { opacity: 0; animation: intro-in .6s ease var(--d, 0s) forwards; }
+@keyframes intro-draw { to { stroke-dashoffset: 0; } }
+@keyframes intro-in { to { opacity: 1; } }
+.intro-scan { position: absolute; left: 0; right: 0; top: 44vh; height: 1px; background: var(--dim); pointer-events: none; opacity: 0; transition: opacity .6s ease; }
+.intro-scan b { position: absolute; left: 16px; bottom: 6px; font: 600 .75rem var(--mono); color: var(--dim); }
+html.pre.draw .intro-scan { opacity: 1; transition: none; animation: intro-scan 2.6s cubic-bezier(.45, 0, .55, 1) forwards; }
+@keyframes intro-scan { from { clip-path: inset(-30px 100% -30px 0); } to { clip-path: inset(-30px 0 -30px 0); } }
+/* the plan moves first; the content follows once it is most of the way home */
+html.booted .nav { animation: intro-in 1s ease .35s backwards; }
+html.booted .hero .wrap > * { animation: rise 1.1s cubic-bezier(.16, 1, .3, 1) backwards; animation-delay: calc(.5s + var(--i, 0) * .11s); }
+html.booted .hero .wrap > :nth-child(2) { --i: 1; }
+html.booted .hero .wrap > :nth-child(3) { --i: 2; }
+html.booted .hero .wrap > :nth-child(4) { --i: 3; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+
 /* buttons */
 .btn {
   position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -99,7 +167,7 @@ code { background: var(--fill); border: 1px solid var(--rule); border-radius: 4p
 /* hero */
 .hero { position: relative; border-top: 0; padding-block: clamp(56px, 9vw, 112px) clamp(48px, 7vw, 88px); overflow: hidden; }
 .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--steel); opacity: var(--plan-op); pointer-events: none;
-  -webkit-mask-image: linear-gradient(100deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,.35) 45%, #000 100%); mask-image: linear-gradient(100deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,.35) 45%, #000 100%); }
+  -webkit-mask-image: linear-gradient(100deg, rgba(0,0,0,var(--mk1)) 0%, rgba(0,0,0,var(--mk2)) 45%, #000 100%); mask-image: linear-gradient(100deg, rgba(0,0,0,var(--mk1)) 0%, rgba(0,0,0,var(--mk2)) 45%, #000 100%); }
 .hero-dots { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
   -webkit-mask-image: linear-gradient(100deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,.55) 45%, #000 100%); mask-image: linear-gradient(100deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,.55) 45%, #000 100%); }
 .hero-code { color: var(--accent); }
@@ -232,10 +300,36 @@ tr.total td { font-weight: 700; background: var(--fill); }
 .pass { background: var(--accent-tint); color: var(--accent-ink); }
 .fail { background: var(--bad-tint); color: var(--bad); }
 
+/* agent beam: light travels along the wires, in to the agent and out again */
+.beam { margin: 20px 0 0; padding: 18px 8px 10px; border: 1px solid var(--rule); border-radius: 12px; background: var(--surface); }
+.beam svg { display: block; width: 100%; max-width: 760px; height: auto; margin-inline: auto; }
+.beam figcaption { text-align: center; font-size: .875rem; color: var(--ink-soft); padding: 4px 12px 8px; }
+.bm-wire { fill: none; stroke: var(--rule); stroke-width: 1.5; }
+.bm-light { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 16 100; stroke-dashoffset: 16; animation: bm 3.2s linear infinite; }
+.bm-light.out { animation-delay: 1.6s; }
+@keyframes bm { to { stroke-dashoffset: -100; } }
+.bm-node circle { fill: var(--fill); stroke: var(--rule); stroke-width: 1.2; }
+.bm-node use, .bm-agent use { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.bm-node { color: var(--ink); }
+.bm-node text, .bm-agent text { font: 600 13px "Plus Jakarta Sans", sans-serif; fill: var(--ink-soft); stroke: none; text-anchor: middle; }
+.bm-agent { color: var(--on-accent); }
+.bm-agent .core { fill: var(--accent); }
+.bm-agent .ring { fill: none; stroke: var(--accent); stroke-width: 1.5; transform-box: fill-box; transform-origin: center; animation: bmring 3.2s ease-out infinite; animation-delay: 1.3s; }
+.bm-agent text { fill: var(--ink); font-size: 14px; font-weight: 700; }
+@keyframes bmring { from { transform: scale(1); opacity: .7; } to { transform: scale(1.7); opacity: 0; } }
+@media (max-width: 640px) { .bm-node text { font-size: 18px; } .bm-agent text { font-size: 19px; } }
+
 /* cards */
 .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
-.card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; box-shadow: var(--shadow); padding: 22px; min-width: 0; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
-.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-up); border-color: var(--accent); }
+/* notched bento card: a filled block with its top-right corner cut out, and a chip sitting in the cutout */
+.card { --n: 54px; --r: 18px; --tag: var(--bg); display: flex; flex-direction: column; background: var(--card); border-radius: 20px; padding: 22px; min-width: 0; transition: transform .18s ease; }
+.notch { position: absolute; top: 0; right: 0; z-index: 1; width: var(--n); height: var(--n); background: var(--bg); border-bottom-left-radius: var(--r); }
+.notch::before, .notch::after { content: ""; position: absolute; width: var(--r); height: var(--r); background: radial-gradient(circle at 0 100%, transparent calc(var(--r) - .5px), var(--bg) var(--r)); }
+.notch::before { top: 0; right: 100%; }
+.notch::after { top: 100%; right: 0; }
+.notch > * { position: absolute; top: 0; right: 0; width: calc(var(--n) - 8px); height: calc(var(--n) - 8px); border-radius: 14px; display: grid; place-items: center; background: var(--card); color: var(--ink); text-decoration: none; }
+.notch a:hover { transform: scale(1.06); }
+.card .tags span { background: var(--tag); }
 .tile { width: 52px; height: 52px; border-radius: 12px; background: var(--accent-tint); color: var(--accent); display: grid; place-items: center; margin-bottom: 16px; }
 .tile .ti { width: 31px; height: 31px; stroke-width: 1.6; }
 .card dl { margin: 10px 0 0; font-size: .9375rem; }
@@ -257,9 +351,10 @@ tr.total td { font-weight: 700; background: var(--fill); }
 .card *, .loop a * { transition: color .7s cubic-bezier(.22, 1, .36, 1), background-color .7s cubic-bezier(.22, 1, .36, 1); }
 .card:hover, .card:focus-within, .loop a:hover, .loop a:focus-visible {
   --ink: var(--f-ink); --accent: var(--f-ink); --ink-soft: var(--f-soft); --steel: var(--f-faint);
-  --fill: var(--f-chip); --accent-tint: var(--f-chip);
+  --fill: var(--f-chip); --accent-tint: var(--f-chip); --tag: var(--f-chip);
   color: var(--ink); transform: translateY(-4px); border-color: transparent;
 }
+.card:hover .notch > *, .card:focus-within .notch > * { background: var(--flood); }
 .card:hover::before, .card:focus-within::before, .loop a:hover::before, .loop a:focus-visible::before { clip-path: circle(142% at 0% 100%); }
 
 
@@ -371,6 +466,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 </head>
 <body>
 
+
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-code" viewBox="0 0 24 24"><path d="M7 8l-4 4l4 4"/><path d="M17 8l4 4l-4 4"/><path d="M14 4l-4 16"/></symbol>
   <symbol id="i-bug" viewBox="0 0 24 24"><path d="M9 9v-1a3 3 0 0 1 6 0v1"/><path d="M8 9h8a6 6 0 0 1 1 3v3a5 5 0 0 1 -10 0v-3a6 6 0 0 1 1 -3"/><path d="M3 13l4 0"/><path d="M17 13l4 0"/><path d="M12 20l0 -6"/><path d="M4 19l3.35 -2"/><path d="M20 19l-3.35 -2"/><path d="M4 7l3.75 2.4"/><path d="M20 7l-3.75 2.4"/></symbol>
@@ -389,6 +485,10 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
   <symbol id="i-school" viewBox="0 0 24 24"><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6"/><path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4"/></symbol>
   <symbol id="i-sun" viewBox="0 0 24 24"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></symbol>
   <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z"/><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"/><path d="M8 11v-4a4 4 0 1 1 8 0v4"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M8 9h8"/><path d="M8 13h6"/><path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></symbol>
   <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4v16l13 -8z"/></symbol>
 </svg>
 
@@ -399,6 +499,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
       <a href="#p1">Hard problems</a>
       <a href="#work">Other work</a>
       <a href="#how">How I work</a>
+      <a href="#auto">Automation</a>
       <a href="#experience">Experience</a>
       <a href="#stack">Tech stack</a>
     </nav>
@@ -411,6 +512,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 
 <section class="hero">
   <canvas class="hero-dots" id="heroDots" aria-hidden="true"></canvas>
+  <div class="intro-scan" aria-hidden="true"><b id="introPct">0%</b></div>
   <svg class="hero-bg" viewBox="0 0 1440 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke="currentColor">
     <g stroke-width="1" stroke-dasharray="14 5 2 5">
       <path d="M760 40V600M1000 40V600M1240 40V600M700 180H1400M700 420H1400"/>
@@ -444,6 +546,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
     </g>
     </g>
   </svg>
+  <script>if (window.__intro) __intro();</script>
   <div class="wrap">
     <div class="avail"><i></i>Open to software developer and QA roles</div>
     <h1>I build the software <span>people still do by hand.</span></h1>
@@ -623,27 +726,31 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
     <p class="lede">Smaller problems, same habit: find the manual step and remove it.</p>
     <div class="cards">
       <article class="card">
+        <div class="notch"><a href="https://excel-cleaner-one.vercel.app/" target="_blank" rel="noopener" aria-label="Open Excel Cleaner, live site"><svg class="ti"><use href="#i-out"/></svg></a></div>
         <div class="tile"><svg class="ti"><use href="#i-sheet"/></svg></div>
         <h3>Excel Cleaner</h3>
         <dl><dt>Problem</dt><dd>Client spreadsheets arrive with hidden macros, objects and messy formatting that break whatever reads them next.</dd>
         <dt>Built</dt><dd>A web tool that takes the raw XLSX and gives back clean, structured data.</dd></dl>
-        <div class="foot"><div class="tags"><span>Next.js</span><span>Data processing</span></div><a class="go" href="https://excel-cleaner-one.vercel.app/" target="_blank" rel="noopener">Live<svg class="ti"><use href="#i-out"/></svg></a></div>
+        <div class="foot"><div class="tags"><span>Next.js</span><span>Data processing</span></div><span class="priv">Live site</span></div>
       </article>
       <article class="card">
+        <div class="notch"><a href="https://www.safeandsecuresecurityservice.com/" target="_blank" rel="noopener" aria-label="Open Safe &amp; Secure Security Service, live site"><svg class="ti"><use href="#i-out"/></svg></a></div>
         <div class="tile"><svg class="ti"><use href="#i-shield"/></svg></div>
         <h3>Safe &amp; Secure Security Service</h3>
         <dl><dt>Problem</dt><dd>A security agency's enquiries stopped at "contact us", with no detail to quote from.</dd>
         <dt>Built</dt><dd>A site whose request form asks about the situation first, then carries the answers into a full quote.</dd></dl>
-        <div class="foot"><div class="tags"><span>Next.js</span><span>Quote forms</span><span>SEO</span></div><a class="go" href="https://www.safeandsecuresecurityservice.com/" target="_blank" rel="noopener">Live<svg class="ti"><use href="#i-out"/></svg></a></div>
+        <div class="foot"><div class="tags"><span>Next.js</span><span>Quote forms</span><span>SEO</span></div><span class="priv">Live site</span></div>
       </article>
       <article class="card">
+        <div class="notch"><a href="https://shamgym.vercel.app/" target="_blank" rel="noopener" aria-label="Open ShamGym, live site"><svg class="ti"><use href="#i-out"/></svg></a></div>
         <div class="tile"><svg class="ti"><use href="#i-barbell"/></svg></div>
         <h3>ShamGym</h3>
         <dl><dt>Problem</dt><dd>A strength gym had no single place for classes, trainers, plans and trial bookings.</dd>
         <dt>Built</dt><dd>The gym's whole site, with membership plans, a blog and free-trial booking.</dd></dl>
-        <div class="foot"><div class="tags"><span>Next.js</span><span>Responsive UI</span></div><a class="go" href="https://shamgym.vercel.app/" target="_blank" rel="noopener">Live<svg class="ti"><use href="#i-out"/></svg></a></div>
+        <div class="foot"><div class="tags"><span>Next.js</span><span>Responsive UI</span></div><span class="priv">Live site</span></div>
       </article>
       <article class="card">
+        <div class="notch"><span title="Not public"><svg class="ti"><use href="#i-lock"/></svg></span></div>
         <div class="tile"><svg class="ti"><use href="#i-truck"/></svg></div>
         <h3>FastShipment</h3>
         <dl><dt>Problem</dt><dd>Orders, payment, tracking and partners lived in separate places.</dd>
@@ -651,6 +758,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
         <div class="foot"><div class="tags"><span>Python</span><span>Tracking</span></div><span class="priv">Private build</span></div>
       </article>
       <article class="card">
+        <div class="notch"><span title="Not public"><svg class="ti"><use href="#i-lock"/></svg></span></div>
         <div class="tile"><svg class="ti"><use href="#i-robot"/></svg></div>
         <h3>Multi-step AI agent</h3>
         <dl><dt>Problem</dt><dd>A chatbot can answer, but it can't finish a task that takes several steps.</dd>
@@ -658,6 +766,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
         <div class="foot"><div class="tags"><span>LangGraph</span><span>Python</span></div><span class="priv">Private build</span></div>
       </article>
       <article class="card">
+        <div class="notch"><span title="Not public"><svg class="ti"><use href="#i-lock"/></svg></span></div>
         <div class="tile"><svg class="ti"><use href="#i-school"/></svg></div>
         <h3>StudySphere and AttendEASE365</h3>
         <dl><dt>Problem</dt><dd>Students shared books by word of mouth, and attendance lived on paper.</dd>
@@ -675,6 +784,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
     <div class="steps">
       <div class="step"><div><h3>Find the person who does it by hand</h3><p>Watch the real steps and write down the limits that never move: 12&nbsp;m stock, a cover dimension, a code rule. Everything else obeys those.</p></div></div>
       <div class="step"><div><h3>Work one case on paper</h3><p>If I can't get the answer by hand, I can't tell whether the code is right. The hand-worked case becomes the first test.</p></div></div>
+      <div class="step"><div><h3>Use AI every day, and check what it writes</h3><p>AI tools draft code, tests and docs with me daily. The hand-worked case and the checks decide what stays, not the tool.</p></div></div>
       <div class="step"><div><h3>Ship the smallest version that is real</h3><p>One element working end to end, from input to export, beats four half-finished ones. Then widen it.</p></div></div>
       <div class="step"><div><h3>Try to break it</h3><p>Zero, negative, too long, missing, written oddly. Each failure found here is one a user never sees.</p></div></div>
     </div>
@@ -682,6 +792,60 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 </section>
 
 <!-- ───────── Experience ───────── -->
+<section id="auto">
+  <div class="wrap">
+    <div class="kicker"><svg class="ti"><use href="#i-robot"/></svg>Automation and AI</div>
+    <h2>If it repeats, I automate it.</h2>
+    <p class="lede">Same habit as the rest of this page: find the manual step, hand it to a machine, and keep a check on the result.</p>
+    <div class="think">
+      <div>
+        <h3><i>1</i>Tests</h3>
+        <p>Regression suites that click through the web app on their own, so a release is not held up by a person repeating the same steps.</p>
+      </div>
+      <div>
+        <h3><i>2</i>Releases</h3>
+        <p>A pipeline that tests, builds and deploys every merge. Nobody copies files to a server by hand.</p>
+      </div>
+      <div>
+        <h3><i>3</i>Work that needs judgement</h3>
+        <p>Where a fixed script is not enough, an AI step reads the input and decides: a chatbot that answers, or an agent that <mark class="good">finishes a multi-step task</mark>.</p>
+      </div>
+    </div>
+    <figure class="beam">
+      <svg viewBox="0 0 600 310" role="img" aria-label="A question, documents and tools go into an agent. An answer, a finished task or a hand-off to a person comes out.">
+        <path class="bm-wire" d="M82 50C200 50 180 150 262 150"/>
+        <path class="bm-wire" d="M82 150C200 150 180 150 262 150"/>
+        <path class="bm-wire" d="M82 250C200 250 180 150 262 150"/>
+        <path class="bm-wire" d="M338 150C420 150 400 50 518 50"/>
+        <path class="bm-wire" d="M338 150C420 150 400 150 518 150"/>
+        <path class="bm-wire" d="M338 150C420 150 400 250 518 250"/>
+        <path class="bm-light" pathLength="100" d="M82 50C200 50 180 150 262 150" style="animation-delay:0.00s"/>
+        <path class="bm-light" pathLength="100" d="M82 150C200 150 180 150 262 150" style="animation-delay:0.25s"/>
+        <path class="bm-light" pathLength="100" d="M82 250C200 250 180 150 262 150" style="animation-delay:0.50s"/>
+        <path class="bm-light out" pathLength="100" d="M338 150C420 150 400 50 518 50" style="animation-delay:1.60s"/>
+        <path class="bm-light out" pathLength="100" d="M338 150C420 150 400 150 518 150" style="animation-delay:1.85s"/>
+        <path class="bm-light out" pathLength="100" d="M338 150C420 150 400 250 518 250" style="animation-delay:2.10s"/>
+        <g class="bm-node"><circle cx="56" cy="50" r="26"/><use href="#i-chat" x="45" y="39" width="22" height="22"/><text x="56" y="95">Question</text></g>
+        <g class="bm-node"><circle cx="56" cy="150" r="26"/><use href="#i-sheet" x="45" y="139" width="22" height="22"/><text x="56" y="195">Documents</text></g>
+        <g class="bm-node"><circle cx="56" cy="250" r="26"/><use href="#i-code" x="45" y="239" width="22" height="22"/><text x="56" y="295">Tools</text></g>
+        <g class="bm-node"><circle cx="544" cy="50" r="26"/><use href="#i-check" x="533" y="39" width="22" height="22"/><text x="544" y="95">Answer</text></g>
+        <g class="bm-node"><circle cx="544" cy="150" r="26"/><use href="#i-rocket" x="533" y="139" width="22" height="22"/><text x="544" y="195">Task done</text></g>
+        <g class="bm-node"><circle cx="544" cy="250" r="26"/><use href="#i-user" x="533" y="239" width="22" height="22"/><text x="544" y="295">A person</text></g>
+        <g class="bm-agent"><circle class="ring" cx="300" cy="150" r="38"/><circle class="core" cx="300" cy="150" r="38"/><use href="#i-robot" x="284" y="134" width="32" height="32"/><text x="300" y="214">Agent</text></g>
+      </svg>
+      <figcaption>The agent reads what comes in, decides, and either answers, finishes the task or hands it to a person.</figcaption>
+    </figure>
+    <h3 style="margin-top:44px">How I build an AI chatbot</h3>
+    <div class="pipe" aria-label="How I build an AI chatbot">
+      <div><b><i>1</i>One job</b><span>Decide what it answers, and what it must refuse.</span></div>
+      <div><b><i>2</i>Its own sources</b><span>It answers from approved documents, not from memory.</span></div>
+      <div><b><i>3</i>Tools</b><span>Read-only first. Anything that changes data comes later.</span></div>
+      <div><b><i>4</i>Test chats</b><span>A fixed set of conversations, odd ones included, re-run after every change.</span></div>
+      <div><b><i>5</i>Hand off</b><span>When it is unsure it passes the chat to a person, with the context.</span></div>
+    </div>
+  </div>
+</section>
+
 <section id="experience">
   <div class="wrap">
     <h2>Experience.</h2>
@@ -1123,7 +1287,8 @@ var STACK = [
   ["Tools", "VS Code", "Main editor", "Debugging · Extensions", "vscode", "VS"],
   ["Tools", "IntelliJ IDEA", "Java and Selenium work", "Java · Refactoring", "intellij", "IN"],
   ["Tools", "Chrome DevTools", "Inspecting pages and network calls", "Network · Console · Performance", "chrome", "CH"],
-  ["Tools", "npm and Webpack", "Packages and bundling", "Dependencies · Scripts · Builds", "npm", "NP"]
+  ["Tools", "npm and Webpack", "Packages and bundling", "Dependencies · Scripts · Builds", "npm", "NP"],
+  ["Tools", "AI assistants", "Daily help with code, tests and docs", "Drafting · Review · Debugging", "", "AI"]
 ];
 var stackGroup = "Everything", stackSel = 0;
 function toolLogo(t, px) {
