@@ -36,7 +36,7 @@ try { if (localStorage.getItem("theme") === "light") document.documentElement.se
     (function tick() {
       if (over) return;
       var k = Math.min(1, (clock() - t0) / RUN); if (pct) pct.textContent = Math.round(k * 100) + "%";
-      if (k < 1) requestAnimationFrame(tick); else end();
+      if (k < 1) requestAnimationFrame(tick); else setTimeout(end, 180);   // a beat on the finished drawing
     })();
     addEventListener("pointerdown", end, { once: true }); addEventListener("keydown", end, { once: true });
   };
@@ -115,24 +115,29 @@ code { background: var(--fill); border: 1px solid var(--rule); border-radius: 4p
 html.pre { overflow: hidden; }
 html.pre .nav, html.pre .hero .wrap > * { opacity: 0; }
 html.pre:not(.draw) .hero-bg, html.pre .hero-dots { opacity: 0; }
-html.pre.draw .hero-bg { opacity: 1; color: var(--ink-soft); -webkit-mask-image: none; mask-image: none; transition: none; }
-@media (min-width: 961px) { html.pre.draw .hero-bg { transform: translateX(-21%); } }   /* drawn centre-stage, then it slides aside for the text */
+/* the plan's left-side fade is two registered numbers, so it can ease in instead of popping */
+@property --mk1 { syntax: "<number>"; inherits: false; initial-value: .18; }
+@property --mk2 { syntax: "<number>"; inherits: false; initial-value: .35; }
+html.pre.draw .hero-bg { opacity: 1; color: var(--ink-soft); --mk1: 1; --mk2: 1; transition: none; }
+@media (min-width: 961px) { html.pre.draw .hero-bg { transform: translateX(-21%); } }   /* drawn centre-stage, then it glides aside for the text */
 html.pre.draw .hero-dots { opacity: 1; }
-.hero-bg, .hero-dots { transition: opacity .9s ease, color .9s ease, transform 1s cubic-bezier(.76, 0, .24, 1); }
-html.pre .hero-bg .dr { stroke-dasharray: 1; stroke-dashoffset: 1; animation: intro-draw .9s cubic-bezier(.4, 0, .2, 1) var(--d, 0s) forwards; }
-html.pre .hero-bg .df { opacity: 0; animation: intro-in .35s ease var(--d, 0s) forwards; }
+.hero-bg { will-change: transform, opacity; transition: opacity 1.3s cubic-bezier(.65, 0, .35, 1), color 1.3s cubic-bezier(.65, 0, .35, 1), transform 1.3s cubic-bezier(.65, 0, .35, 1), --mk1 1.3s cubic-bezier(.65, 0, .35, 1), --mk2 1.3s cubic-bezier(.65, 0, .35, 1); }
+.hero-dots { transition: opacity 1.2s ease; }
+html.pre .hero-bg .dr { stroke-dasharray: 1; stroke-dashoffset: 1; animation: intro-draw 1s cubic-bezier(.65, 0, .35, 1) var(--d, 0s) forwards; }
+html.pre .hero-bg .df { opacity: 0; animation: intro-in .6s ease var(--d, 0s) forwards; }
 @keyframes intro-draw { to { stroke-dashoffset: 0; } }
 @keyframes intro-in { to { opacity: 1; } }
-.intro-scan { display: none; position: absolute; left: 0; right: 0; top: 44vh; height: 1px; background: var(--dim); pointer-events: none; }
+.intro-scan { position: absolute; left: 0; right: 0; top: 44vh; height: 1px; background: var(--dim); pointer-events: none; opacity: 0; transition: opacity .6s ease; }
 .intro-scan b { position: absolute; left: 16px; bottom: 6px; font: 600 .75rem var(--mono); color: var(--dim); }
-html.pre.draw .intro-scan { display: block; animation: intro-scan 2.6s cubic-bezier(.4, 0, .2, 1) forwards; }
+html.pre.draw .intro-scan { opacity: 1; transition: none; animation: intro-scan 2.6s cubic-bezier(.45, 0, .55, 1) forwards; }
 @keyframes intro-scan { from { clip-path: inset(-30px 100% -30px 0); } to { clip-path: inset(-30px 0 -30px 0); } }
-html.booted .nav { animation: intro-in .6s ease backwards; }
-html.booted .hero .wrap > * { animation: rise .7s cubic-bezier(.22, 1, .36, 1) backwards; }
-html.booted .hero .wrap > :nth-child(2) { animation-delay: .08s; }
-html.booted .hero .wrap > :nth-child(3) { animation-delay: .16s; }
-html.booted .hero .wrap > :nth-child(4) { animation-delay: .24s; }
-@keyframes rise { from { opacity: 0; transform: translateY(18px); } }
+/* the plan moves first; the content follows once it is most of the way home */
+html.booted .nav { animation: intro-in 1s ease .35s backwards; }
+html.booted .hero .wrap > * { animation: rise 1.1s cubic-bezier(.16, 1, .3, 1) backwards; animation-delay: calc(.5s + var(--i, 0) * .11s); }
+html.booted .hero .wrap > :nth-child(2) { --i: 1; }
+html.booted .hero .wrap > :nth-child(3) { --i: 2; }
+html.booted .hero .wrap > :nth-child(4) { --i: 3; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } }
 
 /* buttons */
 .btn {
@@ -162,7 +167,7 @@ html.booted .hero .wrap > :nth-child(4) { animation-delay: .24s; }
 /* hero */
 .hero { position: relative; border-top: 0; padding-block: clamp(56px, 9vw, 112px) clamp(48px, 7vw, 88px); overflow: hidden; }
 .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--steel); opacity: var(--plan-op); pointer-events: none;
-  -webkit-mask-image: linear-gradient(100deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,.35) 45%, #000 100%); mask-image: linear-gradient(100deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,.35) 45%, #000 100%); }
+  -webkit-mask-image: linear-gradient(100deg, rgba(0,0,0,var(--mk1)) 0%, rgba(0,0,0,var(--mk2)) 45%, #000 100%); mask-image: linear-gradient(100deg, rgba(0,0,0,var(--mk1)) 0%, rgba(0,0,0,var(--mk2)) 45%, #000 100%); }
 .hero-dots { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
   -webkit-mask-image: linear-gradient(100deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,.55) 45%, #000 100%); mask-image: linear-gradient(100deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,.55) 45%, #000 100%); }
 .hero-code { color: var(--accent); }
