@@ -61,7 +61,7 @@ try { if (localStorage.getItem("theme") === "light") document.documentElement.se
   --rule: #2C2E32;
   --accent: #FFFFFF; --accent-tint: #303236; --accent-ink: #FFFFFF; --on-accent: #070709;
   --dim: #E7C952;
-  --bad: #FE8D70; --bad-tint: #421D13;
+  --bad: #FE8D70; --bad-tint: #421D13; --tail: #2EA8FF; --tail-tint: #0B2A4D;
   /* a flooded card (hover): fill colour, then its text, secondary text, labels and chip wash */
   --flood: #FFFFFF; --f-ink: #070709; --f-soft: #2C2E32; --f-faint: #55585F; --f-chip: rgba(7,7,9,.08);
   --shadow: 0 1px 2px rgba(0,0,0,.5), 0 8px 24px rgba(0,0,0,.35);
@@ -78,7 +78,7 @@ try { if (localStorage.getItem("theme") === "light") document.documentElement.se
   --rule: #DFE5EF;
   --accent: #008C1F; --accent-tint: #E8FBDA; --accent-ink: #006B18; --on-accent: #FFFFFF;
   --dim: #2563EB;
-  --bad: #C2410C; --bad-tint: #FDECE7;
+  --bad: #C2410C; --bad-tint: #FDECE7; --tail: #0066FF; --tail-tint: #E3EDFF;
   --flood: #006B18; --f-ink: #FFFFFF; --f-soft: #E8FBDA; --f-faint: #C3EDB4; --f-chip: rgba(255,255,255,.14);
   --shadow: 0 1px 2px rgba(42,53,71,.06), 0 8px 24px rgba(42,53,71,.06);
   --shadow-up: 0 2px 4px rgba(42,53,71,.08), 0 14px 32px rgba(42,53,71,.10);
@@ -285,7 +285,7 @@ tr.total td { font-weight: 700; background: var(--fill); }
 .stockbar i:last-child { border-right: 0; }
 .stockbar .pc { background: var(--accent-tint); color: var(--accent-ink); }
 .plan-base .stockbar .pc { background: var(--fill); color: var(--ink-soft); }
-.stockbar .tail { color: var(--bad); background: repeating-linear-gradient(135deg, var(--bad-tint) 0 5px, var(--surface) 5px 10px); }
+.stockbar .tail { color: var(--tail); background: repeating-linear-gradient(135deg, var(--tail-tint) 0 5px, var(--surface) 5px 10px); }
 .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 12px; font-size: .8125rem; color: var(--ink-soft); }
 .legend i { display: inline-block; width: 14px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: middle; border: 1px solid var(--steel); }
 
@@ -305,9 +305,11 @@ tr.total td { font-weight: 700; background: var(--fill); }
 .beam svg { display: block; width: 100%; max-width: 760px; height: auto; margin-inline: auto; }
 .beam figcaption { text-align: center; font-size: .875rem; color: var(--ink-soft); padding: 4px 12px 8px; }
 .bm-wire { fill: none; stroke: var(--rule); stroke-width: 1.5; }
-.bm-light { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 16 100; stroke-dashoffset: 16; animation: bm 3.2s linear infinite; }
-.bm-light.out { animation-delay: 1.6s; }
-@keyframes bm { to { stroke-dashoffset: -100; } }
+.bm-light { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 16 100; stroke-dashoffset: 16; opacity: 0; filter: drop-shadow(0 0 3px var(--accent)); animation: bm 3.2s cubic-bezier(.45, 0, .55, 1) infinite; }
+/* each light runs its wire in the first 40% of the cycle, then rests: in-lights, agent pulse, out-lights */
+@keyframes bm { 0% { stroke-dashoffset: 16; opacity: 0; } 5%, 34% { opacity: 1; } 40%, 100% { stroke-dashoffset: -100; opacity: 0; } }
+.bm-port { fill: var(--surface); stroke: var(--ink-soft); stroke-width: 1.2; }
+.bm-agent .halo { fill: none; stroke: var(--rule); stroke-width: 1.2; }
 .bm-node circle { fill: var(--fill); stroke: var(--rule); stroke-width: 1.2; }
 .bm-node use, .bm-agent use { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .bm-node { color: var(--ink); }
@@ -316,7 +318,7 @@ tr.total td { font-weight: 700; background: var(--fill); }
 .bm-agent .core { fill: var(--accent); }
 .bm-agent .ring { fill: none; stroke: var(--accent); stroke-width: 1.5; transform-box: fill-box; transform-origin: center; animation: bmring 3.2s ease-out infinite; animation-delay: 1.3s; }
 .bm-agent text { fill: var(--ink); font-size: 14px; font-weight: 700; }
-@keyframes bmring { from { transform: scale(1); opacity: .7; } to { transform: scale(1.7); opacity: 0; } }
+@keyframes bmring { from { transform: scale(1); opacity: .6; } to { transform: scale(1.4); opacity: 0; } }
 @media (max-width: 640px) { .bm-node text { font-size: 18px; } .bm-agent text { font-size: 19px; } }
 
 /* cards */
@@ -393,7 +395,7 @@ tr.total td { font-weight: 700; background: var(--fill); }
 .tool img, .mg { width: 30px; height: 30px; flex: none; }
 .tool img { transition: transform .18s ease; }
 /* logos drawn in near-black: flip lightness, keep hue */
-:root:not([data-theme="light"]) :is(img[src$="/express.svg"], img[src$="/nextjs.svg"], img[src$="/amazonwebservices.svg"], img[src$="/bash.svg"]) { filter: invert(1) hue-rotate(180deg); }
+:root:not([data-theme="light"]) :is(img[src$="/express.svg"], img[src$="/nextjs.svg"], img[src$="/amazonwebservices.svg"], img[src$="/bash.svg"], img[src$="/langchain.svg"]) { filter: invert(1) hue-rotate(180deg); }
 .mg { display: grid; place-items: center; border-radius: 8px; background: var(--accent-tint); color: var(--accent-ink); font-size: .625rem; font-weight: 700; }
 /* glow that follows the cursor: a lit border plus a soft wash */
 .tool::before, .tool::after { content: ""; position: absolute; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .25s ease; }
@@ -813,25 +815,26 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
     </div>
     <figure class="beam">
       <svg viewBox="0 0 600 310" role="img" aria-label="A question, documents and tools go into an agent. An answer, a finished task or a hand-off to a person comes out.">
-        <path class="bm-wire" d="M82 50C200 50 180 150 262 150"/>
-        <path class="bm-wire" d="M82 150C200 150 180 150 262 150"/>
-        <path class="bm-wire" d="M82 250C200 250 180 150 262 150"/>
-        <path class="bm-wire" d="M338 150C420 150 400 50 518 50"/>
-        <path class="bm-wire" d="M338 150C420 150 400 150 518 150"/>
-        <path class="bm-wire" d="M338 150C420 150 400 250 518 250"/>
-        <path class="bm-light" pathLength="100" d="M82 50C200 50 180 150 262 150" style="animation-delay:0.00s"/>
-        <path class="bm-light" pathLength="100" d="M82 150C200 150 180 150 262 150" style="animation-delay:0.25s"/>
-        <path class="bm-light" pathLength="100" d="M82 250C200 250 180 150 262 150" style="animation-delay:0.50s"/>
-        <path class="bm-light out" pathLength="100" d="M338 150C420 150 400 50 518 50" style="animation-delay:1.60s"/>
-        <path class="bm-light out" pathLength="100" d="M338 150C420 150 400 150 518 150" style="animation-delay:1.85s"/>
-        <path class="bm-light out" pathLength="100" d="M338 150C420 150 400 250 518 250" style="animation-delay:2.10s"/>
+        <path class="bm-wire" d="M82 50C170 50 227 88 265 120"/>
+        <path class="bm-wire" d="M82 150H254"/>
+        <path class="bm-wire" d="M82 250C170 250 227 212 265 180"/>
+        <path class="bm-wire" d="M335 120C373 88 430 50 518 50"/>
+        <path class="bm-wire" d="M346 150H518"/>
+        <path class="bm-wire" d="M335 180C373 212 430 250 518 250"/>
+        <path class="bm-light" pathLength="100" d="M82 50C170 50 227 88 265 120" style="animation-delay:0.00s"/>
+        <path class="bm-light" pathLength="100" d="M82 150H254" style="animation-delay:0.12s"/>
+        <path class="bm-light" pathLength="100" d="M82 250C170 250 227 212 265 180" style="animation-delay:0.24s"/>
+        <path class="bm-light" pathLength="100" d="M335 120C373 88 430 50 518 50" style="animation-delay:1.60s"/>
+        <path class="bm-light" pathLength="100" d="M346 150H518" style="animation-delay:1.72s"/>
+        <path class="bm-light" pathLength="100" d="M335 180C373 212 430 250 518 250" style="animation-delay:1.84s"/>
         <g class="bm-node"><circle cx="56" cy="50" r="26"/><use href="#i-chat" x="45" y="39" width="22" height="22"/><text x="56" y="95">Question</text></g>
         <g class="bm-node"><circle cx="56" cy="150" r="26"/><use href="#i-sheet" x="45" y="139" width="22" height="22"/><text x="56" y="195">Documents</text></g>
         <g class="bm-node"><circle cx="56" cy="250" r="26"/><use href="#i-code" x="45" y="239" width="22" height="22"/><text x="56" y="295">Tools</text></g>
         <g class="bm-node"><circle cx="544" cy="50" r="26"/><use href="#i-check" x="533" y="39" width="22" height="22"/><text x="544" y="95">Answer</text></g>
         <g class="bm-node"><circle cx="544" cy="150" r="26"/><use href="#i-rocket" x="533" y="139" width="22" height="22"/><text x="544" y="195">Task done</text></g>
         <g class="bm-node"><circle cx="544" cy="250" r="26"/><use href="#i-user" x="533" y="239" width="22" height="22"/><text x="544" y="295">A person</text></g>
-        <g class="bm-agent"><circle class="ring" cx="300" cy="150" r="38"/><circle class="core" cx="300" cy="150" r="38"/><use href="#i-robot" x="284" y="134" width="32" height="32"/><text x="300" y="214">Agent</text></g>
+        <g class="bm-agent"><circle class="halo" cx="300" cy="150" r="46"/><circle class="ring" cx="300" cy="150" r="38"/><circle class="core" cx="300" cy="150" r="38"/><use href="#i-robot" x="284" y="134" width="32" height="32"/><text x="300" y="218">Agent</text></g>
+        <circle class="bm-port" cx="265" cy="120" r="3"/><circle class="bm-port" cx="254" cy="150" r="3"/><circle class="bm-port" cx="265" cy="180" r="3"/><circle class="bm-port" cx="335" cy="120" r="3"/><circle class="bm-port" cx="346" cy="150" r="3"/><circle class="bm-port" cx="335" cy="180" r="3"/>
       </svg>
       <figcaption>The agent reads what comes in, decides, and either answers, finishes the task or hands it to a person.</figcaption>
     </figure>
@@ -1208,7 +1211,7 @@ function renderCuts() {
       '<div class="plan-base"><div class="plan-h">In schedule order<small>' + r.base.length + " bars</small></div>" + planHtml(r.base, stock) + "</div>" +
       '<div><div class="plan-h">Planned<small>' + r.best.length + " bars · " + r.by + "</small></div>" + planHtml(r.best, stock) + "</div>" +
     "</div>" +
-    '<div class="legend"><span><i style="background:var(--accent-tint)"></i>cut piece</span><span><i style="background:var(--bad-tint)"></i>tail left on the bar</span><span>' + fmt(r.pieces) + " pieces, " + fmt(r.length / 1000) + " m of steel needed</span></div>";
+    '<div class="legend"><span><i style="background:var(--accent-tint)"></i>cut piece</span><span><i style="background:var(--tail-tint)"></i>tail left on the bar</span><span>' + fmt(r.pieces) + " pieces, " + fmt(r.length / 1000) + " m of steel needed</span></div>";
 }
 
 /* ───────── 3. checks, run for real on load ───────── */
@@ -1260,19 +1263,19 @@ var STACK = [
   ["Languages", "JavaScript", "The language of the browser and Node", "ES6+ · Async · DOM", "javascript", "JA"],
   ["Languages", "Python", "Scripts, automation and test code", "Automation · Pytest · Data", "python", "PY"],
   ["Languages", "Java", "Selenium test automation", "OOP · WebDriver · TestNG", "java", "JA"],
-  ["Languages", "SQL", "Querying and checking data", "Joins · Filters · Data checks", "", "SQL"],
+  ["Languages", "SQL", "Querying and checking data", "Joins · Filters · Data checks", "sql", "SQL"],
   ["Languages", "HTML5 and CSS3", "Structure and layout of every page", "Semantic · Grid · Responsive", "html5", "HT"],
   ["Build", "React", "Interfaces made of reusable components", "Hooks · State · Forms", "react", "RE"],
   ["Build", "Next.js", "React apps and client websites", "Routing · SEO · Server rendering", "nextjs", "NE"],
   ["Build", "Node.js", "Server-side JavaScript", "APIs · Services · Scripts", "nodejs", "NO"],
   ["Build", "Express.js", "REST APIs on Node", "Routes · Middleware · Validation", "express", "EX"],
-  ["Build", "REST APIs", "Designing and consuming endpoints", "Requests · Errors · Data shape", "", "API"],
+  ["Build", "REST APIs", "Designing and consuming endpoints", "Requests · Errors · Data shape", "openapi", "API"],
   ["Build", "MongoDB", "Document database", "Schemas · Queries · Indexes", "mongodb", "MO"],
   ["Build", "PostgreSQL", "Relational database", "Tables · Relations · Queries", "postgresql", "PO"],
-  ["Build", "LangChain and LangGraph", "AI agents that work in steps", "Tools · Memory · Branching", "", "LC"],
-  ["Test", "Manual testing", "Finding what breaks before users do", "Functional · Regression · Exploratory", "", "QA"],
+  ["Build", "LangChain and LangGraph", "AI agents that work in steps", "Tools · Memory · Branching", "langchain", "LC"],
+  ["Test", "Manual testing", "Finding what breaks before users do", "Functional · Regression · Exploratory", "manual-testing", "QA"],
   ["Test", "Selenium WebDriver", "Browser tests that run on their own", "Java · Regression suites · Locators", "selenium", "SE"],
-  ["Test", "TestNG", "Organising and running Java tests", "Suites · Assertions · Reports", "", "NG"],
+  ["Test", "TestNG", "Organising and running Java tests", "Suites · Assertions · Reports", "testng", "NG"],
   ["Test", "Pytest", "Tests in Python", "Fixtures · Parametrised · Asserts", "pytest", "PY"],
   ["Test", "Postman", "API testing", "Correctness · Response time · Data integrity", "postman", "PO"],
   ["Test", "Jira", "Bug reports tracked to closure", "Defect life cycle · Sprints · Traceability", "jira", "JI"],
@@ -1281,14 +1284,14 @@ var STACK = [
   ["Ship", "Jenkins", "Build and deployment pipelines", "Jobs · Stages · Automation", "jenkins", "JE"],
   ["Ship", "AWS", "Cloud hosting and storage", "EC2 · S3 · RDS · IAM · Lambda · CloudWatch", "amazonwebservices", "AW"],
   ["Ship", "Nginx", "Reverse proxy in front of apps", "Proxy · SSL/TLS · Routing", "nginx", "NG"],
-  ["Ship", "PM2", "Keeping Node services running", "Restarts · Logs · Processes", "", "PM2"],
+  ["Ship", "PM2", "Keeping Node services running", "Restarts · Logs · Processes", "pm2", "PM2"],
   ["Ship", "Linux and Bash", "Servers and shell scripts", "Shell · Config · Scripting", "bash", "LI"],
   ["Tools", "Git and GitHub", "Version control and code review", "Branches · Pull requests · Issues", "git", "GI"],
   ["Tools", "VS Code", "Main editor", "Debugging · Extensions", "vscode", "VS"],
   ["Tools", "IntelliJ IDEA", "Java and Selenium work", "Java · Refactoring", "intellij", "IN"],
   ["Tools", "Chrome DevTools", "Inspecting pages and network calls", "Network · Console · Performance", "chrome", "CH"],
   ["Tools", "npm and Webpack", "Packages and bundling", "Dependencies · Scripts · Builds", "npm", "NP"],
-  ["Tools", "AI assistants", "Daily help with code, tests and docs", "Drafting · Review · Debugging", "", "AI"]
+  ["Tools", "AI assistants", "Daily help with code, tests and docs", "Drafting · Review · Debugging", "claude", "AI"]
 ];
 var stackGroup = "Everything", stackSel = 0;
 function toolLogo(t, px) {
